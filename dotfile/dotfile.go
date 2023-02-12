@@ -26,6 +26,15 @@ func (path *Path)Abs()(string, error){
 	return filepath.Abs(string(*path))
 }
 
+func NewPath(pathS string)Path{
+	return Path(pathS)
+}
+
+func NewAbsPath(pathS string)Path{
+	absPath, _ := filepath.Abs(pathS)
+	return Path(absPath)
+}
+
 // 2つのパスが共通のファイルを指しているかどうかを確認します
 func PathIs(path1 , path2 Path)(bool, error){
 	path1Abs, err := path1.Abs()

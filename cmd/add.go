@@ -24,7 +24,7 @@ func addCmd ()(*cobra.Command){
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
-			entry := df.NewEntry(df.Path(args[0]) , df.Path(args[1]))
+			entry := df.NewEntry(df.NewPath(args[0]) , df.NewAbsPath(args[1]))
 
 			// Entry一覧を生成
 			list, err := conf.ReadConf(listFile)

@@ -33,7 +33,7 @@ func unregisterCmd()(*cobra.Command){
 				return err
 			}
 
-			targetPath := df.Path(args[0])
+			targetPath := df.NewAbsPath(args[0])
 
 			targetItem := list.GetItemFromPath(targetPath)
 			if targetItem == nil{
