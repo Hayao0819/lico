@@ -1,6 +1,7 @@
 package dotfile
 
 import (
+	//"errors"
 	"fmt"
 	"os"
 )

@@ -2,11 +2,14 @@ package conf
 
 import (
 	"bufio"
+	"text/template"
 	//"errors"
-	"strings"
-	"regexp"
 	"os"
+	"regexp"
+	"strings"
+	"bytes"
 
+	"github.com/Hayao0819/lico/utils"
 	df "github.com/Hayao0819/lico/dotfile"
 )
 
@@ -45,6 +48,28 @@ func ReadConf(path string)(*[]df.Entry, error){
 		entrySlice = append(entrySlice, entry)
 	}
 	return &entrySlice,nil
+}
+
+func Format(path string)(df.Path, error){
+	var parsed df.Path
+	
+	dirInfo, err := utils.GetOSEnv()
+	if err != nil{
+		return parsed, err
+	}
+
+	tpl, err := template.New("path").Parse(path)
+	if err != nil{
+		return parsed, err
+	}
+	var parsedBytes bytes.Buffer
+	if err := tpl.Execute(&parsedBytes, dirInfo); err !=nil{
+		return parsed, err
+	}
+
+	parsed = df.Path(parsedBytes.String())
+
+	return parsed,nil
 }
 
 /*
