@@ -16,6 +16,7 @@ var rootCmd = &cobra.Command{
 	独自の設定ファイルを用いてホームディレクトリ以下の
 	設定ファイルを1つのGitリポジトリで管理します。
 	テンプレート記法を用いて柔軟な設定が可能です。`,
+	SilenceUsage: true, //コマンド失敗時に使い方を表示しない
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
