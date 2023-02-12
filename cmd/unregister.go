@@ -17,9 +17,6 @@ import (
 
 var delLineMode bool = false
 
-// unregisterCmd represents the unregister command
-
-
 func unregisterCmd()(*cobra.Command){
 	cmd := cobra.Command{
 		Use:   "unregister",

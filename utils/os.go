@@ -6,10 +6,12 @@ import (
 	"runtime"
 )
 
+// OS依存の情報を保持します
 type osEnv struct{
 	Home string
 }
 
+// 新しいosEnvを生成します
 func newOSEnv ()(osEnv){
 	env:= new(osEnv)
 	homedir, _ := os.UserHomeDir()
@@ -17,14 +19,18 @@ func newOSEnv ()(osEnv){
 	return *env
 }
 
+// Linux特有のディレクトリ情報
 var LinuxDirs osEnv = func ()(osEnv)  {
 	return newOSEnv()
 }()
 
+
+// Darwin特有のディレクトリ情報
 var MacDirs osEnv = func ()(osEnv)  {
 	return newOSEnv()
 }()
 
+// Windows特有のディレクトリ情報
 var WindowsDirs osEnv = func()(osEnv){
 	return newOSEnv()
 }()

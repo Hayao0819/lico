@@ -19,12 +19,13 @@ import (
 
 //import errList "github.com/Hayao0819/lico/errlist"
 
-
+// 設定ファイルの1行であるdotfile.Entryに行番号を追加したもの
 type ListItem struct{
 	Entry df.Entry
 	Index int
 }
 
+// 
 func NewListItem(entry df.Entry, index int)(ListItem){
 	return ListItem{
 		Entry:  entry,
@@ -32,8 +33,11 @@ func NewListItem(entry df.Entry, index int)(ListItem){
 	}
 }
 
+
+// 設定ファイル全体
 type List []ListItem
 
+// 設定ファイル全体からEntryを全て取り出します
 func (list *List)GetEntries()(*[]df.Entry){
 	var rtn []df.Entry 
 	for _,listitem := range *list{
@@ -42,6 +46,7 @@ func (list *List)GetEntries()(*[]df.Entry){
 	return &rtn
 }
 
+// 指定されたパスを持つListItemを返します
 func (list *List)GetItemFromPath(path df.Path)(*ListItem){
 	// Todo
 	for _, item := range *list{
@@ -65,6 +70,7 @@ func (list *List)GetItemFromPath(path df.Path)(*ListItem){
 	return nil
 }
 
+// 設定ファイルを読み込みます
 func ReadConf(path string)(*List, error){
 	file, err := os.Open(path)
 	if err != nil{
@@ -105,6 +111,7 @@ func ReadConf(path string)(*List, error){
 	return &list,nil
 }
 
+// テンプレートを解析してPathを生成します
 func Format(path string)(df.Path, error){
 	var parsed df.Path
 	

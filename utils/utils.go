@@ -7,6 +7,7 @@ import (
 	//"strings"
 )
 
+// 文字列が正常なディレクトリへのパスかどうかを確認します
 func IsDir(path string)(bool){
 	if f, err := os.Stat(path); os.IsNotExist(err) || !f.IsDir() {
 		return false
@@ -15,7 +16,7 @@ func IsDir(path string)(bool){
 	}
 }
 
-
+// 文字列が正常なファイルパスかどうかを調べます
 func IsFile(path string)(bool){
 	if f, err := os.Stat(path); os.IsNotExist(err) || f.IsDir() {
 		return false
@@ -25,6 +26,7 @@ func IsFile(path string)(bool){
 }
 
 
+// ファイルの内容を読みとって文字列配列を返します
 func ReadLines(path string) ([]string, error) {
     file, err := os.Open(path)
     if err != nil {
@@ -54,6 +56,7 @@ func WriteLines(lines []string, path string) error {
     return w.Flush()
 }
 
+// 指定したファイルの指定した行の行頭に#を追加します
 func CommentOut(path string, targetLineNo int)error{
 	var newFileLine []string
 	fileLines, err := ReadLines(path)
