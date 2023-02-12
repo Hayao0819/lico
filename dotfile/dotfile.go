@@ -24,6 +24,22 @@ func (path *Path)Abs()(string, error){
 	return filepath.Abs(string(*path))
 }
 
+func PathIs(path1 , path2 Path)(bool, error){
+	path1Abs, err := path1.Abs()
+	if err != nil{
+		return false, err
+	}
+	path2Abs , err := path2.Abs()
+	if err != nil{
+		return false, err
+	}
+
+	if path1Abs == path2Abs{
+		return true,nil
+	}else{
+		return false, nil
+	}
+}
 
 func NewEntry(repoPath, homePath Path)(Entry){
 	return Entry{RepoPath: repoPath, HomePath: homePath}
@@ -34,18 +50,12 @@ func (entry *Entry) String ()(string){
 }
 
 func HasRepoFile(entries *[]Entry, path Path)(bool, error){
-	fullPath, err := path.Abs()
-	if err != nil{
-		return false, err
-	}
-
-	// フルパスで一致したなら一致
 	for _,entry := range *entries{
-		repoPathFile, err := entry.RepoPath.Abs()
+		result, err := PathIs(entry.RepoPath, path)
 		if err != nil{
 			continue
 		}
-		if repoPathFile == fullPath {
+		if result {
 			return true, nil
 		}
 	}
@@ -53,18 +63,12 @@ func HasRepoFile(entries *[]Entry, path Path)(bool, error){
 }
 
 func HasHomeFile(entries *[]Entry, path Path)(bool, error){
-	fullPath, err := path.Abs()
-	if err != nil{
-		return false, err
-	}
-
-	// フルパスで一致したなら一致
 	for _,entry := range *entries{
-		homePathFile, err := entry.HomePath.Abs()
+		result, err := PathIs(entry.HomePath, path)
 		if err != nil{
 			continue
 		}
-		if homePathFile == fullPath {
+		if result {
 			return true, nil
 		}
 	}

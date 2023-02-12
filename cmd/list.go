@@ -27,7 +27,7 @@ func runList(cmd *cobra.Command, args []string)(error){
 		return err
 	}
 
-	for _, entry := range *list{
+	for _, entry := range *list.GetEntries(){
 		parsedRepoPath, _ := conf.Format(string(entry.RepoPath))
 		parsedHomePath, _ := conf.Format(string(entry.HomePath))
 		fmt.Printf("%v => %v\n" , parsedRepoPath, parsedHomePath)

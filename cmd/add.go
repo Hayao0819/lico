@@ -33,8 +33,8 @@ func addCmd ()(*cobra.Command){
 			}
 
 			// Entryに既に登録されていないか確認
-			hasHomeFile, _ := df.HasHomeFile(list, entry.HomePath) //Todo: 存在しない場合に作成
-			hasRepoFile, err := df.HasRepoFile(list, entry.RepoPath) //Todo: 存在しない場合に作成
+			hasHomeFile, _ := df.HasHomeFile(list.GetEntries(), entry.HomePath) //Todo: 存在しない場合に作成
+			hasRepoFile, err := df.HasRepoFile(list.GetEntries(), entry.RepoPath) //Todo: 存在しない場合に作成
 			if err !=nil { return err; }
 			//fmt.Printf("hasHomeFile=%v hasRepoFile=%v\n", hasHomeFile, hasRepoFile)
 			if hasHomeFile || hasRepoFile {

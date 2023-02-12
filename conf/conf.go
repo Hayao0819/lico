@@ -2,28 +2,81 @@ package conf
 
 import (
 	"bufio"
+	"fmt"
 	"text/template"
+
 	//"errors"
+	"bytes"
 	"os"
 	"regexp"
 	"strings"
-	"bytes"
 
-	"github.com/Hayao0819/lico/utils"
 	df "github.com/Hayao0819/lico/dotfile"
+	"github.com/Hayao0819/lico/utils"
+
+	
 )
 
+//import errList "github.com/Hayao0819/lico/errlist"
 
-func ReadConf(path string)(*[]df.Entry, error){
+
+type ListItem struct{
+	Entry df.Entry
+	Index int
+}
+
+func NewListItem(entry df.Entry, index int)(ListItem){
+	return ListItem{
+		Entry:  entry,
+		Index: index,
+	}
+}
+
+type List []ListItem
+
+func (list *List)GetEntries()(*[]df.Entry){
+	var rtn []df.Entry 
+	for _,listitem := range *list{
+		rtn = append(rtn, listitem.Entry)
+	}
+	return &rtn
+}
+
+func (list *List)GetItemFromPath(path df.Path)(*ListItem){
+	// Todo
+	for _, item := range *list{
+		fmt.Printf("%v and %v, %v and %v\n", item.Entry.HomePath, path, item.Entry.RepoPath, path)
+		if item.Entry.HomePath == path || item.Entry.RepoPath == path{
+			return &item
+		}else{
+			homeIsSame, err := df.PathIs(item.Entry.HomePath, path)
+			if err!=nil{
+				continue
+			}
+			repoIsSame , err := df.PathIs(item.Entry.RepoPath, path)
+			if err!=nil{
+				continue
+			}
+			if homeIsSame || repoIsSame{
+				return &item
+			}
+		}
+	}
+	return nil
+}
+
+func ReadConf(path string)(*List, error){
 	file, err := os.Open(path)
 	if err != nil{
-		return nil,ErrCantOpenListFile
+		return nil, err
 	}
+	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
+	
 
-	var entrySlice []df.Entry
-	var entry df.Entry
+	var list List
+	var item ListItem
 	var splited []string
 	var repoPath df.Path
 	var homePath df.Path
@@ -32,8 +85,10 @@ func ReadConf(path string)(*[]df.Entry, error){
 	commentReg, _ := regexp.Compile("^ *#")
 	emptyReg, _ := regexp.Compile("^ *$")
 
+
+	lineNo := 0
 	for scanner.Scan(){
-		
+		lineNo++
 		line = scanner.Text()
 
 		if commentReg.MatchString(line) || emptyReg.MatchString(line){
@@ -41,13 +96,13 @@ func ReadConf(path string)(*[]df.Entry, error){
 		}
 
 		splited = strings.Split(line, ":")
-		repoPath = df.Path(splited[0])
-		homePath = df.Path(splited[1])
+		repoPath = df.Path(strings.TrimSpace(splited[0]))
+		homePath = df.Path(strings.TrimSpace(splited[1]))
 
-		entry = df.NewEntry(repoPath, homePath)
-		entrySlice = append(entrySlice, entry)
+		item = NewListItem(df.NewEntry(repoPath, homePath), lineNo) 
+		list = append(list, item)
 	}
-	return &entrySlice,nil
+	return &list,nil
 }
 
 func Format(path string)(df.Path, error){
