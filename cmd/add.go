@@ -5,7 +5,7 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
+	//"fmt"
 	"errors"
 	"os"
 
@@ -33,12 +33,12 @@ func addCmd ()(*cobra.Command){
 			}
 
 			// Entryに既に登録されていないか確認
-			hasHomeFile, _ := df.HasHomeFile(list, entry.HomePath)
-			//if err !=nil { return err }
-			hasRepoFile , err := df.HasRepoFile(list, entry.RepoPath)
-			if err !=nil { return err }
+			hasHomeFile, _ := df.HasHomeFile(list, entry.HomePath) //Todo: 存在しない場合に作成
+			hasRepoFile, err := df.HasRepoFile(list, entry.RepoPath) //Todo: 存在しない場合に作成
+			if err !=nil { return err; }
+			//fmt.Printf("hasHomeFile=%v hasRepoFile=%v\n", hasHomeFile, hasRepoFile)
 			if hasHomeFile || hasRepoFile {
-				return errors.New("this file has been managed\nPlease unregister it first")
+				return errors.New("this file has been managed. Please unregister it first")
 			}
 
 			// ファイル一覧に追記
@@ -47,7 +47,7 @@ func addCmd ()(*cobra.Command){
 				return err
 			}
 			defer lf.Close()
-			fmt.Fprint(lf, entry.String())
+			//fmt.Fprint(lf, entry.String())
 
 			return nil
 		},

@@ -4,6 +4,7 @@ import (
 	//"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
 type Entry struct{
@@ -19,6 +20,10 @@ func (path *Path) Stat()(os.FileInfo, error){
 	
 }
 
+func (path *Path)Abs()(string, error){
+	return filepath.Abs(string(*path))
+}
+
 
 func NewEntry(repoPath, homePath Path)(Entry){
 	return Entry{RepoPath: repoPath, HomePath: homePath}
@@ -29,23 +34,18 @@ func (entry *Entry) String ()(string){
 }
 
 func HasRepoFile(entries *[]Entry, path Path)(bool, error){
-	pathInfo, err := path.Stat()
+	fullPath, err := path.Abs()
 	if err != nil{
 		return false, err
 	}
 
-	// os.Statで同じオブジェクトを返却したら一致
-	// もしエラーの場合でもフルパスで一致したなら一致
+	// フルパスで一致したなら一致
 	for _,entry := range *entries{
-		repoPathFile, err := entry.RepoPath.Stat()
+		repoPathFile, err := entry.RepoPath.Abs()
 		if err != nil{
-			if string(path) == string(entry.RepoPath){
-				return true, nil
-			}
 			continue
 		}
-
-		if pathInfo == repoPathFile {
+		if repoPathFile == fullPath {
 			return true, nil
 		}
 	}
@@ -53,23 +53,18 @@ func HasRepoFile(entries *[]Entry, path Path)(bool, error){
 }
 
 func HasHomeFile(entries *[]Entry, path Path)(bool, error){
-	pathInfo, err := path.Stat()
+	fullPath, err := path.Abs()
 	if err != nil{
 		return false, err
 	}
 
-	// os.Statで同じオブジェクトを返却したら一致
-	// もしエラーの場合でもフルパスで一致したなら一致
+	// フルパスで一致したなら一致
 	for _,entry := range *entries{
-		homePathFile, err := entry.HomePath.Stat()
+		homePathFile, err := entry.HomePath.Abs()
 		if err != nil{
-			if string(path) == string(entry.HomePath){
-				return true, nil
-			}
 			continue
 		}
-
-		if pathInfo == homePathFile {
+		if homePathFile == fullPath {
 			return true, nil
 		}
 	}
