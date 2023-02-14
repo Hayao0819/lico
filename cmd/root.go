@@ -12,10 +12,11 @@ var listFile string
 var rootCmd = &cobra.Command{
 	Use:   "lico",
 	Short: "OS非依存なドットファイル管理ツール",
-	Long: `licoはOSに依存しないドットファイル管理マネージャーです。
-	独自の設定ファイルを用いてホームディレクトリ以下の
-	設定ファイルを1つのGitリポジトリで管理します。
-	テンプレート記法を用いて柔軟な設定が可能です。`,
+	Long: 
+`licoはOSに依存しないドットファイル管理マネージャーです。
+独自の設定ファイルを用いてホームディレクトリ以下の
+設定ファイルを1つのGitリポジトリで管理します。
+テンプレート記法を用いて柔軟な設定が可能です。`,
 	SilenceUsage: true, //コマンド失敗時に使い方を表示しない
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
