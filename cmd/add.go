@@ -5,7 +5,7 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	//"fmt"
+	"fmt"
 	"errors"
 	"os"
 
@@ -47,7 +47,7 @@ func addCmd ()(*cobra.Command){
 				return err
 			}
 			defer lf.Close()
-			//fmt.Fprint(lf, entry.String())
+			fmt.Fprint(lf, entry.String())
 
 			return nil
 		},
