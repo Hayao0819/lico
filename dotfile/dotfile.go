@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/errs"
 )
 
 // 設定ファイルの1行に対応した構造体
@@ -24,6 +27,10 @@ func (path *Path) Stat()(os.FileInfo, error){
 // ファイルの絶対パスを返します
 func (path *Path)Abs()(string, error){
 	return filepath.Abs(string(*path))
+}
+
+func (path *Path)String()(string){
+	return string(*path)
 }
 
 func NewPath(pathS string)Path{
@@ -66,8 +73,8 @@ func (entry *Entry) String ()(string){
 
 // repoPathが存在するかどうかを確認する
 func (entry *Entry) ExistsRepoPath() (bool){
-	// Todo 実装する
-	return false
+	_, err := os.Stat(string(entry.RepoPath))
+	return err == nil
 }
 
 // リンクを作成する
@@ -78,6 +85,29 @@ func (entry *Entry) MakeSymLink()(error){
 
 // リンクが正常に設定されているかチェックする
 func (entry *Entry) CheckSymLink()(error){
+	link := entry.HomePath.String()
+	if ! utils.Exists(link){
+		return errs.ErrNotExist
+	}
+
+	if ! utils.IsSymlink(link){
+		return errs.ErrNotSymlink
+	}
+
+	readlink, err := os.Readlink(link)
+	if err != nil{
+		return err
+	}
+
+	isSameFile, err := PathIs(NewPath(readlink), entry.RepoPath)
+	if err !=nil{
+		return err
+	}
+
+	if ! isSameFile{
+		return errs.ErrLinkToDiffFile
+	}
+
 	return nil
 }
 

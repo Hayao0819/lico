@@ -25,6 +25,20 @@ func IsFile(path string)(bool){
 	}
 }
 
+// シンボリックリンクかどうか
+// 参考: https://github.com/eihigh/filetest
+// Thanks eihigh <eihigh.contact@gmail.com>
+func IsSymlink(path string) bool {
+	stat, err := os.Stat(path)
+	return err == nil && stat.Mode()&os.ModeSymlink != 0
+}
+
+// ファイルが存在するかどうか
+func Exists(path string)(bool){
+	_, err := os.Stat(path)
+	return err == nil
+}
+
 
 // ファイルの内容を読みとって文字列配列を返します
 func ReadLines(path string) ([]string, error) {
