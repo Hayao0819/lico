@@ -63,6 +63,24 @@ func (entry *Entry) String ()(string){
 	return fmt.Sprintf("%v:%v\n", entry.RepoPath, entry.HomePath)
 }
 
+
+// repoPathが存在するかどうかを確認する
+func (entry *Entry) ExistsRepoPath() (bool){
+	// Todo 実装する
+	return false
+}
+
+// リンクを作成する
+func (entry *Entry) MakeSymLink()(error){
+	// Todo 実行する
+	return nil
+}
+
+// リンクが正常に設定されているかチェックする
+func (entry *Entry) CheckSymLink()(error){
+	return nil
+}
+
 // パスがリポジトリファイルに含まれているかどうか
 func HasRepoFile(entries *[]Entry, path Path)(bool, error){
 	for _,entry := range *entries{
