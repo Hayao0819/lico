@@ -17,15 +17,16 @@ import (
 
 var delLineMode bool = false
 
-func unregisterCmd()(*cobra.Command){
+func unlinkCmd()(*cobra.Command){
 	cmd := cobra.Command{
-		Use:   "unregister",
+		Use:   "unlink",
 		Short: "ファイルを管理対象から除外",
 		Long: `指定されたファイルをlicoの管理対象から除外します。
 		ファイルは削除されず、関連付けのみ解除されます。
 		デフォルトでは設定ファイルの該当箇所をコメントアウトします。
 		行を完全に削除するには-dを用いてください。`,
 		Args: cobra.ExactArgs(1),
+		Aliases: []string{"unregister"},
 		RunE: func(cmd *cobra.Command, args []string) error{
 			// Entry一覧を生成
 			list, err := conf.ReadConf(listFile)
@@ -49,7 +50,7 @@ func unregisterCmd()(*cobra.Command){
 }
 
 func init() {
-	cmd := unregisterCmd()
+	cmd := unlinkCmd()
 	rootCmd.AddCommand(cmd)
-	cmd.Flags().BoolVarP(&delLineMode , "del-line", "d", false, "Help message for toggle")
+	cmd.Flags().BoolVarP(&delLineMode , "del-line", "d", false, "コメントアウトの代わりに行を削除します")
 }
