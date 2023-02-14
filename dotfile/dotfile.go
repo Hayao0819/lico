@@ -29,8 +29,13 @@ func (path *Path)Abs()(string, error){
 	return filepath.Abs(string(*path))
 }
 
+// パスを文字列に変換
 func (path *Path)String()(string){
 	return string(*path)
+}
+
+func (path *Path)Exists()(bool){
+	return utils.Exists(path.String())
 }
 
 func NewPath(pathS string)Path{
@@ -79,7 +84,20 @@ func (entry *Entry) ExistsRepoPath() (bool){
 
 // リンクを作成する
 func (entry *Entry) MakeSymLink()(error){
-	// Todo 実行する
+	link := entry.HomePath
+	orig := entry.RepoPath
+	if entry.CheckSymLink() == nil{
+		return nil
+	}
+
+	if ! orig.Exists(){
+		return errs.ErrNotExist
+	}
+
+	err := os.Symlink(orig.String(), link.String())
+	if err !=nil{
+		return err
+	}
 	return nil
 }
 
