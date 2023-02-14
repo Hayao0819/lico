@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
 	//"strings"
 )
 
@@ -91,4 +92,8 @@ func CommentOut(path string, targetLineNo int)error{
 	return WriteLines(newFileLine, path)
 }
 
-//func Write
+// コマンドの存在確認
+func CommandExists(cmd string) bool {
+	_, err := exec.LookPath(cmd)
+	return err == nil
+}
