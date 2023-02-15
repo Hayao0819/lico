@@ -4,7 +4,6 @@ import (
 	//"errors"
 	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/errs"
@@ -16,54 +15,6 @@ type Entry struct{
 	HomePath Path
 }
 
-// いくつかのメソッドを持ったファイルパス
-type Path string
-
-func (path *Path) Stat()(os.FileInfo, error){
-	return os.Stat(string(*path))
-	
-}
-
-// ファイルの絶対パスを返します
-func (path *Path)Abs()(string, error){
-	return filepath.Abs(string(*path))
-}
-
-// パスを文字列に変換
-func (path *Path)String()(string){
-	return string(*path)
-}
-
-func (path *Path)Exists()(bool){
-	return utils.Exists(path.String())
-}
-
-func NewPath(pathS string)Path{
-	return Path(pathS)
-}
-
-func NewAbsPath(pathS string)Path{
-	absPath, _ := filepath.Abs(pathS)
-	return Path(absPath)
-}
-
-// 2つのパスが共通のファイルを指しているかどうかを確認します
-func PathIs(path1 , path2 Path)(bool, error){
-	path1Abs, err := path1.Abs()
-	if err != nil{
-		return false, err
-	}
-	path2Abs , err := path2.Abs()
-	if err != nil{
-		return false, err
-	}
-
-	if path1Abs == path2Abs{
-		return true,nil
-	}else{
-		return false, nil
-	}
-}
 
 // 新しいEntryを生成します
 func NewEntry(repoPath, homePath Path)(Entry){
