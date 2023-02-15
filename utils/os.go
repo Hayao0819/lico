@@ -7,16 +7,13 @@ import (
 )
 
 // OS依存の情報を保持します
-type osEnv struct{
-	Home string
-}
+type osEnv map[string]string
 
 // 新しいosEnvを生成します
 func newOSEnv ()(osEnv){
-	env:= new(osEnv)
 	homedir, _ := os.UserHomeDir()
-	env.Home = homedir
-	return *env
+	env:= osEnv{"Home": homedir}
+	return env
 }
 
 // Linux特有のディレクトリ情報
