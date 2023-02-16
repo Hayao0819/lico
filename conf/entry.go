@@ -6,22 +6,23 @@ import (
 	"os"
 
 	"github.com/Hayao0819/lico/errs"
+	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
 )
 
 // 設定ファイルの1行に対応した構造体
 type Entry struct {
-	RepoPath Path
-	HomePath Path
+	RepoPath p.Path
+	HomePath p.Path
 	Index    int
 }
 
 // 新しいEntryを生成します
-func NewEntry(repoPath, homePath Path) Entry {
+func NewEntry(repoPath, homePath p.Path) Entry {
 	return Entry{RepoPath: repoPath, HomePath: homePath}
 }
 
-func NewEntryWithIndex(repoPath, homePath Path, index int) Entry {
+func NewEntryWithIndex(repoPath, homePath p.Path, index int) Entry {
 	return Entry{RepoPath: repoPath, HomePath: homePath, Index: index}
 }
 
@@ -66,7 +67,7 @@ func (entry *Entry) CheckSymLink() error {
 		return err
 	}
 
-	isSameFile, err := PathIs(NewPath(readlink), entry.RepoPath)
+	isSameFile, err := p.Is(p.New(readlink), entry.RepoPath)
 	if err != nil {
 		return err
 	}
@@ -79,9 +80,9 @@ func (entry *Entry) CheckSymLink() error {
 }
 
 // パスがリポジトリファイルに含まれているかどうか
-func HasRepoFile(entries *List, path Path) (bool, error) {
+func HasRepoFile(entries *List, path p.Path) (bool, error) {
 	for _, entry := range *entries {
-		result, err := PathIs(entry.RepoPath, path)
+		result, err := p.Is(entry.RepoPath, path)
 		if err != nil {
 			continue
 		}
@@ -93,9 +94,9 @@ func HasRepoFile(entries *List, path Path) (bool, error) {
 }
 
 // パスがホームファイルに含まれているかどうか
-func HasHomeFile(entries *List, path Path) (bool, error) {
+func HasHomeFile(entries *List, path p.Path) (bool, error) {
 	for _, entry := range *entries {
-		result, err := PathIs(entry.HomePath, path)
+		result, err := p.Is(entry.HomePath, path)
 		if err != nil {
 			continue
 		}

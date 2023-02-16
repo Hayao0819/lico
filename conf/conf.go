@@ -11,6 +11,7 @@ import (
 	"regexp"
 	"strings"
 
+	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
 )
 
@@ -19,7 +20,7 @@ type List []Entry
 
 func (item *Entry) String(replace bool) (string, error) {
 	var (
-		repo, home Path
+		repo, home p.Path
 	)
 	var err error
 
@@ -41,18 +42,18 @@ func (item *Entry) String(replace bool) (string, error) {
 }
 
 // 指定されたパスを持つEntryを返します
-func (list *List) GetItemFromPath(path Path) *Entry {
+func (list *List) GetItemFromPath(path p.Path) *Entry {
 	// Todo
 	for _, item := range *list {
 		fmt.Printf("%v and %v, %v and %v\n", item.HomePath, path, item.RepoPath, path)
 		if item.HomePath == path || item.RepoPath == path {
 			return &item
 		} else {
-			homeIsSame, err := PathIs(item.HomePath, path)
+			homeIsSame, err := p.Is(item.HomePath, path)
 			if err != nil {
 				continue
 			}
-			repoIsSame, err := PathIs(item.RepoPath, path)
+			repoIsSame, err := p.Is(item.RepoPath, path)
 			if err != nil {
 				continue
 			}
@@ -77,8 +78,8 @@ func ReadConf(path string) (*List, error) {
 	var list List
 	var item Entry
 	var splited []string
-	var repoPath Path
-	var homePath Path
+	var repoPath p.Path
+	var homePath p.Path
 	var line string
 
 	commentReg, _ := regexp.Compile("^ *#")
@@ -94,8 +95,8 @@ func ReadConf(path string) (*List, error) {
 		}
 
 		splited = strings.Split(line, ":")
-		repoPath = Path(strings.TrimSpace(splited[0]))
-		homePath = Path(strings.TrimSpace(splited[1]))
+		repoPath = p.Path(strings.TrimSpace(splited[0]))
+		homePath = p.Path(strings.TrimSpace(splited[1]))
 
 		item = NewEntryWithIndex(repoPath, homePath, lineNo)
 		list = append(list, item)
@@ -104,8 +105,8 @@ func ReadConf(path string) (*List, error) {
 }
 
 // テンプレートを解析してPathを生成します
-func Format(path string) (Path, error) {
-	var parsed Path
+func Format(path string) (p.Path, error) {
+	var parsed p.Path
 
 	dirInfo, err := utils.GetOSEnv()
 	if err != nil {
@@ -121,7 +122,7 @@ func Format(path string) (Path, error) {
 		return parsed, err
 	}
 
-	parsed = Path(parsedBytes.String())
+	parsed = p.Path(parsedBytes.String())
 
 	return parsed, nil
 }

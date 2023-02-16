@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/Hayao0819/lico/conf"
+	p "github.com/Hayao0819/lico/paths"
 	"github.com/spf13/cobra"
 )
 
@@ -19,7 +20,7 @@ func addCmd() *cobra.Command {
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
-			entry := conf.NewEntry(conf.NewPath(args[0]), conf.NewAbsPath(args[1]))
+			entry := conf.NewEntry(p.New(args[0]), p.New(args[1]))
 
 			// Entry一覧を生成
 			list, err := conf.ReadConf(listFile)

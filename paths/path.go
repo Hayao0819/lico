@@ -1,4 +1,4 @@
-package conf
+package path
 
 import (
 	"os"

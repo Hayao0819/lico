@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/Hayao0819/lico/conf"
+	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
 	"github.com/spf13/cobra"
 )
@@ -28,7 +29,7 @@ func unlinkCmd() *cobra.Command {
 				return err
 			}
 
-			targetPath := conf.NewAbsPath(args[0])
+			targetPath := p.NewAbs(args[0])
 
 			targetItem := list.GetItemFromPath(targetPath)
 			if targetItem == nil {

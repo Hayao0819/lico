@@ -1,20 +1,20 @@
-package conf
+package path
 
 import (
 	"path/filepath"
 )
 
-func NewPath(pathS string) Path {
+func New(pathS string) Path {
 	return Path(pathS)
 }
 
-func NewAbsPath(pathS string) Path {
+func NewAbs(pathS string) Path {
 	absPath, _ := filepath.Abs(pathS)
 	return Path(absPath)
 }
 
 // 2つのパスが共通のファイルを指しているかどうかを確認します
-func PathIs(path1, path2 Path) (bool, error) {
+func Is(path1, path2 Path) (bool, error) {
 	path1Abs, err := path1.Abs()
 	if err != nil {
 		return false, err
