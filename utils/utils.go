@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	//"strings"
+	"sort"
 )
 
 // 文字列が正常なディレクトリへのパスかどうかを確認します
@@ -96,4 +97,13 @@ func CommentOut(path string, targetLineNo int)error{
 func CommandExists(cmd string) bool {
 	_, err := exec.LookPath(cmd)
 	return err == nil
+}
+
+
+// 文字列配列を長さでソート
+func SortWithLen(arr []string)([]string){
+    sort.Slice(arr, func(i, j int) bool {
+        return len(arr[i]) > len(arr[j])
+    })
+	return arr
 }
