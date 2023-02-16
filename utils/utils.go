@@ -105,3 +105,23 @@ func SortWithLen(arr []string) []string {
 	})
 	return arr
 }
+
+/*
+func ForEach(arr []interface{}, runFunc func(int, interface{})([]interface{}))([]interface{}){
+	rtn := []interface{}{}
+	for index, item := range arr{
+		rtn = append(rtn, runFunc(index, item))
+	}
+	return rtn
+}
+
+func ForEachStop(arr []interface{}, runFunc func(int, interface{})(error))(error){
+	for index, item := range arr{
+		err := runFunc(index, item)
+		if err == nil{
+			return err
+		}
+	}
+	return nil
+}
+*/
