@@ -14,76 +14,45 @@ import (
 	"github.com/Hayao0819/lico/utils"
 )
 
-//import errList "github.com/Hayao0819/lico/errlist"
-
-// 設定ファイルの1行であるdotfile.Entryに行番号を追加したもの
-type ListItem struct {
-	Entry Entry
-	Index int
-}
-
-func NewListItem(entry Entry) ListItem {
-	return ListItem{
-		Entry: entry,
-		Index: 0,
-	}
-}
-
-func NewListItemWithIndex(entry Entry, index int) ListItem {
-	return ListItem{
-		Entry: entry,
-		Index: index,
-	}
-}
-
 // 設定ファイル全体
-type List []ListItem
+type List []Entry
 
-// 設定ファイル全体からEntryを全て取り出します
-func (list *List) GetEntries() *[]Entry {
-	var rtn []Entry
-	for _, listitem := range *list {
-		rtn = append(rtn, listitem.Entry)
-	}
-	return &rtn
-}
-
-func (item *ListItem) String(replace bool) (string, error) {
+func (item *Entry) String(replace bool) (string, error) {
 	var (
 		repo, home Path
 	)
 	var err error
 
 	if replace {
-		repo, err = ReplaceToTemplate(item.Entry.RepoPath.String())
+		repo, err = ReplaceToTemplate(item.RepoPath.String())
 		if err != nil {
 			return "", err
 		}
 
-		home, err = ReplaceToTemplate(item.Entry.HomePath.String())
+		home, err = ReplaceToTemplate(item.HomePath.String())
 		if err != nil {
 			return "", err
 		}
 	} else {
-		repo = item.Entry.RepoPath
-		home = item.Entry.HomePath
+		repo = item.RepoPath
+		home = item.HomePath
 	}
 	return fmt.Sprintf("%v:%v\n", repo, home), nil
 }
 
-// 指定されたパスを持つListItemを返します
-func (list *List) GetItemFromPath(path Path) *ListItem {
+// 指定されたパスを持つEntryを返します
+func (list *List) GetItemFromPath(path Path) *Entry {
 	// Todo
 	for _, item := range *list {
-		fmt.Printf("%v and %v, %v and %v\n", item.Entry.HomePath, path, item.Entry.RepoPath, path)
-		if item.Entry.HomePath == path || item.Entry.RepoPath == path {
+		fmt.Printf("%v and %v, %v and %v\n", item.HomePath, path, item.RepoPath, path)
+		if item.HomePath == path || item.RepoPath == path {
 			return &item
 		} else {
-			homeIsSame, err := PathIs(item.Entry.HomePath, path)
+			homeIsSame, err := PathIs(item.HomePath, path)
 			if err != nil {
 				continue
 			}
-			repoIsSame, err := PathIs(item.Entry.RepoPath, path)
+			repoIsSame, err := PathIs(item.RepoPath, path)
 			if err != nil {
 				continue
 			}
@@ -106,7 +75,7 @@ func ReadConf(path string) (*List, error) {
 	scanner := bufio.NewScanner(file)
 
 	var list List
-	var item ListItem
+	var item Entry
 	var splited []string
 	var repoPath Path
 	var homePath Path
@@ -128,7 +97,7 @@ func ReadConf(path string) (*List, error) {
 		repoPath = Path(strings.TrimSpace(splited[0]))
 		homePath = Path(strings.TrimSpace(splited[1]))
 
-		item = NewListItemWithIndex(NewEntry(repoPath, homePath), lineNo)
+		item = NewEntryWithIndex(repoPath, homePath, lineNo)
 		list = append(list, item)
 	}
 	return &list, nil

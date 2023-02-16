@@ -13,11 +13,16 @@ import (
 type Entry struct {
 	RepoPath Path
 	HomePath Path
+	Index    int
 }
 
 // 新しいEntryを生成します
 func NewEntry(repoPath, homePath Path) Entry {
 	return Entry{RepoPath: repoPath, HomePath: homePath}
+}
+
+func NewEntryWithIndex(repoPath, homePath Path, index int) Entry {
+	return Entry{RepoPath: repoPath, HomePath: homePath, Index: index}
 }
 
 // repoPathが存在するかどうかを確認する
@@ -74,7 +79,7 @@ func (entry *Entry) CheckSymLink() error {
 }
 
 // パスがリポジトリファイルに含まれているかどうか
-func HasRepoFile(entries *[]Entry, path Path) (bool, error) {
+func HasRepoFile(entries *List, path Path) (bool, error) {
 	for _, entry := range *entries {
 		result, err := PathIs(entry.RepoPath, path)
 		if err != nil {
@@ -88,7 +93,7 @@ func HasRepoFile(entries *[]Entry, path Path) (bool, error) {
 }
 
 // パスがホームファイルに含まれているかどうか
-func HasHomeFile(entries *[]Entry, path Path) (bool, error) {
+func HasHomeFile(entries *List, path Path) (bool, error) {
 	for _, entry := range *entries {
 		result, err := PathIs(entry.HomePath, path)
 		if err != nil {

@@ -27,10 +27,10 @@ func setCmd() *cobra.Command {
 			}
 
 			for _, entry := range *list {
-				if entry.Entry.CheckSymLink() == nil {
+				if entry.CheckSymLink() == nil {
 					continue
 				}
-				err := entry.Entry.MakeSymLink()
+				err := entry.MakeSymLink()
 				if err != nil {
 					errlist = append(errlist, err)
 				}

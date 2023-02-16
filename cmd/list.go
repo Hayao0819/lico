@@ -27,7 +27,7 @@ func runList(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	for _, entry := range *list.GetEntries() {
+	for _, entry := range *list {
 		parsedRepoPath, err := conf.Format(string(entry.RepoPath))
 		if err != nil {
 			return err

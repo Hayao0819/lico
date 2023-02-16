@@ -28,8 +28,8 @@ func addCmd() *cobra.Command {
 			}
 
 			// Entryに既に登録されていないか確認
-			hasHomeFile, _ := conf.HasHomeFile(list.GetEntries(), entry.HomePath)   //Todo: 存在しない場合に作成
-			hasRepoFile, err := conf.HasRepoFile(list.GetEntries(), entry.RepoPath) //Todo: 存在しない場合に作成
+			hasHomeFile, _ := conf.HasHomeFile(list, entry.HomePath)   //Todo: 存在しない場合に作成
+			hasRepoFile, err := conf.HasRepoFile(list, entry.RepoPath) //Todo: 存在しない場合に作成
 			if err != nil {
 				return err
 			}
@@ -45,8 +45,7 @@ func addCmd() *cobra.Command {
 			}
 			defer lf.Close()
 
-			item := conf.NewListItem(entry)
-			itemStr, err := item.String(!noTemplate)
+			itemStr, err := entry.String(!noTemplate)
 			if err != nil {
 				return err
 			}
