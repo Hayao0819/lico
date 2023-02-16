@@ -16,6 +16,7 @@ mode="${1-""}"
     echo "  build    make executable file"
     echo "  run      run lico"
     echo "  drun     run lico with '-l $script_path/lico.list'"
+    echo "  fmt      run gofmt"
     exit 1
 }
 
@@ -30,6 +31,9 @@ case "${mode}" in
         ;;
     "drun")
         "$script_path/$(basename "$0")" "run" -l "$script_path/lico.list" "$@"
+        ;;
+    "fmt")
+        gofmt -l -w .
         ;;
     "")
         exit 1
