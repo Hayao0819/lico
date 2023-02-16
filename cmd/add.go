@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/Hayao0819/lico/conf"
-	df "github.com/Hayao0819/lico/dotfile"
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +19,7 @@ func addCmd() *cobra.Command {
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
-			entry := df.NewEntry(df.NewPath(args[0]), df.NewAbsPath(args[1]))
+			entry := conf.NewEntry(conf.NewPath(args[0]), conf.NewAbsPath(args[1]))
 
 			// Entry一覧を生成
 			list, err := conf.ReadConf(listFile)
@@ -29,8 +28,8 @@ func addCmd() *cobra.Command {
 			}
 
 			// Entryに既に登録されていないか確認
-			hasHomeFile, _ := df.HasHomeFile(list.GetEntries(), entry.HomePath)   //Todo: 存在しない場合に作成
-			hasRepoFile, err := df.HasRepoFile(list.GetEntries(), entry.RepoPath) //Todo: 存在しない場合に作成
+			hasHomeFile, _ := conf.HasHomeFile(list.GetEntries(), entry.HomePath)   //Todo: 存在しない場合に作成
+			hasRepoFile, err := conf.HasRepoFile(list.GetEntries(), entry.RepoPath) //Todo: 存在しない場合に作成
 			if err != nil {
 				return err
 			}

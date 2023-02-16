@@ -4,12 +4,11 @@ import (
 	"fmt"
 	"strings"
 
-	df "github.com/Hayao0819/lico/dotfile"
 	"github.com/Hayao0819/lico/utils"
 )
 
-func ReplaceToTemplate(path string) (df.Path, error) {
-	var parsed df.Path
+func ReplaceToTemplate(path string) (Path, error) {
+	var parsed Path
 	dirInfo, err := utils.GetOSEnv()
 	if err != nil {
 		return parsed, err
@@ -19,6 +18,6 @@ func ReplaceToTemplate(path string) (df.Path, error) {
 		path = strings.ReplaceAll(path, dirInfo[key], fmt.Sprintf("{{ .%v }}", key))
 	}
 
-	parsed = df.NewPath(path)
+	parsed = NewPath(path)
 	return parsed, nil
 }

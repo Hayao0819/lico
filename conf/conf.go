@@ -11,7 +11,6 @@ import (
 	"regexp"
 	"strings"
 
-	df "github.com/Hayao0819/lico/dotfile"
 	"github.com/Hayao0819/lico/utils"
 )
 
@@ -19,18 +18,18 @@ import (
 
 // 設定ファイルの1行であるdotfile.Entryに行番号を追加したもの
 type ListItem struct {
-	Entry df.Entry
+	Entry Entry
 	Index int
 }
 
-func NewListItem(entry df.Entry) ListItem {
+func NewListItem(entry Entry) ListItem {
 	return ListItem{
 		Entry: entry,
 		Index: 0,
 	}
 }
 
-func NewListItemWithIndex(entry df.Entry, index int) ListItem {
+func NewListItemWithIndex(entry Entry, index int) ListItem {
 	return ListItem{
 		Entry: entry,
 		Index: index,
@@ -41,8 +40,8 @@ func NewListItemWithIndex(entry df.Entry, index int) ListItem {
 type List []ListItem
 
 // 設定ファイル全体からEntryを全て取り出します
-func (list *List) GetEntries() *[]df.Entry {
-	var rtn []df.Entry
+func (list *List) GetEntries() *[]Entry {
+	var rtn []Entry
 	for _, listitem := range *list {
 		rtn = append(rtn, listitem.Entry)
 	}
@@ -51,7 +50,7 @@ func (list *List) GetEntries() *[]df.Entry {
 
 func (item *ListItem) String(replace bool) (string, error) {
 	var (
-		repo, home df.Path
+		repo, home Path
 	)
 	var err error
 
@@ -73,18 +72,18 @@ func (item *ListItem) String(replace bool) (string, error) {
 }
 
 // 指定されたパスを持つListItemを返します
-func (list *List) GetItemFromPath(path df.Path) *ListItem {
+func (list *List) GetItemFromPath(path Path) *ListItem {
 	// Todo
 	for _, item := range *list {
 		fmt.Printf("%v and %v, %v and %v\n", item.Entry.HomePath, path, item.Entry.RepoPath, path)
 		if item.Entry.HomePath == path || item.Entry.RepoPath == path {
 			return &item
 		} else {
-			homeIsSame, err := df.PathIs(item.Entry.HomePath, path)
+			homeIsSame, err := PathIs(item.Entry.HomePath, path)
 			if err != nil {
 				continue
 			}
-			repoIsSame, err := df.PathIs(item.Entry.RepoPath, path)
+			repoIsSame, err := PathIs(item.Entry.RepoPath, path)
 			if err != nil {
 				continue
 			}
@@ -109,8 +108,8 @@ func ReadConf(path string) (*List, error) {
 	var list List
 	var item ListItem
 	var splited []string
-	var repoPath df.Path
-	var homePath df.Path
+	var repoPath Path
+	var homePath Path
 	var line string
 
 	commentReg, _ := regexp.Compile("^ *#")
@@ -126,18 +125,18 @@ func ReadConf(path string) (*List, error) {
 		}
 
 		splited = strings.Split(line, ":")
-		repoPath = df.Path(strings.TrimSpace(splited[0]))
-		homePath = df.Path(strings.TrimSpace(splited[1]))
+		repoPath = Path(strings.TrimSpace(splited[0]))
+		homePath = Path(strings.TrimSpace(splited[1]))
 
-		item = NewListItemWithIndex(df.NewEntry(repoPath, homePath), lineNo)
+		item = NewListItemWithIndex(NewEntry(repoPath, homePath), lineNo)
 		list = append(list, item)
 	}
 	return &list, nil
 }
 
 // テンプレートを解析してPathを生成します
-func Format(path string) (df.Path, error) {
-	var parsed df.Path
+func Format(path string) (Path, error) {
+	var parsed Path
 
 	dirInfo, err := utils.GetOSEnv()
 	if err != nil {
@@ -153,7 +152,7 @@ func Format(path string) (df.Path, error) {
 		return parsed, err
 	}
 
-	parsed = df.Path(parsedBytes.String())
+	parsed = Path(parsedBytes.String())
 
 	return parsed, nil
 }
