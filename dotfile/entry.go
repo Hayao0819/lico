@@ -5,69 +5,68 @@ import (
 	//"fmt"
 	"os"
 
-	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/errs"
+	"github.com/Hayao0819/lico/utils"
 )
 
 // 設定ファイルの1行に対応した構造体
-type Entry struct{
+type Entry struct {
 	RepoPath Path
 	HomePath Path
 }
 
-
 // 新しいEntryを生成します
-func NewEntry(repoPath, homePath Path)(Entry){
+func NewEntry(repoPath, homePath Path) Entry {
 	return Entry{RepoPath: repoPath, HomePath: homePath}
 }
 
 // repoPathが存在するかどうかを確認する
-func (entry *Entry) ExistsRepoPath() (bool){
+func (entry *Entry) ExistsRepoPath() bool {
 	_, err := os.Stat(string(entry.RepoPath))
 	return err == nil
 }
 
 // リンクを作成する
-func (entry *Entry) MakeSymLink()(error){
+func (entry *Entry) MakeSymLink() error {
 	link := entry.HomePath
 	orig := entry.RepoPath
-	if entry.CheckSymLink() == nil{
+	if entry.CheckSymLink() == nil {
 		return nil
 	}
 
-	if ! orig.Exists(){
+	if !orig.Exists() {
 		return errs.ErrNotExist
 	}
 
 	err := os.Symlink(orig.String(), link.String())
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 	return nil
 }
 
 // リンクが正常に設定されているかチェックする
-func (entry *Entry) CheckSymLink()(error){
+func (entry *Entry) CheckSymLink() error {
 	link := entry.HomePath.String()
-	if ! utils.Exists(link){
+	if !utils.Exists(link) {
 		return errs.ErrNotExist
 	}
 
-	if ! utils.IsSymlink(link){
+	if !utils.IsSymlink(link) {
 		return errs.ErrNotSymlink
 	}
 
 	readlink, err := os.Readlink(link)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 
 	isSameFile, err := PathIs(NewPath(readlink), entry.RepoPath)
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 
-	if ! isSameFile{
+	if !isSameFile {
 		return errs.ErrLinkToDiffFile
 	}
 
@@ -75,10 +74,10 @@ func (entry *Entry) CheckSymLink()(error){
 }
 
 // パスがリポジトリファイルに含まれているかどうか
-func HasRepoFile(entries *[]Entry, path Path)(bool, error){
-	for _,entry := range *entries{
+func HasRepoFile(entries *[]Entry, path Path) (bool, error) {
+	for _, entry := range *entries {
 		result, err := PathIs(entry.RepoPath, path)
-		if err != nil{
+		if err != nil {
 			continue
 		}
 		if result {
@@ -89,10 +88,10 @@ func HasRepoFile(entries *[]Entry, path Path)(bool, error){
 }
 
 // パスがホームファイルに含まれているかどうか
-func HasHomeFile(entries *[]Entry, path Path)(bool, error){
-	for _,entry := range *entries{
+func HasHomeFile(entries *[]Entry, path Path) (bool, error) {
+	for _, entry := range *entries {
 		result, err := PathIs(entry.HomePath, path)
-		if err != nil{
+		if err != nil {
 			continue
 		}
 		if result {

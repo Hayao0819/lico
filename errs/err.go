@@ -9,7 +9,7 @@ import (
 //var ErrCantOpenListFile error =  errors.New("cannot open file")
 //var ErrCantWriteFile error = errors.New("cannot write new text")
 
-var(
+var (
 	// ErrInvalid indicates an invalid argument.
 	// Methods on File will return this error when the receiver is nil.
 	ErrInvalid = os.ErrInvalid // "invalid argument"

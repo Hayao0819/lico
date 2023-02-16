@@ -1,10 +1,9 @@
 package cmd
 
 import (
-	"os"
 	"github.com/spf13/cobra"
+	"os"
 )
-
 
 var listFile string
 
@@ -12,8 +11,7 @@ var listFile string
 var rootCmd = &cobra.Command{
 	Use:   "lico",
 	Short: "OS非依存なドットファイル管理ツール",
-	Long: 
-`licoはOSに依存しないドットファイル管理マネージャーです。
+	Long: `licoはOSに依存しないドットファイル管理マネージャーです。
 独自の設定ファイルを用いてホームディレクトリ以下の
 設定ファイルを1つのGitリポジトリで管理します。
 テンプレート記法を用いて柔軟な設定が可能です。`,
@@ -45,5 +43,3 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&listFile, "list", "l", "~/.lico/lico.list", "ファイルリストを指定します")
 
 }
-
-

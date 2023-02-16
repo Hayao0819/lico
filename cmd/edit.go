@@ -1,6 +1,5 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
@@ -14,10 +13,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-
 var editorBin string
 
-func editCmd()(*cobra.Command){
+func editCmd() *cobra.Command {
 	cmd := cobra.Command{
 		Use:   "edit",
 		Short: fmt.Sprintf("%vを手動で編集", listFile),
@@ -25,8 +23,8 @@ func editCmd()(*cobra.Command){
 
 エディタはオプションもしくは環境変数"EDITOR"で指定されたものが起動されます。
 もしエディタを認識できない場合はViを起動します。`,
-		RunE: func(cmd *cobra.Command, args []string)error {
-			if editorBin== ""{
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if editorBin == "" {
 				return errors.New("cannot find an editor")
 			}
 
@@ -35,7 +33,7 @@ func editCmd()(*cobra.Command){
 			editorRun.Stdin = os.Stdin
 			editorRun.Stderr = os.Stderr
 			err := editorRun.Run()
-			if err != nil{
+			if err != nil {
 				return err
 			}
 
@@ -43,17 +41,16 @@ func editCmd()(*cobra.Command){
 		},
 	}
 
-
-	cmd.Flags().StringVarP(&editorBin , "editor", "e", 
-	func()string{
-		env := strings.TrimSpace(os.Getenv("EDITOR"))
-		if len(env) == 0{
-			return "vi"
-		}else{
-			return env
-		}
-	}(), 
-	"編集に利用するエディタを設定します")
+	cmd.Flags().StringVarP(&editorBin, "editor", "e",
+		func() string {
+			env := strings.TrimSpace(os.Getenv("EDITOR"))
+			if len(env) == 0 {
+				return "vi"
+			} else {
+				return env
+			}
+		}(),
+		"編集に利用するエディタを設定します")
 
 	return &cmd
 }

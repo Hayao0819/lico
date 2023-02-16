@@ -1,6 +1,5 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
@@ -14,10 +13,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-
 var delLineMode bool = false
 
-func unlinkCmd()(*cobra.Command){
+func unlinkCmd() *cobra.Command {
 	cmd := cobra.Command{
 		Use:   "unlink",
 		Short: "ファイルを管理対象から除外",
@@ -25,19 +23,19 @@ func unlinkCmd()(*cobra.Command){
 		ファイルは削除されず、関連付けのみ解除されます。
 		デフォルトでは設定ファイルの該当箇所をコメントアウトします。
 		行を完全に削除するには-dを用いてください。`,
-		Args: cobra.ExactArgs(1),
+		Args:    cobra.ExactArgs(1),
 		Aliases: []string{"unregister"},
-		RunE: func(cmd *cobra.Command, args []string) error{
+		RunE: func(cmd *cobra.Command, args []string) error {
 			// Entry一覧を生成
 			list, err := conf.ReadConf(listFile)
-			if err != nil{
+			if err != nil {
 				return err
 			}
 
 			targetPath := df.NewAbsPath(args[0])
 
 			targetItem := list.GetItemFromPath(targetPath)
-			if targetItem == nil{
+			if targetItem == nil {
 				return fmt.Errorf("no such file is registered")
 			}
 			//fmt.Println(targetItem.Index)
@@ -52,5 +50,5 @@ func unlinkCmd()(*cobra.Command){
 func init() {
 	cmd := unlinkCmd()
 	rootCmd.AddCommand(cmd)
-	cmd.Flags().BoolVarP(&delLineMode , "del-line", "d", false, "コメントアウトの代わりに行を削除します")
+	cmd.Flags().BoolVarP(&delLineMode, "del-line", "d", false, "コメントアウトの代わりに行を削除します")
 }

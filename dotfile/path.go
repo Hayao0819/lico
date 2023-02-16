@@ -3,6 +3,7 @@ package dotfile
 import (
 	"os"
 	"path/filepath"
+
 	"github.com/Hayao0819/lico/utils"
 )
 
@@ -10,23 +11,22 @@ import (
 type Path string
 
 // 　ファイルのStatを返します
-func (path *Path) Stat()(os.FileInfo, error){
+func (path *Path) Stat() (os.FileInfo, error) {
 	return os.Stat(string(*path))
-	
+
 }
 
 // ファイルの絶対パスを返します
-func (path *Path)Abs()(string, error){
+func (path *Path) Abs() (string, error) {
 	return filepath.Abs(string(*path))
 }
 
 // パスを文字列に変換
-func (path *Path)String()(string){
+func (path *Path) String() string {
 	return string(*path)
 }
 
-
 // utils.Existsを用いてファイルが存在するかどうかを確認します
-func (path *Path)Exists()(bool){
+func (path *Path) Exists() bool {
 	return utils.Exists(path.String())
 }
