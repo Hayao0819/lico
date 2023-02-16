@@ -5,6 +5,7 @@ import (
 	"os"
 	"runtime"
 	"os/user"
+	"sort"
 )
 
 // OS依存の情報を保持します
@@ -59,5 +60,28 @@ func (env *osEnv)GetKeys()([]string){
 		arr = append(arr, index)
 	}
 
-	return SortWithLen(arr)
+	return arr
+}
+
+
+func (env osEnv)GetSortedKeys()([]string){
+	type osEvnStruct struct{
+		name string
+		value string
+	}
+
+	var envS []osEvnStruct
+	for _, key := range env.GetKeys(){
+		envS = append(envS, osEvnStruct{name: key, value: env[key]})
+	}
+	
+	sort.Slice(envS, func(i, j int) bool {
+		return len(envS[i].value) > len(envS[j].value)
+	})
+
+	var rtn []string
+	for _, key := range envS{
+		rtn = append(rtn, key.name)
+	}
+	return rtn
 }

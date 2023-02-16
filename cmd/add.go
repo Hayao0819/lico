@@ -17,6 +17,8 @@ import (
 
 
 func addCmd ()(*cobra.Command){
+	var noTemplate bool
+
 	cmd := cobra.Command{
 		Use:   "add [flags] repoFile hooeFile",
 		Short: "ファイルを追加します",
@@ -49,7 +51,7 @@ func addCmd ()(*cobra.Command){
 			defer lf.Close()
 
 			item :=  conf.NewListItem(entry) 
-			itemStr, err := item.String()
+			itemStr, err := item.String(!noTemplate)
 			if err !=nil{
 				return err
 			}
@@ -58,6 +60,8 @@ func addCmd ()(*cobra.Command){
 			return nil
 		},
 	}
+
+	cmd.Flags().BoolVarP(&noTemplate, "notp", "n", false, "テンプレート構文への置き換えを無効化")
 
 	return &cmd
 }

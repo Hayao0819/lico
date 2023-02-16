@@ -54,17 +54,24 @@ func (list *List)GetEntries()(*[]df.Entry){
 }
 
 
-func (item *ListItem) String ()(string, error){
-	repo, err := ReplaceToTemplate(item.Entry.RepoPath.String())
-	if err !=nil{
-		return "", err
-	}
+func (item *ListItem) String (replace bool)(string, error){
+	var (repo, home df.Path)
+	var err error
 
-	home, err := ReplaceToTemplate(item.Entry.HomePath.String())
-	if err !=nil{
-		return "", err
-	}
+	if replace{
+		repo, err = ReplaceToTemplate(item.Entry.RepoPath.String())
+		if err !=nil{
+			return "", err
+		}
 
+		home, err = ReplaceToTemplate(item.Entry.HomePath.String())
+		if err !=nil{
+			return "", err
+		}
+	}else{
+		repo = item.Entry.RepoPath
+		home =item.Entry.HomePath
+	}
 	return fmt.Sprintf("%v:%v\n", repo, home), nil
 }
 

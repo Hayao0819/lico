@@ -33,7 +33,7 @@ func envCmd()(*cobra.Command){
 
 
 			if showOnlyKey{
-				for _, key := range env.GetKeys(){
+				for _, key := range env.GetSortedKeys(){
 					fmt.Println(key)
 				}
 			}else if len(args)==0{
@@ -53,6 +53,7 @@ func envCmd()(*cobra.Command){
 	}
 
 	cmd.Flags().BoolVarP(&showOnlyKey, "key", "k", false, "変数名のみを表示")
+	
 
 	return &cmd
 }
