@@ -41,5 +41,5 @@ func init() {
 	//rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 	rootCmd.PersistentFlags().StringVarP(&listFile, "list", "l", "~/.lico/lico.list", "ファイルリストを指定します")
-
+	//rootCmd.PersistentFlags().BoolVarP()
 }

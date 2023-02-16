@@ -4,6 +4,3 @@ Licoはシンプルで軽量なDotfilesマネージャーです。全てのフ�
 
 このツールは[ssh0/dot](https://github.com/ssh0/dot)に影響を受けて開発されています。
 
-
-
-
