@@ -14,6 +14,8 @@ import (
 
 
 func envCmd()(*cobra.Command){
+	var showOnlyKey bool
+
 	cmd := cobra.Command{
 		Use:   "env [Name]",
 		Short: "リストで利用できる変数を表示",
@@ -30,7 +32,11 @@ func envCmd()(*cobra.Command){
 			}
 
 
-			if len(args)==0{
+			if showOnlyKey{
+				for _, key := range env.GetKeys(){
+					fmt.Println(key)
+				}
+			}else if len(args)==0{
 				for index, value := range env{
 					fmt.Printf("%v = %v\n", index, value)
 				}
@@ -45,6 +51,8 @@ func envCmd()(*cobra.Command){
 			return nil
 		},
 	}
+
+	cmd.Flags().BoolVarP(&showOnlyKey, "key", "k", false, "変数名のみを表示")
 
 	return &cmd
 }
