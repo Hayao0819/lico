@@ -17,8 +17,9 @@ func (path *Path) Stat() (os.FileInfo, error) {
 }
 
 // ファイルの絶対パスを返します
-func (path *Path) Abs() (string, error) {
-	return filepath.Abs(string(*path))
+func (path *Path) Abs() (Path, error) {
+	str, err := filepath.Abs(string(*path))
+	return New(str), err
 }
 
 // パスを文字列に変換
