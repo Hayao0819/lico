@@ -46,6 +46,6 @@ func unlinkCmd() *cobra.Command {
 
 func init() {
 	cmd := unlinkCmd()
-	rootCmd.AddCommand(cmd)
+	root.AddCommand(cmd)
 	cmd.Flags().BoolVarP(&delLineMode, "del-line", "d", false, "コメントアウトの代わりに行を削除します")
 }

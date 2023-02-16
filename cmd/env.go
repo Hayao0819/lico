@@ -51,5 +51,5 @@ func envCmd() *cobra.Command {
 }
 
 func init() {
-	rootCmd.AddCommand(envCmd())
+	root.AddCommand(envCmd())
 }

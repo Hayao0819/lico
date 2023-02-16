@@ -17,7 +17,7 @@ var listCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(listCmd)
+	root.AddCommand(listCmd)
 }
 
 func runList(cmd *cobra.Command, args []string) error {

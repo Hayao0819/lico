@@ -8,6 +8,7 @@ import (
 	"github.com/Hayao0819/lico/conf"
 	//"github.com/Hayao0819/lico/utils"
 	"errors"
+
 	"github.com/spf13/cobra"
 )
 
@@ -58,5 +59,5 @@ func setCmd() *cobra.Command {
 }
 
 func init() {
-	rootCmd.AddCommand(setCmd())
+	root.AddCommand(setCmd())
 }
