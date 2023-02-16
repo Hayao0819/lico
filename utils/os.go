@@ -54,3 +54,12 @@ func GetOSEnv()(osEnv, error){
 }
 
 
+
+func (env *osEnv)GetKeys()([]string){
+	var arr []string
+	for index := range *env{
+		arr = append(arr, index)
+	}
+
+	return SortWithLen(arr)
+}
