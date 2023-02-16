@@ -1,3 +1,4 @@
 # リポジトリのファイル : 配置先のパス
 
 ./README : {{ .Home }}/README
+./README.md:/Users/{{ .UserName }}/README.md

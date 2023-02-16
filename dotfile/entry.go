@@ -2,7 +2,7 @@ package dotfile
 
 import (
 	//"errors"
-	"fmt"
+	//"fmt"
 	"os"
 
 	"github.com/Hayao0819/lico/utils"
@@ -20,12 +20,6 @@ type Entry struct{
 func NewEntry(repoPath, homePath Path)(Entry){
 	return Entry{RepoPath: repoPath, HomePath: homePath}
 }
-
-// Entryから設定ファイル用文字列を生成します
-func (entry *Entry) String ()(string){
-	return fmt.Sprintf("%v:%v\n", entry.RepoPath, entry.HomePath)
-}
-
 
 // repoPathが存在するかどうかを確認する
 func (entry *Entry) ExistsRepoPath() (bool){

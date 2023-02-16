@@ -26,7 +26,14 @@ type ListItem struct{
 }
 
 // 
-func NewListItem(entry df.Entry, index int)(ListItem){
+func NewListItem(entry df.Entry)(ListItem){
+	return ListItem{
+		Entry:  entry,
+		Index: 0,
+	}
+}
+
+func NewListItemWithIndex(entry df.Entry, index int)(ListItem){
 	return ListItem{
 		Entry:  entry,
 		Index: index,
@@ -44,6 +51,21 @@ func (list *List)GetEntries()(*[]df.Entry){
 		rtn = append(rtn, listitem.Entry)
 	}
 	return &rtn
+}
+
+
+func (item *ListItem) String ()(string, error){
+	repo, err := ReplaceToTemplate(item.Entry.RepoPath.String())
+	if err !=nil{
+		return "", err
+	}
+
+	home, err := ReplaceToTemplate(item.Entry.HomePath.String())
+	if err !=nil{
+		return "", err
+	}
+
+	return fmt.Sprintf("%v:%v\n", repo, home), nil
 }
 
 // 指定されたパスを持つListItemを返します
@@ -105,7 +127,7 @@ func ReadConf(path string)(*List, error){
 		repoPath = df.Path(strings.TrimSpace(splited[0]))
 		homePath = df.Path(strings.TrimSpace(splited[1]))
 
-		item = NewListItem(df.NewEntry(repoPath, homePath), lineNo) 
+		item = NewListItemWithIndex(df.NewEntry(repoPath, homePath), lineNo) 
 		list = append(list, item)
 	}
 	return &list,nil
@@ -134,12 +156,3 @@ func Format(path string)(df.Path, error){
 	return parsed,nil
 }
 
-/*
-func WriteEntries(entries *[]df.Entry, listFile string)(error){
-	file, err := os.Create(listFile)
-	if err != nil{
-		return ErrCantOpenListFile
-	}
-
-}
-*/

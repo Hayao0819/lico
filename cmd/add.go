@@ -47,8 +47,14 @@ func addCmd ()(*cobra.Command){
 				return err
 			}
 			defer lf.Close()
-			fmt.Fprint(lf, entry.String())
 
+			item :=  conf.NewListItem(entry) 
+			itemStr, err := item.String()
+			if err !=nil{
+				return err
+			}
+
+			fmt.Fprint(lf, itemStr)
 			return nil
 		},
 	}

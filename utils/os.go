@@ -53,8 +53,6 @@ func GetOSEnv()(osEnv, error){
 	}
 }
 
-
-
 func (env *osEnv)GetKeys()([]string){
 	var arr []string
 	for index := range *env{
