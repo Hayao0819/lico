@@ -5,7 +5,7 @@ import (
 	//"fmt"
 	"os"
 
-	"github.com/Hayao0819/lico/errs"
+	"github.com/Hayao0819/lico/vars"
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
 )
@@ -38,7 +38,7 @@ func (entry *Entry) MakeSymLink() error {
 	if err !=nil{
 		return err
 	}
-	origF, err := entry.RepoPath.Abs()
+	origF, err := entry.RepoPath.Abs("")
 	if err !=nil{
 		return err
 	}
@@ -51,7 +51,7 @@ func (entry *Entry) MakeSymLink() error {
 	}
 
 	if !orig.Exists() {
-		return errs.ErrNotExist
+		return vars.ErrNotExist
 	}
 
 	err = os.Symlink(orig.String(), link.String())
@@ -65,11 +65,11 @@ func (entry *Entry) MakeSymLink() error {
 func (entry *Entry) CheckSymLink() error {
 	link := entry.HomePath.String()
 	if !utils.Exists(link) {
-		return errs.ErrNotExist
+		return vars.ErrNotExist
 	}
 
 	if !utils.IsSymlink(link) {
-		return errs.ErrNotSymlink
+		return vars.ErrNotSymlink
 	}
 
 	readlink, err := os.Readlink(link)
@@ -83,7 +83,7 @@ func (entry *Entry) CheckSymLink() error {
 	}
 
 	if !isSameFile {
-		return errs.ErrLinkToDiffFile
+		return vars.ErrLinkToDiffFile
 	}
 
 	return nil

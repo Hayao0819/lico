@@ -6,7 +6,7 @@ import (
 
 	"encoding/base64"
 
-	//p "github.com/Hayao0819/lico/paths"
+	"github.com/Hayao0819/lico/vars"
 	"github.com/Hayao0819/lico/utils"
 	"github.com/spf13/cobra"
 )
@@ -50,17 +50,24 @@ func rootCmd ()(*cobra.Command){
 func initilize()error{
 	// 重要なパスを正規化
 	var err error
-	listFile, err = utils.Abs(listFile)
+	listFile, err = utils.Abs("", listFile)
 	if err !=nil{
 		return err
 	}
 	fmt.Printf("リスト: %v\n", listFile)
 
-	repoDir, err = utils.Abs(repoDir)
+	repoDir, err = utils.Abs("", repoDir)
 	if err !=nil{
 		return err
 	}
 	fmt.Printf("リポジトリ: %v\n", repoDir)
+
+	// 定数を初期化
+	err = vars.Init(repoDir)
+	if err !=nil{
+		return err
+	}
+
 	return nil
 }
 

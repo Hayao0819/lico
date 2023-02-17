@@ -138,13 +138,42 @@ func MakeCmd(name string, args ...string)(*exec.Cmd){
 	return cmd
 }
 
-func Abs(path string)(string, error){
+func IsEmpty(str string)bool{
+	return strings.TrimSpace(str) == ""
+}
+
+func Abs(base, path string)(string, error){
 	var err error
+	// OS情報を取得
 	osinfo , err := GetOSEnv()
 	if err !=nil{
 		return path, err
 	}
+
+	currentDir,err := os.Getwd()
+	if err !=nil{
+		return path, err
+	}
+
+	// 起点移動
+	if ! IsEmpty(base){
+		err = os.Chdir(base)
+		if err !=nil{
+			return path, err
+		}
+	}
+
+	// 変換
 	path = strings.Replace(path, "~", osinfo["Home"], 1)
 	path,err = filepath.Abs(path)
-	return path, err
+	if err !=nil{
+		return path, err
+	}
+
+	// ディレクトリを戻る
+	err = os.Chdir(currentDir)
+	if err !=nil{
+		return path, err
+	}
+	return path, nil
 }
