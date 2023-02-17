@@ -2,7 +2,6 @@ package path
 
 import (
 	"os"
-	"path/filepath"
 
 	"github.com/Hayao0819/lico/utils"
 )
@@ -18,7 +17,7 @@ func (path *Path) Stat() (os.FileInfo, error) {
 
 // ファイルの絶対パスを返します
 func (path *Path) Abs() (Path, error) {
-	str, err := filepath.Abs(string(*path))
+	str, err := utils.Abs(string(*path))
 	return New(str), err
 }
 

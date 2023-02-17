@@ -1,7 +1,14 @@
 package main
 
-import "github.com/Hayao0819/lico/cmd"
+import (
+	"os"
+
+	"github.com/Hayao0819/lico/cmd"
+)
 
 func main() {
-	cmd.Execute()
+	err := cmd.Execute()
+	if err !=nil{
+		os.Exit(1)
+	}
 }

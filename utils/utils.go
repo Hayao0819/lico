@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
+	"strings"
+
 	//"strings"
 	"sort"
 )
@@ -125,3 +128,23 @@ func ForEachStop(arr []interface{}, runFunc func(int, interface{})(error))(error
 	return nil
 }
 */
+
+
+func MakeCmd(name string, args ...string)(*exec.Cmd){
+	cmd := exec.Command(name, args...)
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	return cmd
+}
+
+func Abs(path string)(string, error){
+	var err error
+	osinfo , err := GetOSEnv()
+	if err !=nil{
+		return path, err
+	}
+	path = strings.Replace(path, "~", osinfo["Home"], 1)
+	path,err = filepath.Abs(path)
+	return path, err
+}
