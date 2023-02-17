@@ -15,7 +15,7 @@ var repoDir string
 var root *cobra.Command = rootCmd()
 
 func rootCmd() *cobra.Command {
-	shamikoOpt := false
+	licoOpt := false
 
 	var cmd = &cobra.Command{
 		Use:   "lico",
@@ -26,8 +26,8 @@ func rootCmd() *cobra.Command {
 	テンプレート記法を用いて柔軟な設定が可能です。`,
 		SilenceUsage: true, //コマンド失敗時に使い方を表示しない
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if shamikoOpt {
-				fmt.Print(shamiko())
+			if licoOpt {
+				fmt.Print(lico())
 			} else {
 				fmt.Fprintln(os.Stderr, "コマンドを指定してください。詳細はlico helpを参照してください。")
 			}
@@ -37,7 +37,7 @@ func rootCmd() *cobra.Command {
 
 	cmd.PersistentFlags().StringVarP(&listFile, "list", "l", "~/.lico/lico.list", "ファイルリストを指定します")
 	cmd.PersistentFlags().StringVarP(&repoDir, "repo", "r", "~/.lico/repo", "リポジトリディレクトリを指定します")
-	cmd.Flags().BoolVarP(&shamikoOpt, "shamiko", "", shamikoOpt, "")
+	cmd.Flags().BoolVarP(&licoOpt, "lico", "", licoOpt, "")
 	cmd.PersistentFlags().MarkHidden("shamiko")
 
 	return cmd
@@ -50,13 +50,13 @@ func common() error {
 	if err != nil {
 		return err
 	}
-	fmt.Printf("リスト: %v\n", listFile)
+	//fmt.Printf("リスト: %v\n", listFile)
 
 	repoDir, err = utils.Abs("", repoDir)
 	if err != nil {
 		return err
 	}
-	fmt.Printf("リポジトリ: %v\n", repoDir)
+	//fmt.Printf("リポジトリ: %v\n", repoDir)
 
 	// 定数を初期化
 	err = vars.Init(repoDir)
