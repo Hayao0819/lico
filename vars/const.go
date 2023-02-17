@@ -7,17 +7,17 @@ import (
 var RepoPathBase string
 var HomePathBase string
 
-func Init(repodir string)error{
+func Init(repodir string) error {
 	var err error
 
-	HomePathBase, err = func()(string, error){
+	HomePathBase, err = func() (string, error) {
 		osinfo, err := utils.GetOSEnv()
-		if err !=nil{
+		if err != nil {
 			return "", err
 		}
 		return osinfo["Home"], nil
 	}()
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 

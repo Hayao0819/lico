@@ -5,9 +5,9 @@ import (
 	//"fmt"
 	"os"
 
-	"github.com/Hayao0819/lico/vars"
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
 )
 
 // 設定ファイルの1行に対応した構造体
@@ -35,15 +35,15 @@ func (entry *Entry) ExistsRepoPath() bool {
 // リンクを作成する
 func (entry *Entry) MakeSymLink() error {
 	link, err := Format(entry.HomePath.String())
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 	origF, err := entry.RepoPath.Abs("")
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 	orig, err := Format(origF.String())
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 	if entry.CheckSymLink() == nil {

@@ -33,6 +33,7 @@ case "${mode}" in
         "$script_path/$(basename "$0")" "run" -l "$script_path/lico.list" "$@"
         ;;
     "fmt")
+        go mod tidy
         gofmt -l -w .
         ;;
     "")

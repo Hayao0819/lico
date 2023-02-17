@@ -4,10 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"encoding/base64"
-
-	"github.com/Hayao0819/lico/vars"
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 )
 
@@ -16,9 +14,8 @@ var repoDir string
 
 var root *cobra.Command = rootCmd()
 
-
-func rootCmd ()(*cobra.Command){
-	shamiko := false
+func rootCmd() *cobra.Command {
+	shamikoOpt := false
 
 	var cmd = &cobra.Command{
 		Use:   "lico",
@@ -28,11 +25,10 @@ func rootCmd ()(*cobra.Command){
 	設定ファイルを1つのGitリポジトリで管理します。
 	テンプレート記法を用いて柔軟な設定が可能です。`,
 		SilenceUsage: true, //コマンド失敗時に使い方を表示しない
-		RunE: func(cmd *cobra.Command, args []string)error{
-			if shamiko{
-				dec, _ := base64.StdEncoding.DecodeString("44KI44GP6KaL44Gf44KJ44GT44Gu5a2Q44Gq44KT44GL5aSJ44Gq44KT55Sf44GI44Go44KL77yB77yBCg==")
-				fmt.Print(string(dec))
-			}else{
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if shamikoOpt {
+				fmt.Print(shamiko())
+			} else {
 				fmt.Fprintln(os.Stderr, "コマンドを指定してください。詳細はlico helpを参照してください。")
 			}
 			return nil
@@ -41,30 +37,30 @@ func rootCmd ()(*cobra.Command){
 
 	cmd.PersistentFlags().StringVarP(&listFile, "list", "l", "~/.lico/lico.list", "ファイルリストを指定します")
 	cmd.PersistentFlags().StringVarP(&repoDir, "repo", "r", "~/.lico/repo", "リポジトリディレクトリを指定します")
-	cmd.Flags().BoolVarP(&shamiko, "shamiko", "", shamiko, "")
+	cmd.Flags().BoolVarP(&shamikoOpt, "shamiko", "", shamikoOpt, "")
 	cmd.PersistentFlags().MarkHidden("shamiko")
 
 	return cmd
 }
 
-func initilize()error{
+func common() error {
 	// 重要なパスを正規化
 	var err error
 	listFile, err = utils.Abs("", listFile)
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 	fmt.Printf("リスト: %v\n", listFile)
 
 	repoDir, err = utils.Abs("", repoDir)
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 	fmt.Printf("リポジトリ: %v\n", repoDir)
 
 	// 定数を初期化
 	err = vars.Init(repoDir)
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 
@@ -72,9 +68,9 @@ func initilize()error{
 }
 
 // コマンドを実行します
-func Execute() error{
+func Execute() error {
 	var err error
-	err = initilize()
+	err = common()
 	if err != nil {
 		return err
 	}

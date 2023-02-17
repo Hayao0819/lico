@@ -129,8 +129,7 @@ func ForEachStop(arr []interface{}, runFunc func(int, interface{})(error))(error
 }
 */
 
-
-func MakeCmd(name string, args ...string)(*exec.Cmd){
+func MakeCmd(name string, args ...string) *exec.Cmd {
 	cmd := exec.Command(name, args...)
 	cmd.Stderr = os.Stderr
 	cmd.Stdin = os.Stdin
@@ -138,41 +137,41 @@ func MakeCmd(name string, args ...string)(*exec.Cmd){
 	return cmd
 }
 
-func IsEmpty(str string)bool{
+func IsEmpty(str string) bool {
 	return strings.TrimSpace(str) == ""
 }
 
-func Abs(base, path string)(string, error){
+func Abs(base, path string) (string, error) {
 	var err error
 	// OS情報を取得
-	osinfo , err := GetOSEnv()
-	if err !=nil{
+	osinfo, err := GetOSEnv()
+	if err != nil {
 		return path, err
 	}
 
-	currentDir,err := os.Getwd()
-	if err !=nil{
+	currentDir, err := os.Getwd()
+	if err != nil {
 		return path, err
 	}
 
 	// 起点移動
-	if ! IsEmpty(base){
+	if !IsEmpty(base) {
 		err = os.Chdir(base)
-		if err !=nil{
+		if err != nil {
 			return path, err
 		}
 	}
 
 	// 変換
 	path = strings.Replace(path, "~", osinfo["Home"], 1)
-	path,err = filepath.Abs(path)
-	if err !=nil{
+	path, err = filepath.Abs(path)
+	if err != nil {
 		return path, err
 	}
 
 	// ディレクトリを戻る
 	err = os.Chdir(currentDir)
-	if err !=nil{
+	if err != nil {
 		return path, err
 	}
 	return path, nil
