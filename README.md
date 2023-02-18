@@ -42,6 +42,13 @@ lico init <repository>
 lico set
 ```
 
+## Todo
+
+- Gitの操作を[go-git](https://github.com/go-git/go-git)で書き直す
+- rmlinkコマンドを実装する
+- rmファイルを実装する
+- unlink時にrmlinkコマンドを実行する
+
 ## Special Thanks
 
 - [まちかどまぞく](https://www.tbs.co.jp/anime/machikado/)
