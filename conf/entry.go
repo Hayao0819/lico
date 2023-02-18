@@ -3,6 +3,7 @@ package conf
 import (
 	//"errors"
 	//"fmt"
+	"fmt"
 	"os"
 
 	p "github.com/Hayao0819/lico/paths"
@@ -60,11 +61,14 @@ func (entry *Entry) MakeSymLink() error {
 		return vars.ErrNotExist
 	}
 
-	err := os.Symlink(orig.String(), link.String())
-	if err != nil {
+
+	if err := os.Symlink(orig.String(), link.String()); err ==nil {
+		fmt.Printf("%v ==> %v\n", orig.String(), link.String())
+		return nil
+	}else{
 		return err
 	}
-	return nil
+	
 }
 
 // リンクが正常に設定されているかチェックする
