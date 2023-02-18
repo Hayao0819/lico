@@ -68,6 +68,7 @@ func common() error {
 }
 
 // コマンドを実行します
+// 引数: バージョン, コミット, 日付
 func Execute() error {
 	var err error
 	err = common()
