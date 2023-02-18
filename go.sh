@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-set -Eeu -o pipefail
+#!/bin/sh
+set -eu #-o pipefail
 
 script_path="$(cd "$(dirname "${0}")" || exit 1; pwd)"
 cd "$script_path" || exit 1
@@ -8,7 +8,7 @@ cd "$script_path" || exit 1
 
 mode="${1-""}"
 
-[[ -n "$mode" ]] || {
+[ -n "$mode" ] || {
     echo "Debug tool for lico"
     echo
     echo "Usage: $0 [mode] [lico-args]"
@@ -23,19 +23,19 @@ mode="${1-""}"
 
 shift 1
 
-#ldflags="$("${script_path}/getldflags.py")"
-binary="${script_path}/dist/lico_$(uname -o | tr "[:upper:]" "[:lower:]")_$(uname -m)/lico"
+build_cmd(){
+    goreleaser build --snapshot --clean --single-target >&2
+    "${script_path}/getpath.py" 
+}
 
 case "${mode}" in
     "build")
-        #go build -ldflags "$ldflags" -o "${script_path}/lico" -- "${go_files[@]}" "$@"
-        goreleaser build --snapshot --clean
-        mv "$binary" "${script_path}/lico"
+        mv "$(build_cmd)" "${script_path}/lico"
         ;;
     "run")
         #go run -ldflags "$ldflags" -- "${go_files[@]}" "$@"
-        "$script_path/$(basename "$0")" "build"
-        "$script_path/lico" "$@"
+        #"$script_path/$(basename "$0")" "build"
+        "$(build_cmd)" "$@"
         ;;
     "drun")
         "$script_path/$(basename "$0")" "run" -l "$script_path/lico.list" "$@"
