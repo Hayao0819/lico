@@ -10,9 +10,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var delLineMode bool = false
 
 func unlinkCmd() *cobra.Command {
+
+	var delLineMode bool = false
+	var noEditListMode bool = false
+
 	cmd := cobra.Command{
 		Use:   "unlink",
 		Short: "ファイルを管理対象から除外",
@@ -35,11 +38,22 @@ func unlinkCmd() *cobra.Command {
 			if targetItem == nil {
 				return fmt.Errorf("no such file is registered")
 			}
-			//fmt.Println(targetItem.Index)
-			err = utils.CommentOut(listFile, targetItem.Index)
-			return err
+			
+			if !noEditListMode{
+				if err = utils.CommentOut(listFile, targetItem.Index); err !=nil{
+					return err
+				}
+			}
+
+			if err = rmLinkCmd().RunE(rmLinkCmd(), []string{targetPath.String()}); err !=nil{
+				return err
+			}
+			return nil
 		},
 	}
+
+	cmd.Flags().BoolVarP(&delLineMode, "delline", "d", delLineMode, "コメントアウトの代わりに行を削除します")
+	cmd.Flags().BoolVarP(&noEditListMode, "noedit", "", noEditListMode, "リストファイルを編集しません")
 
 	return &cmd
 }
@@ -47,5 +61,4 @@ func unlinkCmd() *cobra.Command {
 func init() {
 	cmd := unlinkCmd()
 	root.AddCommand(cmd)
-	cmd.Flags().BoolVarP(&delLineMode, "del-line", "d", false, "コメントアウトの代わりに行を削除します")
 }
