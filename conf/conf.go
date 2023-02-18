@@ -45,7 +45,7 @@ func (item *Entry) String(replace bool) (string, error) {
 func (list *List) GetItemFromPath(path p.Path) *Entry {
 	// Todo
 	for _, item := range *list {
-		fmt.Printf("%v and %v, %v and %v\n", item.HomePath, path, item.RepoPath, path)
+		//fmt.Printf("%v and %v, %v and %v\n", item.HomePath, path, item.RepoPath, path)
 		if item.HomePath == path || item.RepoPath == path {
 			return &item
 		} else {
