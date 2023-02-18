@@ -34,18 +34,24 @@ func (entry *Entry) ExistsRepoPath() bool {
 
 // リンクを作成する
 func (entry *Entry) MakeSymLink() error {
-	link, err := Format(entry.HomePath.String())
-	if err != nil {
+	// ホームパス
+	var link p.Path
+	if linkF, err := entry.RepoPath.Abs(vars.HomePathBase); err !=nil{
+		return err
+	}else if link, err = Format(linkF.String()); err !=nil {
 		return err
 	}
-	origF, err := entry.RepoPath.Abs("")
-	if err != nil {
+	
+
+	// リポジトリパス
+	var orig p.Path
+	if origF, err := entry.RepoPath.Abs(vars.RepoPathBase); err != nil {
+		return err
+	}else if orig, err = Format(origF.String()); err != nil {
 		return err
 	}
-	orig, err := Format(origF.String())
-	if err != nil {
-		return err
-	}
+
+	// 確認
 	if entry.CheckSymLink() == nil {
 		return nil
 	}
@@ -54,7 +60,7 @@ func (entry *Entry) MakeSymLink() error {
 		return vars.ErrNotExist
 	}
 
-	err = os.Symlink(orig.String(), link.String())
+	err := os.Symlink(orig.String(), link.String())
 	if err != nil {
 		return err
 	}
