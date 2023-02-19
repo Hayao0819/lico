@@ -42,3 +42,16 @@ func MakeCmd(name string, args ...string) *exec.Cmd {
 	cmd.Stdout = os.Stdout
 	return cmd
 }
+
+/*
+func MergeMap(m ...map[string]interface{}) map[string]interface{} {
+    ans := make(map[string]interface{}, 0)
+
+    for _, c := range m {
+        for k, v := range c {
+            ans[k] = v
+        }
+    }
+    return ans
+}
+*/

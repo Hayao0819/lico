@@ -2,10 +2,12 @@ package utils
 
 import (
 	"errors"
+	//"fmt"
 	"os"
 	"os/user"
 	"runtime"
 	"sort"
+	"strings"
 )
 
 // OS依存の情報を保持します
@@ -15,8 +17,29 @@ type osEnv map[string]string
 func newOSEnv() osEnv {
 	homedir, _ := os.UserHomeDir()
 	user, _ := user.Current()
-	env := osEnv{"Home": homedir, "OS": "", "UserName": user.Username}
-	return env
+	env := map[string]string{
+		"Home": homedir, 
+		"OS": "",
+		"UserName": user.Username,
+	}
+
+	for index,value := range getEnvVars(){
+		env[index]=value
+	}
+	
+	return osEnv(env)
+}
+
+func getEnvVars()map[string]string{
+	rtn := map[string]string {}
+	for _, envS := range os.Environ(){
+		env:=strings.Split(envS, "=")
+		if strings.HasPrefix(env[0], "LICO_"){
+			index := strings.TrimPrefix(env[0], "LICO_")
+			rtn[index]=env[1]
+		}
+	}
+	return rtn
 }
 
 // Linux特有のディレクトリ情報
