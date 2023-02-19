@@ -8,12 +8,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-
 func versionCmd() *cobra.Command {
 	cmd := cobra.Command{
-		Use:   "version",
-		Short: "バージョン情報",
-		Long: `バージョン情報を表示します`,
+		Use:     "version",
+		Short:   "バージョン情報",
+		Long:    `バージョン情報を表示します`,
 		Args:    cobra.NoArgs,
 		Aliases: []string{},
 		RunE: func(cmd *cobra.Command, args []string) error {

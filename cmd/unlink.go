@@ -10,7 +10,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-
 func unlinkCmd() *cobra.Command {
 
 	var delLineMode bool = false
@@ -38,14 +37,14 @@ func unlinkCmd() *cobra.Command {
 			if targetItem == nil {
 				return fmt.Errorf("no such file is registered")
 			}
-			
-			if !noEditListMode{
-				if err = utils.CommentOut(listFile, targetItem.Index); err !=nil{
+
+			if !noEditListMode {
+				if err = utils.CommentOut(listFile, targetItem.Index); err != nil {
 					return err
 				}
 			}
 
-			if err = rmLinkCmd().RunE(rmLinkCmd(), []string{targetPath.String()}); err !=nil{
+			if err = rmLinkCmd().RunE(rmLinkCmd(), []string{targetPath.String()}); err != nil {
 				return err
 			}
 			return nil

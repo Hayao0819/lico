@@ -7,7 +7,6 @@ import (
 	"sort"
 )
 
-
 // 文字列配列を長さでソート
 func SortWithLen(arr []string) []string {
 	sort.Slice(arr, func(i, j int) bool {
@@ -43,7 +42,3 @@ func MakeCmd(name string, args ...string) *exec.Cmd {
 	cmd.Stdout = os.Stdout
 	return cmd
 }
-
-
-
-

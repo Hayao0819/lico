@@ -1,16 +1,15 @@
 package vars
 
-type verInfo struct{
-	Name string
+type verInfo struct {
+	Name   string
 	Commit string
-	Date string
+	Date   string
 }
-
 
 var version, commit, date string
 
 var Version = verInfo{
-	Name: version,
+	Name:   version,
 	Commit: commit,
-	Date: date,
+	Date:   date,
 }

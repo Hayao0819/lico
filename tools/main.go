@@ -7,47 +7,45 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func rootCmd ()(*cobra.Command){
+func rootCmd() *cobra.Command {
 	cmd := cobra.Command{
-		Use: "licotool",
-		Short: "開発用ツール",
-		Long: "licoの開発用ツールです",
+		Use:          "licotool",
+		Short:        "開発用ツール",
+		Long:         "licoの開発用ツールです",
 		SilenceUsage: true,
 	}
 
 	return &cmd
 }
 
-
-type cmdVars struct{
+type cmdVars struct {
 	Name string
 }
 
-func newcmdCmd()(*cobra.Command){
+func newcmdCmd() *cobra.Command {
 	cmd := cobra.Command{
-		Use: "newcmd BaseFile OutFile Name",
+		Use:   "newcmd BaseFile OutFile Name",
 		Short: "新しいコマンドを追加",
-		Long: "カスタマイズされたCobraのテンプレートを生成してcmd/に追加します",
-		Args: cobra.ExactArgs(3),
+		Long:  "カスタマイズされたCobraのテンプレートを生成してcmd/に追加します",
+		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			basefile := args[0]
 			vars := cmdVars{
 				Name: args[2],
 			}
-			
+
 			t, err := template.ParseFiles(basefile)
-			if err!=nil{
+			if err != nil {
 				return err
 			}
 
 			writeTo, err := os.Create(args[1])
-			if err !=nil{
+			if err != nil {
 				return err
 			}
 			defer writeTo.Close()
 
-
-			if err = t.Execute(writeTo, vars); err!=nil{
+			if err = t.Execute(writeTo, vars); err != nil {
 				return err
 			}
 
@@ -58,11 +56,11 @@ func newcmdCmd()(*cobra.Command){
 	return &cmd
 }
 
-func main(){
+func main() {
 	root := rootCmd()
 	root.AddCommand(newcmdCmd())
 
-	if err:= root.Execute(); err !=nil{
+	if err := root.Execute(); err != nil {
 		os.Exit(1)
 	}
 }

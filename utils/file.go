@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
 )
 
 func Abs(base, path string) (string, error) {

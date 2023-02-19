@@ -9,8 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-
-func hasCorrectRepoDir()(bool){
+func hasCorrectRepoDir() bool {
 	isDir := utils.IsDir(repoDir)
 	hasGitDir := utils.Exists(fmt.Sprint(path.Join(repoDir, ".git")))
 	//fmt.Println(isDir)
@@ -27,12 +26,12 @@ func cloneCmd() *cobra.Command {
 		Args:    cobra.ExactArgs(1),
 		Aliases: []string{"init"},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if hasCorrectRepoDir(){
-				gitCmd := utils.MakeCmd("git","-C", repoDir ,"pull")
-				if err := gitCmd.Run(); err !=nil{
+			if hasCorrectRepoDir() {
+				gitCmd := utils.MakeCmd("git", "-C", repoDir, "pull")
+				if err := gitCmd.Run(); err != nil {
 					return err
 				}
-			}else{
+			} else {
 				cloneFrom := args[0]
 				gitCmd := utils.MakeCmd("git", "clone", cloneFrom, repoDir)
 				if err := gitCmd.Run(); err != nil {
@@ -40,12 +39,12 @@ func cloneCmd() *cobra.Command {
 				}
 			}
 
-			if hasCorrectRepoDir(){
+			if hasCorrectRepoDir() {
 				fmt.Println("リポジトリを取得しました。\nsetコマンドを用いて同期を開始してください。")
-			}else{
+			} else {
 				return errors.New("何らかの理由でリポジトリを初期化できませんでした")
 			}
-			
+
 			return nil
 		},
 	}

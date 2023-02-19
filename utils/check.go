@@ -6,7 +6,6 @@ import (
 	"strings"
 )
 
-
 // 文字列が正常なディレクトリへのパスかどうかを確認します
 func IsDir(path string) bool {
 	if f, err := os.Stat(path); os.IsNotExist(err) || !f.IsDir() {
