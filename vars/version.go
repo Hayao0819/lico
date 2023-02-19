@@ -6,7 +6,10 @@ type verInfo struct {
 	Date   string
 }
 
-var version, commit, date string
+var version string = "Unknown"
+var commit string = "Unknown"
+var date  string = "Unknown"
+
 
 var Version = verInfo{
 	Name:   version,
