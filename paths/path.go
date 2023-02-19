@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/Hayao0819/lico/utils"
+	"path/filepath"
 )
 
 // いくつかのメソッドを持ったファイルパス
@@ -19,6 +20,12 @@ func (path *Path) Stat() (os.FileInfo, error) {
 func (path *Path) Abs(base string) (Path, error) {
 	str, err := utils.Abs(base, string(*path))
 	return New(str), err
+}
+
+// ファイルの相対パスを返します
+func (path *Path)Rel(base string)(Path, error){
+	rel, err := filepath.Rel(base, path.String())
+	return New(rel), err
 }
 
 // パスを文字列に変換
