@@ -44,6 +44,9 @@ case "${mode}" in
         go mod tidy
         gofmt -l -w .
         ;;
+    "newcmd")
+        go run -- "$script_path/tools/main.go" newcmd "$script_path/misc/cmd.go.template" "${script_path}/cmd/${1}.go" "$1"
+        ;;
     "")
         exit 1
         ;;

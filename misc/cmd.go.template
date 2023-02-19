@@ -1,0 +1,29 @@
+package cmd
+
+import (
+	//"fmt"
+
+	"github.com/spf13/cobra"
+	//"github.com/Hayao0819/lico/utils"
+	//"github.com/Hayao0819/lico/conf"
+	//"github.com/Hayao0819/lico/vars"
+)
+
+func {{.Name}}Cmd() *cobra.Command {
+	cmd := cobra.Command{
+		Use:   "{{.Name}}",
+		Short: "短い説明",
+		Long: `長い説明`,
+		Args: cobra.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+
+			return nil
+		},
+	}
+
+	return &cmd
+}
+
+func init() {
+	root.AddCommand({{.Name}}Cmd())
+}
