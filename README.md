@@ -14,7 +14,7 @@ Licoはシンプルで軽量なDotfilesマネージャーです。全てのフ�
 
 ## Special Thanks
 
-- [まちかどまぞく](https://www.tbs.co.jp/anime/machikado/)
+- [まちカドまぞく](https://www.tbs.co.jp/anime/machikado/)
 - [ssh0/dot](https://github.com/ssh0/dot)
 - [mazen160/go-random](https://github.com/mazen160/go-random)
 - [spf13/cobra](https://github.com/spf13/cobra)
