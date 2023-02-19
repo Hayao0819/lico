@@ -38,7 +38,7 @@ func rootCmd() *cobra.Command {
 	cmd.PersistentFlags().StringVarP(&listFile, "list", "l", "~/.lico/lico.list", "ファイルリストを指定します")
 	cmd.PersistentFlags().StringVarP(&repoDir, "repo", "r", "~/.lico/repo", "リポジトリディレクトリを指定します")
 	cmd.Flags().BoolVarP(&licoOpt, "lico", "", licoOpt, "")
-	cmd.PersistentFlags().MarkHidden("shamiko")
+	cmd.Flags().MarkHidden("lico")
 
 	return cmd
 }
