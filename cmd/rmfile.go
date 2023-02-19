@@ -13,9 +13,9 @@ import (
 
 func rmFileCmd() *cobra.Command {
 	cmd := cobra.Command{
-		Use:     "rmfile [ファイル]",
-		Short:   "リポジトリからファイルを削除します",
-		Long:    `リポジトリからファイルを削除します。リンクも一緒に削除されます。
+		Use:   "rmfile [ファイル]",
+		Short: "リポジトリからファイルを削除します",
+		Long: `リポジトリからファイルを削除します。リンクも一緒に削除されます。
 ファイルパスの指定にはリンクと実ファイルの両方を用いることができます。`,
 		Args:    cobra.MinimumNArgs(1),
 		Aliases: []string{},

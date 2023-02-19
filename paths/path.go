@@ -23,7 +23,7 @@ func (path *Path) Abs(base string) (Path, error) {
 }
 
 // ファイルの相対パスを返します
-func (path *Path)Rel(base string)(Path, error){
+func (path *Path) Rel(base string) (Path, error) {
 	rel, err := filepath.Rel(base, path.String())
 	return New(rel), err
 }

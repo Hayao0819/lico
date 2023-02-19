@@ -13,33 +13,32 @@ import (
 )
 
 // listCmd represents the list command
-func listCmd()(*cobra.Command){
+func listCmd() *cobra.Command {
 	absPathMode := false
 	relPathMode := false
 	rawTextMode := false
-	
-	listSeparator := " ==> "
 
+	listSeparator := " ==> "
 
 	cmd := cobra.Command{
 		Use:   "list",
 		Short: "ドットファイルの一覧を表示",
 		Long:  ``,
-		RunE:  func (cmd *cobra.Command, args []string) error {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			// 引数チェック
-			trueN := func(b ...bool)(int){
-				c:=0
-				for _,v := range b{
-					if v{
+			trueN := func(b ...bool) int {
+				c := 0
+				for _, v := range b {
+					if v {
 						c++
 					}
 				}
 				return c
 			}(absPathMode, relPathMode, rawTextMode)
-			if trueN ==0{
+			if trueN == 0 {
 				// デフォルト動作
-				rawTextMode=true
-			}else if trueN >= 2{
+				rawTextMode = true
+			} else if trueN >= 2 {
 				return errors.New("multiple output methods specified")
 			}
 
@@ -50,8 +49,8 @@ func listCmd()(*cobra.Command){
 			}
 
 			for _, entry := range *list {
-				if rawTextMode{
-					fmt.Printf("%v%v%v\n", entry.RepoPath, listSeparator,entry.HomePath)
+				if rawTextMode {
+					fmt.Printf("%v%v%v\n", entry.RepoPath, listSeparator, entry.HomePath)
 					continue
 				}
 
@@ -65,30 +64,30 @@ func listCmd()(*cobra.Command){
 				}
 
 				parsedAbsRepoPath, err := formatRepoPath(parsedRepoPath)
-				if err !=nil{
+				if err != nil {
 					return err
 				}
 				parsedAbsHomePath, err := formatHomePath(parsedHomePath)
-				if err !=nil{
+				if err != nil {
 					return err
 				}
 
-				if absPathMode{
-					fmt.Printf("%v%v%v\n", parsedAbsRepoPath, listSeparator ,parsedAbsHomePath)
+				if absPathMode {
+					fmt.Printf("%v%v%v\n", parsedAbsRepoPath, listSeparator, parsedAbsHomePath)
 					continue
 				}
 
-				if relPathMode{
+				if relPathMode {
 					parsedRelRepoPath, err := parsedAbsRepoPath.Rel(vars.RepoPathBase)
-					if err !=nil{
+					if err != nil {
 						return err
 					}
 
 					parsedRelHomePath, err := parsedAbsHomePath.Rel(vars.HomePathBase)
-					if err!=nil{
+					if err != nil {
 						return err
 					}
-					fmt.Printf("%v%v%v\n", parsedRelRepoPath,listSeparator , parsedRelHomePath)
+					fmt.Printf("%v%v%v\n", parsedRelRepoPath, listSeparator, parsedRelHomePath)
 					continue
 				}
 
@@ -104,11 +103,9 @@ func listCmd()(*cobra.Command){
 	cmd.Flags().BoolVarP(&rawTextMode, "raw", "w", rawTextMode, "テンプレートを解釈せず、生の値をそのまま表示")
 	cmd.Flags().StringVarP(&listSeparator, "sep", "", listSeparator, "リストの区切り文字を指定")
 
-
 	return &cmd
 }
 
 func init() {
 	root.AddCommand(listCmd())
 }
-

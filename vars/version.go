@@ -8,8 +8,7 @@ type verInfo struct {
 
 var version string = "Unknown"
 var commit string = "Unknown"
-var date  string = "Unknown"
-
+var date string = "Unknown"
 
 var Version = verInfo{
 	Name:   version,
