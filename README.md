@@ -1,5 +1,9 @@
 ## Lico - シンプルで軽量なDotfilesマネージャー
 
+![](https://img.shields.io/tokei/lines/github/Hayao0819/lico?style=flat-square)
+![](https://img.shields.io/github/license/Hayao0819/lico?style=flat-square)
+
+
 Licoはシンプルで軽量なDotfilesマネージャーです。全てのファイルをGitで管理し、自由なファイル構造を維持できます。
 
 このツールは[ssh0/dot](https://github.com/ssh0/dot)に影響を受けて開発されています。
