@@ -4,7 +4,48 @@ import (
 	"encoding/base64"
 
 	random "github.com/mazen160/go-random"
+	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/conf"
+	"github.com/Hayao0819/lico/vars"
+	p "github.com/Hayao0819/lico/paths"
+	"path"
+	"fmt"
 )
+
+
+func hasCorrectRepoDir() bool {
+	isDir := utils.IsDir(repoDir)
+	hasGitDir := utils.Exists(fmt.Sprint(path.Join(repoDir, ".git")))
+	//fmt.Println(isDir)
+	//fmt.Println(hasGitDir)
+	return isDir || hasGitDir
+}
+
+func formatHomePath(path *p.Path)(*p.Path, error){
+	var err error
+	var rtn p.Path
+
+	if rtn, err = conf.Format(string(*path)); err !=nil{
+		return nil, err
+	}
+	if rtn, err = rtn.Abs(vars.HomePathBase); err !=nil{
+		return nil, err
+	}
+	return &rtn, nil
+}
+
+func formatRepoPath(path *p.Path)(*p.Path, error){
+	var err error
+	var rtn p.Path
+
+	if rtn, err = conf.Format(string(*path)); err !=nil{
+		return nil, err
+	}
+	if rtn, err = rtn.Abs(vars.RepoPathBase); err !=nil{
+		return nil, err
+	}
+	return &rtn, nil
+}
 
 func lico() string {
 	list := []string{
@@ -22,3 +63,5 @@ func lico() string {
 
 	return string(dec)
 }
+
+

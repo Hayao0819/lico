@@ -3,19 +3,10 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"path"
 
 	"github.com/Hayao0819/lico/utils"
 	"github.com/spf13/cobra"
 )
-
-func hasCorrectRepoDir() bool {
-	isDir := utils.IsDir(repoDir)
-	hasGitDir := utils.Exists(fmt.Sprint(path.Join(repoDir, ".git")))
-	//fmt.Println(isDir)
-	//fmt.Println(hasGitDir)
-	return isDir || hasGitDir
-}
 
 func cloneCmd() *cobra.Command {
 	cmd := cobra.Command{

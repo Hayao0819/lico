@@ -28,11 +28,11 @@ func runList(cmd *cobra.Command, args []string) error {
 	}
 
 	for _, entry := range *list {
-		parsedRepoPath, err := conf.Format(string(entry.RepoPath))
+		parsedRepoPath, err := formatRepoPath(&entry.RepoPath)
 		if err != nil {
 			return err
 		}
-		parsedHomePath, err := conf.Format(string(entry.HomePath))
+		parsedHomePath, err := formatHomePath(&entry.HomePath)
 		if err != nil {
 			return err
 		}
