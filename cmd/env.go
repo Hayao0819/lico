@@ -32,7 +32,7 @@ func envCmd() *cobra.Command {
 					fmt.Println(key)
 				}
 			} else if len(args) == 0 {
-				for _, key:= range keys {
+				for _, key := range keys {
 					fmt.Printf("%v = %v\n", key, env[key])
 				}
 			} else if len(args) == 1 {
