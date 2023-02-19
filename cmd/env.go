@@ -25,13 +25,15 @@ func envCmd() *cobra.Command {
 				return err
 			}
 
+			keys := env.GetSortedKeys()
+
 			if showOnlyKey {
-				for _, key := range env.GetSortedKeys() {
+				for _, key := range keys {
 					fmt.Println(key)
 				}
 			} else if len(args) == 0 {
-				for index, value := range env {
-					fmt.Printf("%v = %v\n", index, value)
+				for _, key:= range keys {
+					fmt.Printf("%v = %v\n", key, env[key])
 				}
 			} else if len(args) == 1 {
 				for index, value := range env {
