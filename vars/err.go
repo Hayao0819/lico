@@ -3,6 +3,7 @@ package vars
 import (
 	"errors"
 	"os"
+	"fmt"
 )
 
 //import "errors"
@@ -22,3 +23,22 @@ var (
 
 var ErrNotSymlink = errors.New("file is not symlink")
 var ErrLinkToDiffFile = errors.New("link to different file")
+
+// 参考: https://0e0.pw/5SyM
+type fileErr struct{
+	Err error
+	Path string
+}
+
+func (e *fileErr) Error() string {
+    return fmt.Sprintf("%v: %v", e.Path, e.Err.Error())
+}
+
+func ErrNoSuchEntry(path string) *fileErr{
+	err := fileErr{
+		Err: errors.New("no entry which has such path"),
+		Path: path,
+	}
+	return &err
+	
+}
