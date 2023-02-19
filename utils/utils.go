@@ -43,7 +43,7 @@ func MakeCmd(name string, args ...string) *exec.Cmd {
 	return cmd
 }
 
-func RunCmd(name string, args ...string) error{
+func RunCmd(name string, args ...string) error {
 	cmd := MakeCmd(name, args...)
 	return cmd.Run()
 }

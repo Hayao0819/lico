@@ -18,9 +18,6 @@ import (
 // 設定ファイル全体
 type List []Entry
 
-
-
-
 func (item *Entry) String(replace bool) (string, error) {
 	var (
 		repo, home p.Path
@@ -68,9 +65,8 @@ func (list *List) GetItemFromPath(path p.Path) *Entry {
 	return nil
 }
 
-
 // パスがリポジトリファイルに含まれているかどうか
-func (entries *List)HasRepoFile(path p.Path) (bool, error) {
+func (entries *List) HasRepoFile(path p.Path) (bool, error) {
 	for _, entry := range *entries {
 		result, err := p.Is(entry.RepoPath, path)
 		if err != nil {
@@ -84,7 +80,7 @@ func (entries *List)HasRepoFile(path p.Path) (bool, error) {
 }
 
 // パスがホームファイルに含まれているかどうか
-func (entries *List)HasHomeFile(path p.Path) (bool, error) {
+func (entries *List) HasHomeFile(path p.Path) (bool, error) {
 	for _, entry := range *entries {
 		result, err := p.Is(entry.HomePath, path)
 		if err != nil {

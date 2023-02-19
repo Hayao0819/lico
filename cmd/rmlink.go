@@ -22,37 +22,37 @@ func rmLinkCmd() *cobra.Command {
 			// Get List
 			var list *conf.List
 			var err error
-			if list, err = conf.ReadConf(listFile); err !=nil{
+			if list, err = conf.ReadConf(listFile); err != nil {
 				return err
 			}
 
 			// エラーリスト
 			var errList []error
 
-			for _, arg := range args{
-				targetPath  := p.New(arg)
+			for _, arg := range args {
+				targetPath := p.New(arg)
 				targetEntry := list.GetItemFromPath(targetPath)
-				if targetEntry == nil{
-					errList =append(errList, vars.ErrNoSuchEntry(arg))
-				}else{
+				if targetEntry == nil {
+					errList = append(errList, vars.ErrNoSuchEntry(arg))
+				} else {
 					//abs, err := targetEntry.HomePath.Abs(vars.HomePathBase)
 					abs, err := formatHomePath(&targetEntry.HomePath)
-					if err !=nil{
+					if err != nil {
 						errList = append(errList, err)
 					}
-					if err := os.Remove(abs.String()); err!=nil{
+					if err := os.Remove(abs.String()); err != nil {
 						errList = append(errList, err)
 					}
 				}
 			}
 
 			// 最終処理
-			if len(errList)==0{
+			if len(errList) == 0 {
 				return nil
-			}else{
-				errStringList := func()([]string){
+			} else {
+				errStringList := func() []string {
 					var rtn []string
-					for _, err := range errList{
+					for _, err := range errList {
 						rtn = append(rtn, err.Error())
 					}
 					return rtn
@@ -60,7 +60,6 @@ func rmLinkCmd() *cobra.Command {
 				return errors.New(strings.Join(errStringList, "\n"))
 			}
 		},
-
 	}
 
 	return &cmd

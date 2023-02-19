@@ -3,15 +3,14 @@ package cmd
 import (
 	"encoding/base64"
 
-	random "github.com/mazen160/go-random"
-	"github.com/Hayao0819/lico/utils"
-	"github.com/Hayao0819/lico/conf"
-	"github.com/Hayao0819/lico/vars"
-	p "github.com/Hayao0819/lico/paths"
-	"path"
 	"fmt"
+	"github.com/Hayao0819/lico/conf"
+	p "github.com/Hayao0819/lico/paths"
+	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
+	random "github.com/mazen160/go-random"
+	"path"
 )
-
 
 func hasCorrectRepoDir() bool {
 	isDir := utils.IsDir(repoDir)
@@ -21,27 +20,27 @@ func hasCorrectRepoDir() bool {
 	return isDir || hasGitDir
 }
 
-func formatHomePath(path *p.Path)(*p.Path, error){
+func formatHomePath(path *p.Path) (*p.Path, error) {
 	var err error
 	var rtn p.Path
 
-	if rtn, err = conf.Format(string(*path)); err !=nil{
+	if rtn, err = conf.Format(string(*path)); err != nil {
 		return nil, err
 	}
-	if rtn, err = rtn.Abs(vars.HomePathBase); err !=nil{
+	if rtn, err = rtn.Abs(vars.HomePathBase); err != nil {
 		return nil, err
 	}
 	return &rtn, nil
 }
 
-func formatRepoPath(path *p.Path)(*p.Path, error){
+func formatRepoPath(path *p.Path) (*p.Path, error) {
 	var err error
 	var rtn p.Path
 
-	if rtn, err = conf.Format(string(*path)); err !=nil{
+	if rtn, err = conf.Format(string(*path)); err != nil {
 		return nil, err
 	}
-	if rtn, err = rtn.Abs(vars.RepoPathBase); err !=nil{
+	if rtn, err = rtn.Abs(vars.RepoPathBase); err != nil {
 		return nil, err
 	}
 	return &rtn, nil
@@ -63,5 +62,3 @@ func lico() string {
 
 	return string(dec)
 }
-
-

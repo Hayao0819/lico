@@ -96,5 +96,3 @@ func (entry *Entry) CheckSymLink() error {
 
 	return nil
 }
-
-
