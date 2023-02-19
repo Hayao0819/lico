@@ -29,8 +29,8 @@ func addCmd() *cobra.Command {
 			}
 
 			// Entryに既に登録されていないか確認
-			hasHomeFile, _ := conf.HasHomeFile(list, entry.HomePath)   //Todo: 存在しない場合に作成
-			hasRepoFile, err := conf.HasRepoFile(list, entry.RepoPath) //Todo: 存在しない場合に作成
+			hasHomeFile, _ := list.HasHomeFile(entry.HomePath)   //Todo: 存在しない場合に作成
+			hasRepoFile, err := list.HasRepoFile(entry.RepoPath) //Todo: 存在しない場合に作成
 			if err != nil {
 				return err
 			}

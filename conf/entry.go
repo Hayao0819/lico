@@ -97,30 +97,4 @@ func (entry *Entry) CheckSymLink() error {
 	return nil
 }
 
-// パスがリポジトリファイルに含まれているかどうか
-func HasRepoFile(entries *List, path p.Path) (bool, error) {
-	for _, entry := range *entries {
-		result, err := p.Is(entry.RepoPath, path)
-		if err != nil {
-			continue
-		}
-		if result {
-			return true, nil
-		}
-	}
-	return false, nil
-}
 
-// パスがホームファイルに含まれているかどうか
-func HasHomeFile(entries *List, path p.Path) (bool, error) {
-	for _, entry := range *entries {
-		result, err := p.Is(entry.HomePath, path)
-		if err != nil {
-			continue
-		}
-		if result {
-			return true, nil
-		}
-	}
-	return false, nil
-}
