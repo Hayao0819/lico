@@ -43,6 +43,11 @@ func MakeCmd(name string, args ...string) *exec.Cmd {
 	return cmd
 }
 
+func RunCmd(name string, args ...string) error{
+	cmd := MakeCmd(name, args...)
+	return cmd.Run()
+}
+
 /*
 func MergeMap(m ...map[string]interface{}) map[string]interface{} {
     ans := make(map[string]interface{}, 0)
