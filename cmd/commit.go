@@ -28,11 +28,15 @@ func commitCmd() *cobra.Command {
 			if ! utils.IsEmpty(gitflags){
 				gitArgs = append(gitArgs, gitflags)
 			}
+			if err = utils.RunCmd("git" , append(gitArgs, "add", "-A")...); err !=nil{
+				return err
+			}
 			if len(args)==0{
-				if err = utils.RunCmd("git" , append(gitArgs, "add", "-A")...); err !=nil{
+				if err = utils.RunCmd("git", append(gitArgs, "commit")...); err !=nil{
 					return err
 				}
-				if err = utils.RunCmd("git", append(gitArgs, "commit")...); err !=nil{
+			}else{
+				if err = utils.RunCmd("git" , append(gitArgs, "commit", "-m", args[0])...); err !=nil{
 					return err
 				}
 			}
