@@ -19,22 +19,22 @@ func commitCmd() *cobra.Command {
 		Long: `設定ファイルの変更をコミットします`,
 		Args: cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return nil
-
 			if !hasCorrectRepoDir(){
 				fmt.Fprintln(os.Stderr, "リポジトリがありません。cloneコマンドを用いて初期化してください。")
 			}
 
 			var err error
+			gitArgs := []string{"-C", repoDir}
+			if ! utils.IsEmpty(gitflags){
+				gitArgs = append(gitArgs, gitflags)
+			}
 			if len(args)==0{
-				if err = utils.RunCmd("git","-c", repoDir ,"add", "-A", gitflags); err !=nil{
+				if err = utils.RunCmd("git" , append(gitArgs, "add", "-A")...); err !=nil{
 					return err
 				}
-
-				if err = utils.RunCmd("git","-c", repoDir ,"commit", gitflags); err !=nil{
+				if err = utils.RunCmd("git", append(gitArgs, "commit")...); err !=nil{
 					return err
 				}
-
 			}
 			return nil
 		},
