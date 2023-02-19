@@ -16,7 +16,7 @@ func pullCmd() *cobra.Command {
 		Args:    cobra.NoArgs,
 		Aliases: []string{"init"},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if hasCorrectRepoDir() {
+			if !hasCorrectRepoDir() {
 				fmt.Fprintln(os.Stderr, "リポジトリがありません。cloneコマンドを用いて初期化してください。")
 
 			} else {
