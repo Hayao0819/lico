@@ -34,7 +34,7 @@ func (entry *Entry) ExistsRepoPath() bool {
 }
 
 // リンクを作成する
-func (entry *Entry) MakeSymLink(homeBasePath string, repoBasePath string) error {
+func (entry *Entry) MakeSymLink(homeBasePath, repoBasePath string) error {
 	// ホームパス
 	var link p.Path
 	if linkF, err := entry.HomePath.Abs(homeBasePath); err != nil {
