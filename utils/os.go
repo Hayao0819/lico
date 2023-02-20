@@ -42,6 +42,17 @@ func getEnvVars() map[string]string {
 	return rtn
 }
 
+func (o *osEnv) Add(key, value string) *osEnv {
+	m := *o
+	m[key] = value
+	return (*osEnv)(&m)
+}
+
+func (o *osEnv) Get(key string) string {
+	m := *o
+	return m[key]
+}
+
 // Linux特有のディレクトリ情報
 var LinuxDirs osEnv = func() osEnv {
 	env := newOSEnv()
