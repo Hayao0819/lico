@@ -60,3 +60,9 @@ func MergeMap(m ...map[string]interface{}) map[string]interface{} {
     return ans
 }
 */
+
+
+func GetHomeDir()(string){
+	homedir, _ := os.UserHomeDir()
+	return homedir
+}

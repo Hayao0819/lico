@@ -10,11 +10,6 @@ import (
 
 func Abs(base, path string) (string, error) {
 	var err error
-	// OS情報を取得
-	osinfo, err := GetOSEnv()
-	if err != nil {
-		return path, err
-	}
 
 	currentDir, err := os.Getwd()
 	if err != nil {
@@ -30,7 +25,7 @@ func Abs(base, path string) (string, error) {
 	}
 
 	// 変換
-	path = strings.Replace(path, "~", osinfo["Home"], 1)
+	path = strings.Replace(path, "~", GetHomeDir(), 1)
 	path, err = filepath.Abs(path)
 	if err != nil {
 		return path, err
