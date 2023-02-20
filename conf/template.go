@@ -8,7 +8,7 @@ import (
 	"github.com/Hayao0819/lico/utils"
 )
 
-func ReplaceToTemplate(path string) (p.Path, error) {
+func replaceToTemplate(path string) (p.Path, error) {
 	var parsed p.Path
 	dirInfo, err := utils.GetOSEnv()
 	if err != nil {

@@ -25,12 +25,12 @@ func (item *Entry) String(replace bool) (string, error) {
 	var err error
 
 	if replace {
-		repo, err = ReplaceToTemplate(item.RepoPath.String())
+		repo, err = replaceToTemplate(item.RepoPath.String())
 		if err != nil {
 			return "", err
 		}
 
-		home, err = ReplaceToTemplate(item.HomePath.String())
+		home, err = replaceToTemplate(item.HomePath.String())
 		if err != nil {
 			return "", err
 		}
