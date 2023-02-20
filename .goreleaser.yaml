@@ -44,6 +44,30 @@ changelog:
       - '^docs:'
       - '^test:'
 
+brews:
+  -
+    name: lico
+    tap:
+      owner: Hayao0819
+      name: homebrew-tap
+      branch: master
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    license: "MIT"
+    folder: Formula
+    url_template: "https://github.com/Hayao0819/lico/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    commit_author:
+      name: hayao
+      email: hayao@fascode.net
+    homepage: "https://github.com/Hayao0819/lico"
+    description: "CLI tool for managing dotfiles"
+    test: |
+      system "#{bin}/lico help"
+    install: |
+      bin.install "lico
+    dependencies:
+      - name: git
+
+
 # The lines beneath this are called `modelines`. See `:help modeline`
 # Feel free to remove those if you don't want/use them.
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json

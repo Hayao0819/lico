@@ -65,6 +65,10 @@ case "${mode}" in
     "newcmd")
         go run -- "$script_path/tools/main.go" newcmd "$script_path/misc/cmd.go.template" "${script_path}/cmd/${1}.go" "$1"
         ;;
+    "release")
+        check_cmd "goreleaser"
+        goreleaser release --snapshot --clean
+        ;;
     *)
         echo "No such command"
         call_myself ""
