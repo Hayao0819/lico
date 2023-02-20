@@ -15,10 +15,9 @@ type osEnv map[string]string
 
 // 新しいosEnvを生成します
 func newOSEnv() osEnv {
-	homedir, _ := os.UserHomeDir()
 	user, _ := user.Current()
 	env := map[string]string{
-		"Home":     homedir,
+		"Home":     GetHomeDir(),
 		"OS":       "",
 		"UserName": user.Username,
 	}
