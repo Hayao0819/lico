@@ -4,15 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Hayao0819/lico/utils"
 	"github.com/spf13/cobra"
 )
 
-
-var repoDir string = "~/.lico/repo"
-var listFile string = "~/.lico/lico.list"
-var homeDir string
-var repoPathBase, homePathBase string
 
 var root *cobra.Command = rootCmd()
 
@@ -43,32 +37,6 @@ func rootCmd() *cobra.Command {
 	cmd.Flags().MarkHidden("lico")
 
 	return cmd
-}
-
-func common() error {
-	// 重要なパスを正規化
-	var err error
-	listFile, err = utils.Abs("", listFile)
-	if err != nil {
-		return err
-	}
-	//fmt.Printf("リスト: %v\n", listFile)
-
-	repoDir, err = utils.Abs("", repoDir)
-	if err != nil {
-		return err
-	}
-	//fmt.Printf("リポジトリ: %v\n", repoDir)
-
-	homeDir, err=os.UserHomeDir()
-	if err != nil {
-		return err
-	}
-
-	homePathBase = homeDir
-	repoPathBase = repoDir
-
-	return nil
 }
 
 // コマンドを実行します
