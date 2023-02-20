@@ -8,6 +8,8 @@ import (
 	"runtime"
 	"sort"
 	"strings"
+
+	"github.com/Hayao0819/lico/vars"
 )
 
 // OS依存の情報を保持します
@@ -86,8 +88,8 @@ func GetOSEnv() (osEnv, error) {
 			return env, errors.New("unsupported os")
 	}
 
-	env.Add("Repo", "") //この2つの参照方法を考える
-	env.Add("List", "") //
+	env.Add("Repo", vars.RepoDir)
+	env.Add("List", vars.HomeDir)
 	return env, nil
 }
 
