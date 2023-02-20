@@ -21,7 +21,7 @@ func hasCorrectRepoDir() bool {
 	return isDir || hasGitDir
 }
 
-func runCmd(f func()(*cobra.Command), args ...string) error {
+func runCmd(f func() *cobra.Command, args ...string) error {
 	return f().RunE(f(), args)
 }
 

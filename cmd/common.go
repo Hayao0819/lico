@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"os"
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
+	"os"
 )
 
 var repoDir *string = &vars.RepoDir
@@ -11,8 +11,6 @@ var listFile *string = &vars.ListFile
 var homeDir *string = &vars.HomeDir
 var repoPathBase *string = &vars.RepoPathBase
 var homePathBase *string = &vars.HomePathBase
-
-
 
 func common() error {
 	// 重要なパスを正規化
@@ -29,7 +27,7 @@ func common() error {
 	}
 	//fmt.Printf("リポジトリ: %v\n", repoDir)
 
-	vars.HomeDir, err=os.UserHomeDir()
+	vars.HomeDir, err = os.UserHomeDir()
 	if err != nil {
 		return err
 	}

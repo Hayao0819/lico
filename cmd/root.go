@@ -7,7 +7,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-
 var root *cobra.Command = rootCmd()
 
 func rootCmd() *cobra.Command {
@@ -23,7 +22,7 @@ func rootCmd() *cobra.Command {
 テンプレート記法を用いて柔軟な設定が可能です。`,
 		SilenceUsage: true, //コマンド失敗時に使い方を表示しない
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if showVersion{
+			if showVersion {
 				return runCmd(versionCmd)
 			}
 
