@@ -22,7 +22,7 @@ func rmLinkCmd() *cobra.Command {
 			// Get List
 			var list *conf.List
 			var err error
-			if list, err = conf.ReadConf(listFile); err != nil {
+			if list, err = conf.ReadConf(*listFile); err != nil {
 				return err
 			}
 

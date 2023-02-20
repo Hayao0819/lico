@@ -42,7 +42,7 @@ func listCmd() *cobra.Command {
 				return errors.New("multiple output methods specified")
 			}
 
-			list, err := conf.ReadConf(listFile)
+			list, err := conf.ReadConf(*listFile)
 			if err != nil {
 				//fmt.Fprintln(os.Stderr, err)
 				return err
@@ -78,12 +78,12 @@ func listCmd() *cobra.Command {
 				}
 
 				if relPathMode {
-					parsedRelRepoPath, err := parsedAbsRepoPath.Rel(repoPathBase)
+					parsedRelRepoPath, err := parsedAbsRepoPath.Rel(*repoPathBase)
 					if err != nil {
 						return err
 					}
 
-					parsedRelHomePath, err := parsedAbsHomePath.Rel(homePathBase)
+					parsedRelHomePath, err := parsedAbsHomePath.Rel(*homePathBase)
 					if err != nil {
 						return err
 					}

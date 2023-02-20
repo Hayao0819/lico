@@ -21,7 +21,7 @@ func setCmd() *cobra.Command {
 もし不正なファイルが設定されていた場合、そのファイルは無視して続行されます。
 `,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			list, err := conf.ReadConf(listFile)
+			list, err := conf.ReadConf(*listFile)
 			var errlist []error
 			if err != nil {
 				return err
@@ -31,7 +31,7 @@ func setCmd() *cobra.Command {
 				if entry.CheckSymLink() == nil {
 					continue
 				}
-				err := entry.MakeSymLink(homePathBase, repoPathBase)
+				err := entry.MakeSymLink(*homePathBase, *repoPathBase)
 				if err != nil {
 					errlist = append(errlist, err)
 				}

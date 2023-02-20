@@ -26,7 +26,7 @@ func unlinkCmd() *cobra.Command {
 		Aliases: []string{"unregister"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Entry一覧を生成
-			list, err := conf.ReadConf(listFile)
+			list, err := conf.ReadConf(*listFile)
 			if err != nil {
 				return err
 			}
@@ -39,7 +39,7 @@ func unlinkCmd() *cobra.Command {
 			}
 
 			if !noEditListMode {
-				if err = utils.CommentOut(listFile, targetItem.Index); err != nil {
+				if err = utils.CommentOut(*listFile, targetItem.Index); err != nil {
 					return err
 				}
 			}

@@ -23,7 +23,7 @@ func addCmd() *cobra.Command {
 			entry := conf.NewEntry(p.New(args[0]), p.New(args[1]))
 
 			// Entry一覧を生成
-			list, err := conf.ReadConf(listFile)
+			list, err := conf.ReadConf(*listFile)
 			if err != nil {
 				return err
 			}
@@ -40,7 +40,7 @@ func addCmd() *cobra.Command {
 			}
 
 			// ファイル一覧に追記
-			lf, err := os.OpenFile(listFile, os.O_APPEND|os.O_WRONLY, 0600)
+			lf, err := os.OpenFile(*listFile, os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
 				return err
 			}

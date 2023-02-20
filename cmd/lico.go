@@ -13,8 +13,8 @@ import (
 )
 
 func hasCorrectRepoDir() bool {
-	isDir := utils.IsDir(repoDir)
-	hasGitDir := utils.Exists(fmt.Sprint(path.Join(repoDir, ".git")))
+	isDir := utils.IsDir(*repoDir)
+	hasGitDir := utils.Exists(fmt.Sprint(path.Join(*repoDir, ".git")))
 	//fmt.Println(isDir)
 	//fmt.Println(hasGitDir)
 	return isDir || hasGitDir
@@ -27,7 +27,7 @@ func formatHomePath(path *p.Path) (*p.Path, error) {
 	if rtn, err = conf.Format(string(*path)); err != nil {
 		return nil, err
 	}
-	if rtn, err = rtn.Abs(homePathBase); err != nil {
+	if rtn, err = rtn.Abs(*homePathBase); err != nil {
 		return nil, err
 	}
 	return &rtn, nil
@@ -40,7 +40,7 @@ func formatRepoPath(path *p.Path) (*p.Path, error) {
 	if rtn, err = conf.Format(string(*path)); err != nil {
 		return nil, err
 	}
-	if rtn, err = rtn.Abs(repoPathBase); err != nil {
+	if rtn, err = rtn.Abs(*repoPathBase); err != nil {
 		return nil, err
 	}
 	return &rtn, nil

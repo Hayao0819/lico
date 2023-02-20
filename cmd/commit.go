@@ -23,7 +23,7 @@ func commitCmd() *cobra.Command {
 			}
 
 			var err error
-			gitArgs := []string{"-C", repoDir}
+			gitArgs := []string{"-C", *repoDir}
 			if !utils.IsEmpty(gitflags) {
 				gitArgs = append(gitArgs, gitflags)
 			}
