@@ -1,8 +1,13 @@
 ## Licoを導入する
 
 ### インストール
+
+事前に`git`, `go`, `goreleaser`, `make`がインストールされている必要があります。
+
 ```bash
-go install github.com/Hayao0819/lico@latest
+git clone https://github.com/Hayao0819/lico.git
+cd lico
+sudo make install
 ```
 
 ### リポジトリを作成する

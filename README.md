@@ -10,7 +10,8 @@ Licoはシンプルで軽量なDotfilesマネージャーです。全てのフ�
 
 ## 使い方
 
-[インストール方法](./docs/install.md)を参照してください。
+- [インストール](./docs/install.md)
+- [設定](./docs/config.md)
 
 ## Special Thanks
 
