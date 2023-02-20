@@ -73,17 +73,22 @@ var WindowsDirs osEnv = func() osEnv {
 	return env
 }()
 
-func GetOSEnv() (osEnv, error) {
+func GetOSEnv() (osEnv, error) {	
+	var env osEnv
 	switch runtime.GOOS {
-	case "windows":
-		return WindowsDirs, nil
-	case "linux":
-		return LinuxDirs, nil
-	case "darwin":
-		return MacDirs, nil
-	default:
-		return newOSEnv(), errors.New("unsupported os")
+		case "windows":
+			env=WindowsDirs
+		case "linux":
+			env=LinuxDirs
+		case "darwin":
+			env=MacDirs
+		default:
+			return env, errors.New("unsupported os")
 	}
+
+	env.Add("Repo", "") //この2つの参照方法を考える
+	env.Add("List", "") //
+	return env, nil
 }
 
 func (env *osEnv) GetKeys() []string {
