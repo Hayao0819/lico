@@ -53,7 +53,6 @@ brews:
       branch: master
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     license: "MIT"
-    folder: Formula
     url_template: "https://github.com/Hayao0819/lico/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
     commit_author:
       name: hayao
