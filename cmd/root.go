@@ -5,12 +5,13 @@ import (
 	"os"
 
 	"github.com/Hayao0819/lico/utils"
-	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 )
 
-var listFile string
-var repoDir string
+var repoPathBase string
+var homePathBase string
+var repoDir string = "~/.lico/repo"
+var listFile string = "~/.lico/lico.list"
 
 var root *cobra.Command = rootCmd()
 
@@ -35,8 +36,8 @@ func rootCmd() *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&listFile, "list", "l", "~/.lico/lico.list", "ファイルリストを指定します")
-	cmd.PersistentFlags().StringVarP(&repoDir, "repo", "r", "~/.lico/repo", "リポジトリディレクトリを指定します")
+	cmd.PersistentFlags().StringVarP(&listFile, "list", "l", listFile, "ファイルリストを指定します")
+	cmd.PersistentFlags().StringVarP(&repoDir, "repo", "r", repoDir, "リポジトリディレクトリを指定します")
 	cmd.Flags().BoolVarP(&licoOpt, "lico", "", licoOpt, "")
 	cmd.Flags().MarkHidden("lico")
 
@@ -58,11 +59,18 @@ func common() error {
 	}
 	//fmt.Printf("リポジトリ: %v\n", repoDir)
 
-	// 定数を初期化
-	err = vars.Init(repoDir)
+	homePathBase, err = func() (string, error) {
+		osinfo, err := utils.GetOSEnv()
+		if err != nil {
+			return "", err
+		}
+		return osinfo["Home"], nil
+	}()
 	if err != nil {
 		return err
 	}
+
+	repoPathBase = repoDir
 
 	return nil
 }

@@ -8,7 +8,7 @@ import (
 	//"os"
 
 	"github.com/Hayao0819/lico/conf"
-	"github.com/Hayao0819/lico/vars"
+	//"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 )
 
@@ -78,12 +78,12 @@ func listCmd() *cobra.Command {
 				}
 
 				if relPathMode {
-					parsedRelRepoPath, err := parsedAbsRepoPath.Rel(vars.RepoPathBase)
+					parsedRelRepoPath, err := parsedAbsRepoPath.Rel(repoPathBase)
 					if err != nil {
 						return err
 					}
 
-					parsedRelHomePath, err := parsedAbsHomePath.Rel(vars.HomePathBase)
+					parsedRelHomePath, err := parsedAbsHomePath.Rel(homePathBase)
 					if err != nil {
 						return err
 					}

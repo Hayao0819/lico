@@ -4,12 +4,12 @@ import (
 	"encoding/base64"
 
 	"fmt"
+	"path"
+
 	"github.com/Hayao0819/lico/conf"
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
-	"github.com/Hayao0819/lico/vars"
 	random "github.com/mazen160/go-random"
-	"path"
 )
 
 func hasCorrectRepoDir() bool {
@@ -27,7 +27,7 @@ func formatHomePath(path *p.Path) (*p.Path, error) {
 	if rtn, err = conf.Format(string(*path)); err != nil {
 		return nil, err
 	}
-	if rtn, err = rtn.Abs(vars.HomePathBase); err != nil {
+	if rtn, err = rtn.Abs(homePathBase); err != nil {
 		return nil, err
 	}
 	return &rtn, nil
@@ -40,7 +40,7 @@ func formatRepoPath(path *p.Path) (*p.Path, error) {
 	if rtn, err = conf.Format(string(*path)); err != nil {
 		return nil, err
 	}
-	if rtn, err = rtn.Abs(vars.RepoPathBase); err != nil {
+	if rtn, err = rtn.Abs(homePathBase); err != nil {
 		return nil, err
 	}
 	return &rtn, nil
