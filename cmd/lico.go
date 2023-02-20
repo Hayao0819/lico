@@ -40,7 +40,7 @@ func formatRepoPath(path *p.Path) (*p.Path, error) {
 	if rtn, err = conf.Format(string(*path)); err != nil {
 		return nil, err
 	}
-	if rtn, err = rtn.Abs(homePathBase); err != nil {
+	if rtn, err = rtn.Abs(repoPathBase); err != nil {
 		return nil, err
 	}
 	return &rtn, nil
