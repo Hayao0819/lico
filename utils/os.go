@@ -89,7 +89,7 @@ func GetOSEnv() (osEnv, error) {
 	}
 
 	env.Add("Repo", vars.RepoDir)
-	env.Add("List", vars.HomeDir)
+	env.Add("List", vars.ListFile)
 	return env, nil
 }
 
