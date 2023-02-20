@@ -25,9 +25,11 @@ func runCmd(f func()(*cobra.Command), args ...string) error {
 	return f().RunE(f(), args)
 }
 
+/*
 func runCmdVar(c *cobra.Command, args ...string) error {
 	return c.RunE(c, args)
 }
+*/
 
 func formatHomePath(path *p.Path) (*p.Path, error) {
 	var err error
