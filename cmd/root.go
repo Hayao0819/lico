@@ -8,10 +8,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var repoPathBase string
-var homePathBase string
+
 var repoDir string = "~/.lico/repo"
 var listFile string = "~/.lico/lico.list"
+var homeDir string
+var repoPathBase, homePathBase string
 
 var root *cobra.Command = rootCmd()
 
@@ -59,17 +60,12 @@ func common() error {
 	}
 	//fmt.Printf("リポジトリ: %v\n", repoDir)
 
-	homePathBase, err = func() (string, error) {
-		osinfo, err := utils.GetOSEnv()
-		if err != nil {
-			return "", err
-		}
-		return osinfo["Home"], nil
-	}()
+	homeDir, err=os.UserHomeDir()
 	if err != nil {
 		return err
 	}
 
+	homePathBase = homeDir
 	repoPathBase = repoDir
 
 	return nil
