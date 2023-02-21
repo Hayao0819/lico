@@ -18,14 +18,10 @@ func cloneCmd() *cobra.Command {
 		Aliases: []string{"init"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if hasCorrectRepoDir() {
-				gitCmd := utils.MakeCmd("git", "-C", *repoDir, "pull")
-				if err := gitCmd.Run(); err != nil {
-					return err
-				}
+				runCmd(pullCmd)
 			} else {
 				cloneFrom := args[0]
-				gitCmd := utils.MakeCmd("git", "clone", cloneFrom, *repoDir)
-				if err := gitCmd.Run(); err != nil {
+				if err := utils.RunCmd("git", "clone", cloneFrom, *repoDir); err != nil {
 					return err
 				}
 			}
