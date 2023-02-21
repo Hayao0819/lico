@@ -35,17 +35,27 @@ func ForEachStop(arr []interface{}, runFunc func(int, interface{})(error))(error
 }
 */
 
-func MakeCmd(name string, args ...string) *exec.Cmd {
+
+func RunCmd(name string, args ...string) error {
 	cmd := exec.Command(name, args...)
 	cmd.Stderr = os.Stderr
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
-	return cmd
+	return cmd.Run()
 }
 
-func RunCmd(name string, args ...string) error {
-	cmd := MakeCmd(name, args...)
-	return cmd.Run()
+func RunCmdAndGetStdout(name string, args ...string) ([]string, error){
+	cmd := exec.Command(name, args...)
+	//cmd.Stderr = os.Stderr
+	//cmd.Stdin = os.Stdin
+	res, err := cmd.CombinedOutput()
+	return func(res []byte)([]string){
+		s:=[]string{}
+		for _,r := range res{
+			s = append(s, string(r))
+		}
+		return s
+	}(res), err
 }
 
 /*
