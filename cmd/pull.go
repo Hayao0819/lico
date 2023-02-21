@@ -18,10 +18,8 @@ func pullCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if !hasCorrectRepoDir() {
 				fmt.Fprintln(os.Stderr, "リポジトリがありません。cloneコマンドを用いて初期化してください。")
-
 			} else {
-				gitCmd := utils.MakeCmd("git", "-C", *repoDir, "pull")
-				if err := gitCmd.Run(); err != nil {
+				if err := utils.RunCmd("git", "-C", *repoDir, "pull"); err != nil {
 					return err
 				}
 			}
