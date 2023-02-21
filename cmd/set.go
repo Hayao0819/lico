@@ -31,7 +31,7 @@ func setCmd() *cobra.Command {
 				if entry.CheckSymLink() == nil {
 					continue
 				}
-				err := entry.MakeSymLink(*homePathBase, *repoPathBase)
+				err := entry.MakeSymLink()
 				if err != nil {
 					errlist = append(errlist, err)
 				}
