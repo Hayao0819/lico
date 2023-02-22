@@ -24,3 +24,5 @@
 - [ ] ソースコードの整理
   - [ ] `conf.ReadConf`の引数を削除し、`vars.ListFile`を用いる
   - [ ] `cmd.formatRepoPath`と`cmd.formatHomePath`を`conf`に移動
+- [ ] statusコマンドで見れる情報を増やす
+- [ ] statusコマンドを見やすくする
