@@ -1,6 +1,6 @@
-## Licoを導入する
+## インストール
 
-### インストール
+### makeを用いる
 
 事前に`git`, `go`, `goreleaser`, `make`がインストールされている必要があります。
 
@@ -10,23 +10,26 @@ cd lico
 sudo make install
 ```
 
-### リポジトリを作成する
+### Go Modules でインストール
 
-設定ファイルを含んだGitリポジトリを作成してください。
-
-その後、リポジトリ内の設定ファイルとホームディレクトリでの関係を記述した`lico.list`を作成してください。
-
-`lico.list`の書き方は[こちら](./config.md)を参照してください。
-
-
-
-### リポジトリを登録し、適用する
-
-リポジトリを作成したら、licoにリポジトリを登録します。
-
-`set`コマンドでシンボリックリンクを作成します。
+事前に`go`がインストールされている必要があります。
 
 ```bash
-lico init <repository>
-lico set
+go install github.com/Hayao0819/lico@HEAD
 ```
+
+### バイナリをダウンロードする
+
+#### Linux , macOSの場合
+
+このスクリプトはWindowsでは動作しません
+
+```bash
+sudo sh -c "$(curl -L https://raw.githubusercontent.com/Hayao0819/lico/master/dl.sh)"
+```
+
+#### Windowsの場合
+
+現在準備中
+
+
