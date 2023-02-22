@@ -56,6 +56,6 @@ mkdir -p "$tmpdir"
 curl -f -L -o "$tmpdir/archive.tar.gz" "$url"
 
 # Extract and install
-tar xvf "$tmpdir/archive.tar.gz"
+tar xvf "$tmpdir/archive.tar.gz" -C "$tmpdir"
 sudo cp "$tmpdir/lico" "$dest"
 echo "lico has been installed in $dest" >&2
