@@ -1,8 +1,11 @@
 package utils
 
 import (
+	"bytes"
 	"os"
 	"os/exec"
+	"strings"
+
 	//"strings"
 	"sort"
 )
@@ -44,18 +47,28 @@ func RunCmd(name string, args ...string) error {
 	return cmd.Run()
 }
 
-func RunCmdAndGetStdout(name string, args ...string) ([]string, error){
+func RunCmdAndGet(name string, args ...string) ([]string, []string ,error){
 	cmd := exec.Command(name, args...)
-	//cmd.Stderr = os.Stderr
-	//cmd.Stdin = os.Stdin
-	res, err := cmd.CombinedOutput()
-	return func(res []byte)([]string){
-		s:=[]string{}
-		for _,r := range res{
-			s = append(s, string(r))
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+
+	err := cmd.Run()
+	
+	si, sr := func (s, r bytes.Buffer)([]string, []string){
+		rtn := [2][]string{}
+		for i, b := range []bytes.Buffer{s, r}{
+			rtn[i]=func(b bytes.Buffer)([]string){
+				return strings.Split(b.String(), "\n") 
+			}(b)
 		}
-		return s
-	}(res), err
+		
+		return rtn[0], rtn[1]
+	}(stdout, stderr)
+
+	return si, sr, err
 }
 
 /*

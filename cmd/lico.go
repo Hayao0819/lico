@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"encoding/base64"
+	"os"
 
 	"fmt"
 	"path"
@@ -9,6 +10,7 @@ import (
 	"github.com/Hayao0819/lico/conf"
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
 	random "github.com/mazen160/go-random"
 	"github.com/spf13/cobra"
 )
@@ -72,4 +74,29 @@ func lico() string {
 	dec, _ := base64.StdEncoding.DecodeString(list[i])
 
 	return string(dec)
+}
+
+
+func getRepoUrl()([]string, error){
+	if ! hasCorrectRepoDir(){
+		return []string{}, vars.ErrNoRepoDir
+	}
+
+	remoteList, stderr, err := utils.RunCmdAndGet("git", "-C", *repoDir, "remote", "show")
+	if err !=nil{
+		fmt.Fprintln(os.Stderr, stderr)
+		return []string{}, err
+	}
+
+
+	urlList :=[]string{}
+	for _, r:= range remoteList{
+		u,stderr ,err := utils.RunCmdAndGet("git", "-C", *repoDir, "config", "--get", fmt.Sprintf("remote.%v.url", r))
+		if err !=nil{
+			fmt.Fprintln(os.Stderr, stderr)
+			return []string{}, err
+		}
+		urlList = append(urlList, u[0])
+	}
+	return urlList, err
 }

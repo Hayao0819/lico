@@ -21,3 +21,6 @@
   - [ ] pacmanパッケージを作成する
   - [ ] homebrewパッケージを作成する
     - [なぞのエラーで動かない](https://twitter.com/Hayao0819/status/1627668181992222721)
+- [ ] ソースコードの整理
+  - [ ] `conf.ReadConf`の引数を削除し、`vars.ListFile`を用いる
+  - [ ] `cmd.formatRepoPath`と`cmd.formatHomePath`を`conf`に移動
