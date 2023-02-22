@@ -38,7 +38,6 @@ func ForEachStop(arr []interface{}, runFunc func(int, interface{})(error))(error
 }
 */
 
-
 func RunCmd(name string, args ...string) error {
 	cmd := exec.Command(name, args...)
 	cmd.Stderr = os.Stderr
@@ -47,7 +46,7 @@ func RunCmd(name string, args ...string) error {
 	return cmd.Run()
 }
 
-func RunCmdAndGet(name string, args ...string) ([]string, []string ,error){
+func RunCmdAndGet(name string, args ...string) ([]string, []string, error) {
 	cmd := exec.Command(name, args...)
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
@@ -56,15 +55,15 @@ func RunCmdAndGet(name string, args ...string) ([]string, []string ,error){
 	cmd.Stderr = &stderr
 
 	err := cmd.Run()
-	
-	si, sr := func (s, r bytes.Buffer)([]string, []string){
+
+	si, sr := func(s, r bytes.Buffer) ([]string, []string) {
 		rtn := [2][]string{}
-		for i, b := range []bytes.Buffer{s, r}{
-			rtn[i]=func(b bytes.Buffer)([]string){
-				return strings.Split(b.String(), "\n") 
+		for i, b := range []bytes.Buffer{s, r} {
+			rtn[i] = func(b bytes.Buffer) []string {
+				return strings.Split(b.String(), "\n")
 			}(b)
 		}
-		
+
 		return rtn[0], rtn[1]
 	}(stdout, stderr)
 

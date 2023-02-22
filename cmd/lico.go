@@ -76,23 +76,21 @@ func lico() string {
 	return string(dec)
 }
 
-
-func getRepoUrl()([]string, error){
-	if ! hasCorrectRepoDir(){
+func getRepoUrl() ([]string, error) {
+	if !hasCorrectRepoDir() {
 		return []string{}, vars.ErrNoRepoDir
 	}
 
 	remoteList, stderr, err := utils.RunCmdAndGet("git", "-C", *repoDir, "remote", "show")
-	if err !=nil{
+	if err != nil {
 		fmt.Fprintln(os.Stderr, stderr)
 		return []string{}, err
 	}
 
-
-	urlList :=[]string{}
-	for _, r:= range remoteList{
-		u,stderr ,err := utils.RunCmdAndGet("git", "-C", *repoDir, "config", "--get", fmt.Sprintf("remote.%v.url", r))
-		if err !=nil{
+	urlList := []string{}
+	for _, r := range remoteList {
+		u, stderr, err := utils.RunCmdAndGet("git", "-C", *repoDir, "config", "--get", fmt.Sprintf("remote.%v.url", r))
+		if err != nil {
 			fmt.Fprintln(os.Stderr, stderr)
 			return []string{}, err
 		}

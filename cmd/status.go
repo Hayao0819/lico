@@ -14,16 +14,16 @@ import (
 
 func statusCmd() *cobra.Command {
 
-	showInitilizedStatus := func()error{
+	showInitilizedStatus := func() error {
 		repoDirStatus := hasCorrectRepoDir()
-		if repoDirStatus{
+		if repoDirStatus {
 			fmt.Println("リポジトリ同期済み")
-			url , err := getRepoUrl()
-			if err !=nil{
+			url, err := getRepoUrl()
+			if err != nil {
 				return err
 			}
 			fmt.Println(url)
-			
+
 		}
 		return nil
 	}
@@ -43,7 +43,7 @@ func statusCmd() *cobra.Command {
 			fmt.Println(stdin[0])
 			fmt.Println(stderr[0])
 			fmt.Println(err)
-			
+
 			return showInitilizedStatus()
 			//return nil
 		},

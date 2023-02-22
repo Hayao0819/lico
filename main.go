@@ -1,8 +1,8 @@
 package main
 
 import (
-	"os"
 	"github.com/Hayao0819/lico/cmd"
+	"os"
 )
 
 func main() {
