@@ -25,4 +25,9 @@
   - [ ] `conf.ReadConf`の引数を削除し、`vars.ListFile`を用いる
   - [ ] `cmd.formatRepoPath`と`cmd.formatHomePath`を`conf`に移動
 - [ ] statusコマンドで見れる情報を増やす
+  - [x] コンフィグが設定済みか
+  - [x] リポジトリディレクトリ、設定ファイルのパス
+  - [x] リモートリポジトリのURL
+  - 他にほしい情報があったら追記する
 - [ ] statusコマンドを見やすくする
+  - [ ] [これ](https://github.com/jedib0t/go-pretty)を使って見やすいモードを追加する
