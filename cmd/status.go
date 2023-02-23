@@ -4,29 +4,40 @@ import (
 	//"fmt"
 
 	"fmt"
+	"os"
 
-	"github.com/Hayao0819/lico/utils"
+	//"github.com/Hayao0819/lico/utils"
 	"github.com/spf13/cobra"
 	//"github.com/Hayao0819/lico/utils"
 	//"github.com/Hayao0819/lico/conf"
 	//"github.com/Hayao0819/lico/vars"
 )
 
+func showTextStatus() error {
+	// ディレクトリ
+	fmt.Printf("ConfigCloned=%v\n", hasCorrectRepoDir())
+
+	// リポジトリパス
+	fmt.Printf("RepoDir=%v\n", *repoDir)
+
+	// リストファイル
+	fmt.Printf("ListFile=%v\n", *listFile)
+
+	// リポジトリ
+	if repoList , err := getRepoUrl(); err ==nil{
+		fmt.Printf("RemoteList=%v\n", repoList)
+	}else{
+		fmt.Fprintln(os.Stderr, err)
+	}
+
+	// 
+	
+	return nil
+}
+
 func statusCmd() *cobra.Command {
 
-	showInitilizedStatus := func() error {
-		repoDirStatus := hasCorrectRepoDir()
-		if repoDirStatus {
-			fmt.Println("リポジトリ同期済み")
-			url, err := getRepoUrl()
-			if err != nil {
-				return err
-			}
-			fmt.Println(url)
-
-		}
-		return nil
-	}
+	var textMode = true
 
 	cmd := cobra.Command{
 		Use:   "status",
@@ -39,15 +50,15 @@ func statusCmd() *cobra.Command {
 ・現在の環境変数`,
 		Args: cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			stdin, stderr, err := utils.RunCmdAndGet("sh", "-c", "echo My-stdout; echo My-stderr 1>&2")
-			fmt.Println(stdin[0])
-			fmt.Println(stderr[0])
-			fmt.Println(err)
-
-			return showInitilizedStatus()
-			//return nil
+			if textMode{
+				return showTextStatus()
+			}else{
+				return nil
+			}
 		},
 	}
+
+	cmd.Flags().BoolVarP(&textMode, "text", "t", textMode,"テキストモード")
 
 	return &cmd
 }
