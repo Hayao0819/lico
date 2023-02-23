@@ -89,6 +89,9 @@ func getRepoUrl() ([]string, error) {
 
 	urlList := []string{}
 	for _, r := range remoteList {
+		if utils.IsEmpty(r){
+			continue
+		}
 		u, stderr, err := utils.RunCmdAndGet("git", "-C", *repoDir, "config", "--get", fmt.Sprintf("remote.%v.url", r))
 		if err != nil {
 			fmt.Fprintln(os.Stderr, stderr)
