@@ -11,33 +11,70 @@ import (
 	//"github.com/Hayao0819/lico/utils"
 	//"github.com/Hayao0819/lico/conf"
 	//"github.com/Hayao0819/lico/vars"
+	"github.com/jedib0t/go-pretty/v6/table"
 )
 
-func showTextStatus() error {
+
+type status struct{
+	key string
+	value interface{}
+}
+
+func loadStatus () []status{
+	r := []status{}
+
 	// ディレクトリ
-	fmt.Printf("ConfigCloned=%v\n", hasCorrectRepoDir())
+	r = append(r, status{key: "ConfigCloned", value: hasCorrectRepoDir()})
 
 	// リポジトリパス
-	fmt.Printf("RepoDir=%v\n", *repoDir)
+	r = append(r, status{key: "RepoDir", value: *repoDir})
 
 	// リストファイル
-	fmt.Printf("ListFile=%v\n", *listFile)
+	r = append(r, status{key: "ListFile", value: *listFile})
 
 	// リポジトリ
 	if repoList , err := getRepoUrl(); err ==nil{
-		fmt.Printf("RemoteList=%v\n", repoList)
+		r = append(r, status{key: "RemoteList", value: repoList})
 	}else{
 		fmt.Fprintln(os.Stderr, err)
 	}
 
-	// 
-	
+	return r
+}
+
+func (s *status) string() string{
+	return fmt.Sprintf("%v=%v\n", s.key, s.value)
+}
+
+func showTextStatus() error{
+	for _, s := range loadStatus(){
+		fmt.Print(s.string())
+	}
+	return nil
+}
+
+func showTableStatus() error{
+/*
+	----------------------------
+	|   ConfigCloned   |  true  |
+	|   RepoDir        |  hoge  |
+	-----------------------------
+
+*/
+
+	t := table.NewWriter()
+	for _, s := range loadStatus(){
+		t.AppendRow(table.Row{s.key, s.value})
+	}
+
+	fmt.Println(t.Render())
+
 	return nil
 }
 
 func statusCmd() *cobra.Command {
 
-	var textMode = true
+	var textMode = false
 
 	cmd := cobra.Command{
 		Use:   "status",
@@ -53,7 +90,8 @@ func statusCmd() *cobra.Command {
 			if textMode{
 				return showTextStatus()
 			}else{
-				return nil
+
+				return showTableStatus()
 			}
 		},
 	}

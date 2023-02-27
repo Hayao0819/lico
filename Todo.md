@@ -31,3 +31,6 @@
   - 他にほしい情報があったら追記する
 - [ ] statusコマンドを見やすくする
   - [ ] [これ](https://github.com/jedib0t/go-pretty)を使って見やすいモードを追加する
+    - [x] 最低限の表
+    - [ ] 色付きの表
+- [ ] [これ](https://qiita.com/tkit/items/3cdeafcde2bd98612428)でいい感じにする
