@@ -6,36 +6,48 @@ import (
 	"fmt"
 	"os"
 
-	//"github.com/Hayao0819/lico/utils"
-	//"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/conf"
+	"github.com/Hayao0819/lico/utils"
 	"github.com/spf13/cobra"
-	//"github.com/Hayao0819/lico/utils"
-	//"github.com/Hayao0819/lico/conf"
+
 	//"github.com/Hayao0819/lico/vars"
 	"github.com/jedib0t/go-pretty/v6/table"
+	"github.com/jedib0t/go-pretty/v6/text"
 )
 
 type status struct {
 	key   string
 	value interface{}
+	desc string
+}
+
+func newStatus (key string, value interface{}, desc string)status{
+	return status{key: key, value: value, desc: desc}
 }
 
 func loadStatus() ([]status, error) {
 	r := []status{}
 
 	// ディレクトリ
-	r = append(r, status{key: "ConfigCloned", value: hasCorrectRepoDir()})
+	//r = append(r, status{key: "ConfigCloned", value: hasCorrectRepoDir()})
+	r = append(r, newStatus("ConfigCloned", hasCorrectRepoDir(), "Dotfilesリポジトリが配置済みかどうか"))
 
 	// リポジトリパス
-	r = append(r, status{key: "RepoDir", value: *repoDir})
+	//r = append(r, status{key: "RepoDir", value: *repoDir})
+	r=append(r, newStatus("RepoDir", *repoDir, "Dotfilesリポジトリのパス"))
+
+	//リポジトリパスがシンボリックリンクかどうか
+	//r= append(r, status{key: "IsSymlink", value: utils.IsSymlink(*repoDir)})
+	r = append(r, newStatus("IsSymlink", utils.IsSymlink(*repoDir), "RepoDirがシンボリックリンクかどうか"))
 
 	// リストファイル
-	r = append(r, status{key: "ListFile", value: *listFile})
+	//r = append(r, status{key: "ListFile", value: *listFile})
+	r = append(r, newStatus("ListFile", *listFile, "リストファイルのパス"))
 
 	// リポジトリ
 	if repoList, err := getRepoUrl(); err == nil {
-		r = append(r, status{key: "RemoteList", value: repoList})
+		//r = append(r, status{key: "RemoteList", value: repoList})
+		r = append(r, newStatus("RemoteList", repoList, "Dotfilesを管理しているリモートリポジトリ"))
 	} else {
 		fmt.Fprintln(os.Stderr, err)
 	}
@@ -54,9 +66,14 @@ func loadStatus() ([]status, error) {
 		}
 	}
 
-	r = append(r, status{key: "FileNum", value: len(*list)})
-	r = append(r, status{key: "ConfiguredLink", value: configuredLink})
-	r = append(r, status{key: "MissingLink", value: missingLink})
+	//r = append(r, status{key: "FileNum", value: len(*list)})
+	//r = append(r, status{key: "ConfiguredLink", value: configuredLink})
+	//r = append(r, status{key: "MissingLink", value: missingLink})
+	r = append(r, 
+		newStatus("FileNum", len(*list), "登録されてるリンクの数(OSによって変化する場合があります)"),
+		newStatus("ConfiguredLink", configuredLink, "適切に配置されているリンクの数"),
+		newStatus("MissingLink", missingLink, "まだ設定されていないリンクの数"),
+	)
 
 	return r, nil
 }
@@ -92,9 +109,17 @@ func showTableStatus() error {
 	}
 
 	t := table.NewWriter()
+	t.AppendHeader(table.Row{"Key", "Desc" ,"Value"})
 	for _, s := range slist {
-		t.AppendRow(table.Row{s.key, s.value})
+		t.AppendRow(table.Row{s.key, s.desc,s.value})
 	}
+	t.SetStyle(table.StyleBold)
+	t.SetColumnConfigs([]table.ColumnConfig{
+		{Name: "Key", AlignHeader: text.AlignCenter,},
+		{Name: "Desc", AlignHeader: text.AlignCenter},
+		{Name: "Value", AlignHeader: text.AlignCenter},
+
+	})
 
 	fmt.Println(t.Render())
 
