@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Hayao0819/lico/utils"
 	"github.com/spf13/cobra"
 	//"github.com/Hayao0819/lico/utils"
 	//"github.com/Hayao0819/lico/conf"
@@ -36,7 +37,13 @@ func rmrepoCmd() *cobra.Command {
 				}
 			}
 
-			if err := os.RemoveAll(*repoDir); err != nil {
+			if err := func()error{
+				if utils.IsSymlink(*repoDir){
+					return os.Remove(*repoDir)
+				}else{
+					return os.RemoveAll(*repoDir)
+				}
+			}(); err != nil {
 				return err
 			}
 
