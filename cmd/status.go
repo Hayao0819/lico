@@ -7,6 +7,7 @@ import (
 	"os"
 
 	//"github.com/Hayao0819/lico/utils"
+	//"github.com/Hayao0819/lico/utils"
 	"github.com/spf13/cobra"
 	//"github.com/Hayao0819/lico/utils"
 	//"github.com/Hayao0819/lico/conf"
@@ -54,11 +55,12 @@ func showTextStatus() error {
 
 func showTableStatus() error {
 	/*
-		----------------------------
-		|   ConfigCloned   |  true  |
-		|   RepoDir        |  hoge  |
-		-----------------------------
-
+		+--------------+-----------------------------------------------------------------------+
+		| ConfigCloned | true                                                                  |
+		| RepoDir      | /Users/hayao/.lico/repo                                               |
+		| ListFile     | /Users/hayao/.lico/lico.list                                          |
+		| RemoteList   | [git@github.com:Hayao0819/lico.git git@github.com:Hayao0819/dotfiles] |
+		+--------------+-----------------------------------------------------------------------+
 	*/
 
 	t := table.NewWriter()
