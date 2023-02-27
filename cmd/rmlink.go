@@ -12,24 +12,46 @@ import (
 )
 
 func rmLinkCmd() *cobra.Command {
+	rmAll := false
+
 	cmd := cobra.Command{
 		Use:     "rmlink [ファイル]",
 		Short:   "リンクを削除します",
 		Long:    `ホームディレクトリからリンクを削除します。管理ディレクトリ内から実体を削除することはありません。`,
-		Args:    cobra.MinimumNArgs(1),
+		Args:    func(cmd *cobra.Command, args []string) error {
+			if rmAll{
+				if err := cobra.NoArgs(cmd, args); err !=nil{
+					return err
+				}
+			}else{
+				if err := cobra.MinimumNArgs(1)(cmd, args); err !=nil{
+					return err
+				}
+			}
+			return nil
+		},
 		Aliases: []string{},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// Get List
 			var list *conf.List
 			var err error
+			var rmList []string
+			var errList []error
 			if list, err = conf.ReadConf(*listFile); err != nil {
 				return err
 			}
 
-			// エラーリスト
-			var errList []error
+			if rmAll{
+				// rmAllで警告を出したい
+				for _, i := range *list{
+					rmList = append(rmList, i.HomePath.String())
+				}
+			}else{
+				rmList=args
+			}
+			
 
-			for _, arg := range args {
+			for _, arg := range rmList {
 				targetPath := p.New(arg)
 				targetEntry := list.GetItemFromPath(targetPath)
 				if targetEntry == nil {
@@ -61,6 +83,8 @@ func rmLinkCmd() *cobra.Command {
 			}
 		},
 	}
+
+	cmd.Flags().BoolVarP(&rmAll, "all", "", rmAll, "全てのリンクを削除します")
 
 	return &cmd
 }
