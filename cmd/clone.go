@@ -3,12 +3,15 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/Hayao0819/lico/utils"
 	"github.com/spf13/cobra"
 )
 
 func cloneCmd() *cobra.Command {
+	localPathMode := false
+
 	cmd := cobra.Command{
 		Use:   "clone GitURL",
 		Short: "設定ファイルリポジトリを取得します",
@@ -18,12 +21,17 @@ func cloneCmd() *cobra.Command {
 		Aliases: []string{"init"},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if hasCorrectRepoDir() {
-				runCmd(pullCmd)
-			} else {
-				cloneFrom := args[0]
-				if err := utils.RunCmd("git", "clone", cloneFrom, *repoDir); err != nil {
-					return err
-				}
+				return runCmd(pullCmd)
+			}
+
+			cloneFrom := args[0]
+
+			if localPathMode{
+				return fmt.Errorf("(まだ実装して)ないです。")
+			}
+
+			if err := utils.RunCmd("git", "clone", cloneFrom, *repoDir); err != nil {
+				return err
 			}
 
 			if hasCorrectRepoDir() {
@@ -35,6 +43,8 @@ func cloneCmd() *cobra.Command {
 			return nil
 		},
 	}
+
+	cmd.Flags().BoolVarP(&localPathMode, "local", "", localPathMode, "ローカルディレクトリをリポジトリとして使う")
 
 	return &cmd
 }
