@@ -14,14 +14,14 @@ func gitCmd() *cobra.Command {
 	cmd := cobra.Command{
 		Use:   "git [git args]...",
 		Short: "gitを実行する",
-		Long: `設定ファイルリポジトリ内でGitコマンドを実行します`,
-		Args: cobra.ArbitraryArgs,
+		Long:  `設定ファイルリポジトリ内でGitコマンドを実行します`,
+		Args:  cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if !hasCorrectRepoDir(){
+			if !hasCorrectRepoDir() {
 				return vars.ErrNoRepoDir
 			}
 
-			return utils.RunCmd("git" , append([]string{"-C", *repoDir}, args...)...)
+			return utils.RunCmd("git", append([]string{"-C", *repoDir}, args...)...)
 		},
 	}
 

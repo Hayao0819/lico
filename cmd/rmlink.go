@@ -15,16 +15,16 @@ func rmLinkCmd() *cobra.Command {
 	rmAll := false
 
 	cmd := cobra.Command{
-		Use:     "rmlink [ファイル]",
-		Short:   "リンクを削除します",
-		Long:    `ホームディレクトリからリンクを削除します。管理ディレクトリ内から実体を削除することはありません。`,
-		Args:    func(cmd *cobra.Command, args []string) error {
-			if rmAll{
-				if err := cobra.NoArgs(cmd, args); err !=nil{
+		Use:   "rmlink [ファイル]",
+		Short: "リンクを削除します",
+		Long:  `ホームディレクトリからリンクを削除します。管理ディレクトリ内から実体を削除することはありません。`,
+		Args: func(cmd *cobra.Command, args []string) error {
+			if rmAll {
+				if err := cobra.NoArgs(cmd, args); err != nil {
 					return err
 				}
-			}else{
-				if err := cobra.MinimumNArgs(1)(cmd, args); err !=nil{
+			} else {
+				if err := cobra.MinimumNArgs(1)(cmd, args); err != nil {
 					return err
 				}
 			}
@@ -41,15 +41,14 @@ func rmLinkCmd() *cobra.Command {
 				return err
 			}
 
-			if rmAll{
+			if rmAll {
 				// rmAllで警告を出したい
-				for _, i := range *list{
+				for _, i := range *list {
 					rmList = append(rmList, i.HomePath.String())
 				}
-			}else{
-				rmList=args
+			} else {
+				rmList = args
 			}
-			
 
 			for _, arg := range rmList {
 				targetPath := p.New(arg)

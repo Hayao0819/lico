@@ -26,14 +26,16 @@ func cloneCmd() *cobra.Command {
 
 			cloneFrom := args[0]
 
-			if localPathMode{
+			if localPathMode {
 				return fmt.Errorf("(まだ実装して)ないです。")
-				
+
 				// リポジトリを削除
 				// Todo: シンボリックリンクを貼った後にrmrepoを実行すると実体を削除してしまう問題を修正する
 				os.RemoveAll(*repoDir)
-				if err := os.Symlink(cloneFrom, *repoDir); err !=nil{return err}
-			}else if err := utils.RunCmd("git", "clone", cloneFrom, *repoDir); err != nil {
+				if err := os.Symlink(cloneFrom, *repoDir); err != nil {
+					return err
+				}
+			} else if err := utils.RunCmd("git", "clone", cloneFrom, *repoDir); err != nil {
 				return err
 			}
 

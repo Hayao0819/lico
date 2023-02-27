@@ -42,14 +42,14 @@ func loadStatus() ([]status, error) {
 
 	// 設定済みリンクの数
 	list, err := conf.ReadConf(*listFile)
-	if err !=nil{
+	if err != nil {
 		return []status{}, err
 	}
 	var configuredLink, missingLink int
-	for _,l:= range *list{
-		if e := l.CheckSymLink(); e==nil{
+	for _, l := range *list {
+		if e := l.CheckSymLink(); e == nil {
 			configuredLink++
-		}else{
+		} else {
 			missingLink++
 		}
 	}
@@ -66,8 +66,8 @@ func (s *status) string() string {
 }
 
 func showTextStatus() error {
-	slist , err := loadStatus()
-	if err !=nil{
+	slist, err := loadStatus()
+	if err != nil {
 		return err
 	}
 	for _, s := range slist {
@@ -86,8 +86,8 @@ func showTableStatus() error {
 		+--------------+-----------------------------------------------------------------------+
 	*/
 
-	slist , err := loadStatus()
-	if err !=nil{
+	slist, err := loadStatus()
+	if err != nil {
 		return err
 	}
 

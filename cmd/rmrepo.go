@@ -21,22 +21,22 @@ func rmrepoCmd() *cobra.Command {
 リンクの削除も行わないので、注意してください。`,
 		Args: cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if ! noConfirm{
+			if !noConfirm {
 				p := promptui.Select{
 					Label: fmt.Sprintf("%vを削除します。よろしいですか？", *repoDir),
 					Items: []string{"Yes", "No"},
 				}
 				_, selected, err := p.Run()
-				if err !=nil{
+				if err != nil {
 					return err
 				}
 
-				if selected!="Yes"{
+				if selected != "Yes" {
 					return nil
 				}
 			}
 
-			if err := os.RemoveAll(*repoDir); err!=nil{
+			if err := os.RemoveAll(*repoDir); err != nil {
 				return err
 			}
 
