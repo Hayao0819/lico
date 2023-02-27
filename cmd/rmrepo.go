@@ -12,6 +12,7 @@ import (
 )
 
 func rmrepoCmd() *cobra.Command {
+	noConfirm := false
 	cmd := cobra.Command{
 		Use:   "rmrepo",
 		Short: "リポジトリを削除します",
@@ -20,8 +21,6 @@ func rmrepoCmd() *cobra.Command {
 リンクの削除も行わないので、注意してください。`,
 		Args: cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			noConfirm := false
-			
 			if ! noConfirm{
 				p := promptui.Select{
 					Label: fmt.Sprintf("%vを削除します。よろしいですか？", *repoDir),
@@ -46,6 +45,8 @@ func rmrepoCmd() *cobra.Command {
 			return nil
 		},
 	}
+
+	cmd.Flags().BoolVarP(&noConfirm, "noconfirm", "", false, "確認を行いません")
 
 	return &cmd
 }
