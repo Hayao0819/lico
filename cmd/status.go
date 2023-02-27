@@ -25,8 +25,9 @@ func newStatus (key string, value interface{}, desc string)status{
 	return status{key: key, value: value, desc: desc}
 }
 
-func loadStatus() ([]status, error) {
+func loadStatus() ([]status) {
 	r := []status{}
+	errs := []error{}
 
 	// ディレクトリ
 	//r = append(r, status{key: "ConfigCloned", value: hasCorrectRepoDir()})
@@ -49,13 +50,16 @@ func loadStatus() ([]status, error) {
 		//r = append(r, status{key: "RemoteList", value: repoList})
 		r = append(r, newStatus("RemoteList", repoList, "Dotfilesを管理しているリモートリポジトリ"))
 	} else {
-		fmt.Fprintln(os.Stderr, err)
+		//fmt.Fprintln(os.Stderr, err)
+		//return []status{}, err
+		errs=append(errs, err)
 	}
 
 	// 設定済みリンクの数
 	list, err := conf.ReadConf(*listFile)
 	if err != nil {
-		return []status{}, err
+		//return []status{}, err
+		errs=append(errs, err)
 	}
 	var configuredLink, missingLink int
 	for _, l := range *list {
@@ -75,7 +79,13 @@ func loadStatus() ([]status, error) {
 		newStatus("MissingLink", missingLink, "まだ設定されていないリンクの数"),
 	)
 
-	return r, nil
+	if len(errs)>0{
+		for _, e := range errs{
+			fmt.Fprintln(os.Stderr, e)
+		}
+		return r
+	}
+	return r
 }
 
 func (s *status) string() string {
@@ -83,10 +93,7 @@ func (s *status) string() string {
 }
 
 func showTextStatus() error {
-	slist, err := loadStatus()
-	if err != nil {
-		return err
-	}
+	slist := loadStatus()
 	for _, s := range slist {
 		fmt.Print(s.string())
 	}
@@ -103,10 +110,7 @@ func showTableStatus() error {
 		+--------------+-----------------------------------------------------------------------+
 	*/
 
-	slist, err := loadStatus()
-	if err != nil {
-		return err
-	}
+	slist := loadStatus()
 
 	t := table.NewWriter()
 	t.AppendHeader(table.Row{"Key", "Desc" ,"Value"})
@@ -126,6 +130,19 @@ func showTableStatus() error {
 	return nil
 }
 
+
+func showValue(key string)error{
+	slist := loadStatus()
+
+	for _,s := range slist{
+		if s.key==key{
+			fmt.Println(s.value)
+		}
+	}
+
+	return nil
+}
+
 func statusCmd() *cobra.Command {
 
 	var textMode = false
@@ -139,8 +156,13 @@ func statusCmd() *cobra.Command {
 ・同期されていないがリストに存在するファイル
 ・同期されておらず、システムに別のものが存在するファイル
 ・現在の環境変数`,
-		Args: cobra.NoArgs,
+		Args: cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
+
+			if len(args) > 0{
+				return showValue(args[0])
+			}
+
 			if textMode {
 				return showTextStatus()
 			} else {
