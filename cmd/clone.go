@@ -3,6 +3,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/Hayao0819/lico/utils"
 	"github.com/spf13/cobra"
@@ -27,9 +28,12 @@ func cloneCmd() *cobra.Command {
 
 			if localPathMode{
 				return fmt.Errorf("(まだ実装して)ないです。")
-			}
-
-			if err := utils.RunCmd("git", "clone", cloneFrom, *repoDir); err != nil {
+				
+				// リポジトリを削除
+				// Todo: シンボリックリンクを貼った後にrmrepoを実行すると実体を削除してしまう問題を修正する
+				os.RemoveAll(*repoDir)
+				if err := os.Symlink(cloneFrom, *repoDir); err !=nil{return err}
+			}else if err := utils.RunCmd("git", "clone", cloneFrom, *repoDir); err != nil {
 				return err
 			}
 
