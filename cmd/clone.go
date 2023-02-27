@@ -3,7 +3,6 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"os"
 
 	"github.com/Hayao0819/lico/utils"
 	"github.com/spf13/cobra"
