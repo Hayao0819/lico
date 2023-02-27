@@ -8,6 +8,7 @@ import (
 
 	//"github.com/Hayao0819/lico/utils"
 	//"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/conf"
 	"github.com/spf13/cobra"
 	//"github.com/Hayao0819/lico/utils"
 	//"github.com/Hayao0819/lico/conf"
@@ -20,7 +21,7 @@ type status struct {
 	value interface{}
 }
 
-func loadStatus() []status {
+func loadStatus() ([]status, error) {
 	r := []status{}
 
 	// ディレクトリ
@@ -39,7 +40,25 @@ func loadStatus() []status {
 		fmt.Fprintln(os.Stderr, err)
 	}
 
-	return r
+	// 設定済みリンクの数
+	list, err := conf.ReadConf(*listFile)
+	if err !=nil{
+		return []status{}, err
+	}
+	var configuredLink, missingLink int
+	for _,l:= range *list{
+		if e := l.CheckSymLink(); e==nil{
+			configuredLink++
+		}else{
+			missingLink++
+		}
+	}
+
+	r = append(r, status{key: "FileNum", value: len(*list)})
+	r = append(r, status{key: "ConfiguredLink", value: configuredLink})
+	r = append(r, status{key: "MissingLink", value: missingLink})
+
+	return r, nil
 }
 
 func (s *status) string() string {
@@ -47,7 +66,11 @@ func (s *status) string() string {
 }
 
 func showTextStatus() error {
-	for _, s := range loadStatus() {
+	slist , err := loadStatus()
+	if err !=nil{
+		return err
+	}
+	for _, s := range slist {
 		fmt.Print(s.string())
 	}
 	return nil
@@ -63,8 +86,13 @@ func showTableStatus() error {
 		+--------------+-----------------------------------------------------------------------+
 	*/
 
+	slist , err := loadStatus()
+	if err !=nil{
+		return err
+	}
+
 	t := table.NewWriter()
-	for _, s := range loadStatus() {
+	for _, s := range slist {
 		t.AppendRow(table.Row{s.key, s.value})
 	}
 
