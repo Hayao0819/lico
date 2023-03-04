@@ -37,10 +37,10 @@ func rmrepoCmd() *cobra.Command {
 				}
 			}
 
-			if err := func()error{
-				if utils.IsSymlink(*repoDir){
+			if err := func() error {
+				if utils.IsSymlink(*repoDir) {
 					return os.Remove(*repoDir)
-				}else{
+				} else {
 					return os.RemoveAll(*repoDir)
 				}
 			}(); err != nil {

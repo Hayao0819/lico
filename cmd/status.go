@@ -18,14 +18,14 @@ import (
 type status struct {
 	key   string
 	value interface{}
-	desc string
+	desc  string
 }
 
-func newStatus (key string, value interface{}, desc string)status{
+func newStatus(key string, value interface{}, desc string) status {
 	return status{key: key, value: value, desc: desc}
 }
 
-func loadStatus() ([]status) {
+func loadStatus() []status {
 	r := []status{}
 	errs := []error{}
 
@@ -35,7 +35,7 @@ func loadStatus() ([]status) {
 
 	// リポジトリパス
 	//r = append(r, status{key: "RepoDir", value: *repoDir})
-	r=append(r, newStatus("RepoDir", *repoDir, "Dotfilesリポジトリのパス"))
+	r = append(r, newStatus("RepoDir", *repoDir, "Dotfilesリポジトリのパス"))
 
 	//リポジトリパスがシンボリックリンクかどうか
 	//r= append(r, status{key: "IsSymlink", value: utils.IsSymlink(*repoDir)})
@@ -52,14 +52,14 @@ func loadStatus() ([]status) {
 	} else {
 		//fmt.Fprintln(os.Stderr, err)
 		//return []status{}, err
-		errs=append(errs, err)
+		errs = append(errs, err)
 	}
 
 	// 設定済みリンクの数
 	list, err := conf.ReadConf(*listFile)
 	if err != nil {
 		//return []status{}, err
-		errs=append(errs, err)
+		errs = append(errs, err)
 	}
 	var configuredLink, missingLink int
 	for _, l := range *list {
@@ -73,14 +73,14 @@ func loadStatus() ([]status) {
 	//r = append(r, status{key: "FileNum", value: len(*list)})
 	//r = append(r, status{key: "ConfiguredLink", value: configuredLink})
 	//r = append(r, status{key: "MissingLink", value: missingLink})
-	r = append(r, 
+	r = append(r,
 		newStatus("FileNum", len(*list), "登録されてるリンクの数(OSによって変化する場合があります)"),
 		newStatus("ConfiguredLink", configuredLink, "適切に配置されているリンクの数"),
 		newStatus("MissingLink", missingLink, "まだ設定されていないリンクの数"),
 	)
 
-	if len(errs)>0{
-		for _, e := range errs{
+	if len(errs) > 0 {
+		for _, e := range errs {
 			fmt.Fprintln(os.Stderr, e)
 		}
 		return r
@@ -113,16 +113,15 @@ func showTableStatus() error {
 	slist := loadStatus()
 
 	t := table.NewWriter()
-	t.AppendHeader(table.Row{"Key", "Desc" ,"Value"})
+	t.AppendHeader(table.Row{"Key", "Desc", "Value"})
 	for _, s := range slist {
-		t.AppendRow(table.Row{s.key, s.desc,s.value})
+		t.AppendRow(table.Row{s.key, s.desc, s.value})
 	}
 	t.SetStyle(table.StyleBold)
 	t.SetColumnConfigs([]table.ColumnConfig{
-		{Name: "Key", AlignHeader: text.AlignCenter,},
+		{Name: "Key", AlignHeader: text.AlignCenter},
 		{Name: "Desc", AlignHeader: text.AlignCenter},
 		{Name: "Value", AlignHeader: text.AlignCenter},
-
 	})
 
 	fmt.Println(t.Render())
@@ -130,12 +129,11 @@ func showTableStatus() error {
 	return nil
 }
 
-
-func showValue(key string)error{
+func showValue(key string) error {
 	slist := loadStatus()
 
-	for _,s := range slist{
-		if s.key==key{
+	for _, s := range slist {
+		if s.key == key {
 			fmt.Println(s.value)
 		}
 	}
@@ -159,7 +157,7 @@ func statusCmd() *cobra.Command {
 		Args: cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
-			if len(args) > 0{
+			if len(args) > 0 {
 				return showValue(args[0])
 			}
 
