@@ -145,6 +145,12 @@ func Format(path string) (p.Path, error) {
 		"environ": func (n string)(string){
 			return os.Getenv(n)
 		},
+		"isempty": func(s string)(bool){
+			return utils.IsEmpty(s)
+		},
+		"isset": func(key string)(bool){
+			return utils.IsEmpty(os.Getenv(key))
+		},
 	}
 
 	tpl, err := template.New("path").Funcs(funcMap).Parse(path)
