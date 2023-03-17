@@ -1,8 +1,9 @@
 package conf
 
 import (
-	"bufio"
+	//"bufio"
 	"fmt"
+	"path/filepath"
 	"text/template"
 
 	//"errors"
@@ -95,28 +96,22 @@ func (entries *List) HasHomeFile(path p.Path) (bool, error) {
 
 // 設定ファイルを読み込みます
 func ReadConf(path string) (*List, error) {
-	file, err := os.Open(path)
-	if err != nil {
+	// parse config
+	lines, err := FormatTemplate(path)
+	if err !=nil{
 		return nil, err
 	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
 
 	var list List
 	var item Entry
 	var splited []string
 	var repoPath p.Path
 	var homePath p.Path
-	var line string
 
 	commentReg, _ := regexp.Compile("^ *#")
 	emptyReg, _ := regexp.Compile("^ *$")
 
-	lineNo := 0
-	for scanner.Scan() {
-		lineNo++
-		line = scanner.Text()
+	for lineNo, line := range lines {
 
 		if commentReg.MatchString(line) || emptyReg.MatchString(line) {
 			continue
@@ -126,6 +121,8 @@ func ReadConf(path string) (*List, error) {
 		repoPath = p.Path(strings.TrimSpace(splited[0]))
 		homePath = p.Path(strings.TrimSpace(splited[1]))
 
+		//fmt.Println(repoPath+"=="+homePath)
+
 		item = NewEntryWithIndex(repoPath, homePath, lineNo)
 		list = append(list, item)
 	}
@@ -133,8 +130,8 @@ func ReadConf(path string) (*List, error) {
 }
 
 // テンプレートを解析してPathを生成します
-func Format(path string) (p.Path, error) {
-	var parsed p.Path
+func FormatTemplate(path string) ([]string, error) {
+	parsed:=[]string{}
 
 	dirInfo, err := utils.GetOSEnv()
 	if err != nil {
@@ -149,11 +146,11 @@ func Format(path string) (p.Path, error) {
 			return utils.IsEmpty(s)
 		},
 		"isset": func(key string)(bool){
-			return utils.IsEmpty(os.Getenv(key))
+			return !utils.IsEmpty(os.Getenv(key))
 		},
 	}
 
-	tpl, err := template.New("path").Funcs(funcMap).Parse(path)
+	tpl, err := template.New(filepath.Base(path)).Funcs(funcMap).ParseFiles(path)
 	if err != nil {
 		return parsed, err
 	}
@@ -162,7 +159,7 @@ func Format(path string) (p.Path, error) {
 		return parsed, err
 	}
 
-	parsed = p.Path(parsedBytes.String())
+	parsed = strings.Split(parsedBytes.String(), "\n") 
 
 	return parsed, nil
 }

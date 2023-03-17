@@ -64,27 +64,18 @@ func listCmd() *cobra.Command {
 					return err
 				}
 
-				parsedAbsRepoPath, err := formatRepoPath(parsedRepoPath)
-				if err != nil {
-					return err
-				}
-				parsedAbsHomePath, err := formatHomePath(parsedHomePath)
-				if err != nil {
-					return err
-				}
-
 				if absPathMode {
-					fmt.Printf("%v%v%v\n", parsedAbsRepoPath, listSeparator, parsedAbsHomePath)
+					fmt.Printf("%v%v%v\n", parsedRepoPath, listSeparator, parsedHomePath)
 					continue
 				}
 
 				if relPathMode {
-					parsedRelRepoPath, err := parsedAbsRepoPath.Rel(*repoPathBase)
+					parsedRelRepoPath, err := parsedRepoPath.Rel(*repoPathBase)
 					if err != nil {
 						return err
 					}
 
-					parsedRelHomePath, err := parsedAbsHomePath.Rel(*homePathBase)
+					parsedRelHomePath, err := parsedHomePath.Rel(*homePathBase)
 					if err != nil {
 						return err
 					}

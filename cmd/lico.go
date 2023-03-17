@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"path"
 
-	"github.com/Hayao0819/lico/conf"
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
@@ -34,26 +33,16 @@ func runCmdVar(c *cobra.Command, args ...string) error {
 */
 
 func formatHomePath(path *p.Path) (*p.Path, error) {
-	var err error
-	var rtn p.Path
-
-	if rtn, err = conf.Format(string(*path)); err != nil {
-		return nil, err
-	}
-	if rtn, err = rtn.Abs(*homePathBase); err != nil {
+	rtn, err := path.Abs(*homePathBase)	
+	if ; err != nil {
 		return nil, err
 	}
 	return &rtn, nil
 }
 
 func formatRepoPath(path *p.Path) (*p.Path, error) {
-	var err error
-	var rtn p.Path
-
-	if rtn, err = conf.Format(string(*path)); err != nil {
-		return nil, err
-	}
-	if rtn, err = rtn.Abs(*repoPathBase); err != nil {
+	rtn, err := path.Abs(*repoPathBase)
+	if err != nil {
 		return nil, err
 	}
 	return &rtn, nil
