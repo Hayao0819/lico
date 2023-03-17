@@ -141,7 +141,13 @@ func Format(path string) (p.Path, error) {
 		return parsed, err
 	}
 
-	tpl, err := template.New("path").Parse(path)
+	funcMap := template.FuncMap{
+		"environ": func (n string)(string){
+			return os.Getenv(n)
+		},
+	}
+
+	tpl, err := template.New("path").Funcs(funcMap).Parse(path)
 	if err != nil {
 		return parsed, err
 	}
