@@ -16,7 +16,6 @@ import (
 func listCmd() *cobra.Command {
 	absPathMode := false
 	relPathMode := false
-	rawTextMode := false
 
 	listSeparator := " ==> "
 
@@ -34,10 +33,9 @@ func listCmd() *cobra.Command {
 					}
 				}
 				return c
-			}(absPathMode, relPathMode, rawTextMode)
+			}(absPathMode, relPathMode)
 			if trueN == 0 {
 				// デフォルト動作
-				//rawTextMode = true
 				relPathMode = true
 			} else if trueN >= 2 {
 				return errors.New("multiple output methods specified")
@@ -50,11 +48,6 @@ func listCmd() *cobra.Command {
 			}
 
 			for _, entry := range *list {
-				if rawTextMode {
-					fmt.Printf("%v%v%v\n", entry.RepoPath, listSeparator, entry.HomePath)
-					continue
-				}
-
 				parsedRepoPath, err := formatRepoPath(&entry.RepoPath)
 				if err != nil {
 					return err
@@ -92,7 +85,6 @@ func listCmd() *cobra.Command {
 
 	cmd.Flags().BoolVarP(&absPathMode, "abs", "a", absPathMode, "テンプレートを解釈してフルパスで表示")
 	cmd.Flags().BoolVarP(&relPathMode, "rel", "s", relPathMode, "テンプレートを解釈して相対パスで表示(デフォルト)")
-	cmd.Flags().BoolVarP(&rawTextMode, "raw", "w", rawTextMode, "テンプレートを解釈せず、生の値をそのまま表示")
 	cmd.Flags().StringVarP(&listSeparator, "sep", "", listSeparator, "リストの区切り文字を指定")
 
 	return &cmd
