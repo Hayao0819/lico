@@ -29,6 +29,16 @@ zsh/{{ .OS }}/zshrc:{{ .Home }}/.zshrc
 
 上の例では、Linuxの場合は`zsh/linux/zshrc`、Macの場合は`zsh/darwin/zshrc`を`~/.zshrc`に配置します。
 
+#### 関数
+
+テンプレート内で利用可能な関数の一覧です
+
+関数名 | 引数 | 返り値 | 説明
+--- | --- | --- | ---
+environ | string | string | 環境変数を参照する
+isset | string | bool | 変数がセットされているか確認する
+isempty | string | bool | 文字が空かどうかを確認する
+
 ### コメント
 
 `#`で始まる行はコメントとして扱われます。
