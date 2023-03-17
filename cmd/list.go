@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	//"strings"
 
 	//"os"
 
@@ -18,6 +19,7 @@ func listCmd() *cobra.Command {
 	relPathMode := false
 
 	listSeparator := " ==> "
+	nullSeparator := false
 
 	cmd := cobra.Command{
 		Use:   "list",
@@ -41,11 +43,19 @@ func listCmd() *cobra.Command {
 				return errors.New("multiple output methods specified")
 			}
 
+			if nullSeparator{
+				listSeparator=string([]byte{0})
+			}
+
+
+			// 設定ファイルを読み込み
 			list, err := conf.ReadConf(*listFile)
 			if err != nil {
 				//fmt.Fprintln(os.Stderr, err)
 				return err
 			}
+
+			//listSeparator=strings.ReplaceAll(listSeparator, `\n`, "\n")
 
 			for _, entry := range *list {
 				parsedRepoPath, err := formatRepoPath(&entry.RepoPath)
@@ -58,7 +68,7 @@ func listCmd() *cobra.Command {
 				}
 
 				if absPathMode {
-					fmt.Printf("%v%v%v\n", parsedRepoPath, listSeparator, parsedHomePath)
+					fmt.Printf("%v%s%v\n", parsedRepoPath, listSeparator, parsedHomePath)
 					continue
 				}
 
@@ -72,7 +82,7 @@ func listCmd() *cobra.Command {
 					if err != nil {
 						return err
 					}
-					fmt.Printf("%v%v%v\n", parsedRelRepoPath, listSeparator, parsedRelHomePath)
+					fmt.Printf("%v%s%v\n", parsedRelRepoPath, listSeparator, parsedRelHomePath)
 					continue
 				}
 
@@ -86,6 +96,7 @@ func listCmd() *cobra.Command {
 	cmd.Flags().BoolVarP(&absPathMode, "abs", "a", absPathMode, "テンプレートを解釈してフルパスで表示")
 	cmd.Flags().BoolVarP(&relPathMode, "rel", "s", relPathMode, "テンプレートを解釈して相対パスで表示(デフォルト)")
 	cmd.Flags().StringVarP(&listSeparator, "sep", "", listSeparator, "リストの区切り文字を指定")
+	cmd.Flags().BoolVarP(&nullSeparator, "null", "", false, "リストの区切り文字にヌル文字を指定")
 
 	return &cmd
 }
