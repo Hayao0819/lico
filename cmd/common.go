@@ -7,7 +7,7 @@ import (
 )
 
 var repoDir *string = &vars.RepoDir
-var listFile *string = &vars.ListFile
+var listFile *string = &vars.BaseListFile
 var homeDir *string = &vars.HomeDir
 var repoPathBase *string = &vars.RepoPathBase
 var homePathBase *string = &vars.HomePathBase
@@ -15,7 +15,7 @@ var homePathBase *string = &vars.HomePathBase
 func common() error {
 	// 重要なパスを正規化
 	var err error
-	vars.ListFile, err = utils.Abs("", vars.ListFile)
+	vars.BaseListFile, err = utils.Abs("", vars.BaseListFile)
 	if err != nil {
 		return err
 	}
