@@ -44,6 +44,8 @@ func unlinkCmd() *cobra.Command {
 				}
 			}
 
+			// -dをあとで実装する
+
 			//if err = rmLinkCmd().RunE(rmLinkCmd(), []string{targetPath.String()}); err != nil {
 			if err = runCmd(rmLinkCmd, targetPath.String()); err != nil {
 				return err

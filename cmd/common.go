@@ -8,6 +8,7 @@ import (
 
 var repoDir *string = &vars.RepoDir
 var listFile *string = &vars.BaseListFile
+//var createdListFile *string = &vars.CreatedListFile
 var homeDir *string = &vars.HomeDir
 var repoPathBase *string = &vars.RepoPathBase
 var homePathBase *string = &vars.HomePathBase
