@@ -4,19 +4,24 @@ import (
 	"errors"
 	"fmt"
 	"os"
+
 	//"strings"
 
 	//"os"
 
 	"github.com/Hayao0819/lico/conf"
+	"github.com/Hayao0819/lico/utils"
 	//"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
 
 // listCmd represents the list command
 func listCmd() *cobra.Command {
 	absPathMode := false
 	relPathMode := false
+
+	showIndexNo := false
 
 	listSeparator := " ==> "
 	nullSeparator := false
@@ -58,6 +63,9 @@ func listCmd() *cobra.Command {
 			//listSeparator=strings.ReplaceAll(listSeparator, `\n`, "\n")
 
 			for _, entry := range *list {
+
+				textToPrint := ""
+
 				parsedRepoPath, err := formatRepoPath(&entry.RepoPath)
 				if err != nil {
 					return err
@@ -68,11 +76,10 @@ func listCmd() *cobra.Command {
 				}
 
 				if absPathMode {
-					fmt.Printf("%v%s%v\n", parsedRepoPath, listSeparator, parsedHomePath)
-					continue
-				}
-
-				if relPathMode {
+					//fmt.Printf("%v%s%v\n", parsedRepoPath, listSeparator, parsedHomePath)
+					textToPrint=parsedRepoPath.String() + listSeparator + parsedHomePath.String()
+					//continue
+				}else if relPathMode {
 					parsedRelRepoPath, err := parsedRepoPath.Rel(*repoPathBase)
 					if err != nil {
 						return err
@@ -82,12 +89,24 @@ func listCmd() *cobra.Command {
 					if err != nil {
 						return err
 					}
-					fmt.Printf("%v%s%v\n", parsedRelRepoPath, listSeparator, parsedRelHomePath)
-					continue
+
+					textToPrint=parsedRelRepoPath.String() + listSeparator+parsedRelHomePath.String()
+					//fmt.Printf("%v%s%v\n", parsedRelRepoPath, listSeparator, parsedRelHomePath)
+					//continue
 				}
 
-				fmt.Fprintln(os.Stderr, "このメッセージが出力されることはありえないはずです。バグを作者に報告してください。")
-				return errors.New("no mode specified")
+
+				if utils.IsEmpty(textToPrint){
+					fmt.Fprintln(os.Stderr, "このメッセージが出力されることはありえないはずです。バグを作者に報告してください。")
+					return errors.New("no mode specified")
+				}
+
+
+				if showIndexNo{
+					textToPrint = fmt.Sprintf("%v: %v", entry.Index+1, textToPrint) //entry.Indexは0からスタートします
+				}
+
+				fmt.Println(textToPrint)
 			}
 			return nil
 		},
@@ -97,6 +116,15 @@ func listCmd() *cobra.Command {
 	cmd.Flags().BoolVarP(&relPathMode, "rel", "s", relPathMode, "テンプレートを解釈して相対パスで表示(デフォルト)")
 	cmd.Flags().StringVarP(&listSeparator, "sep", "", listSeparator, "リストの区切り文字を指定")
 	cmd.Flags().BoolVarP(&nullSeparator, "null", "", false, "リストの区切り文字にヌル文字を指定")
+	cmd.Flags().BoolVarP(&showIndexNo, "lineno","", showIndexNo, "設定されている行数を表示" )
+
+	// Allow --line-no
+	cmd.Flags().SetNormalizeFunc(func(f *pflag.FlagSet, name string) pflag.NormalizedName {
+		if name == "line-no"{
+			name="lineno"
+		}
+		return pflag.NormalizedName(name)
+	})
 
 	return &cmd
 }

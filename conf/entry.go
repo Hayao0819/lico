@@ -15,7 +15,7 @@ import (
 type Entry struct {
 	RepoPath p.Path
 	HomePath p.Path
-	Index    int
+	Index    int //0からスタートする行数
 }
 
 // 新しいEntryを生成します
