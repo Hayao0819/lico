@@ -33,6 +33,11 @@ func common() error {
 		return err
 	}
 
+	vars.CreatedListFile, err = utils.Abs("", vars.CreatedListFile)
+	if err !=nil{
+		return err
+	}
+
 	homePathBase = homeDir
 	repoPathBase = repoDir
 

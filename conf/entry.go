@@ -5,6 +5,7 @@ import (
 	//"fmt"
 	"fmt"
 	"os"
+	"strings"
 
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
@@ -33,6 +34,11 @@ func (entry *Entry) ExistsRepoPath() bool {
 	return err == nil
 }
 
+// CreatedListに追記
+func addEntryToCreatedList(path p.Path) error{
+	return utils.WriteLines([]string{path.String()}, vars.CreatedListFile)
+}
+
 // リンクを作成する
 func (entry *Entry) MakeSymLink() error {
 	// ホームパス
@@ -48,8 +54,10 @@ func (entry *Entry) MakeSymLink() error {
 	}
 
 	// 確認
-	if entry.CheckSymLink() == nil {
+	if err := entry.CheckSymLink() ; err == nil {
 		return nil
+	//}else{
+		//fmt.Fprintln(os.Stderr, err)
 	}
 
 	if !orig.Exists() {
@@ -57,6 +65,10 @@ func (entry *Entry) MakeSymLink() error {
 	}
 
 	if err := os.Symlink(orig.String(), link.String()); err == nil {
+		if err := addEntryToCreatedList(link); err !=nil{
+			os.Remove(link.String())
+			return err
+		}
 		fmt.Printf("%v ==> %v\n", orig.String(), link.String())
 		return nil
 	} else {
@@ -91,4 +103,19 @@ func (entry *Entry) CheckSymLink() error {
 	}
 
 	return nil
+}
+
+func ReadCreatedList(path string)(*List, error){
+	lines, err := utils.ReadLines(path)
+	if err !=nil{
+		return nil, err
+	}
+
+	var list List
+
+	for lineNo, line := range lines{
+		list = append(list, NewEntryWithIndex("", p.Path(strings.TrimSpace(line)), lineNo))
+	}
+
+	return &list, nil
 }
