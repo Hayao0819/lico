@@ -28,8 +28,8 @@ func IsFile(path string) bool {
 // 参考: https://github.com/eihigh/filetest
 // Thanks eihigh <eihigh.contact@gmail.com>
 func IsSymlink(path string) bool {
-	stat, err := os.Stat(path)
-	return err == nil && stat.Mode()&os.ModeSymlink != 0
+	stat, err := os.Lstat(path)
+	return err == nil && stat.Mode()&os.ModeSymlink == os.ModeSymlink
 }
 
 // ファイルが存在するかどうか
