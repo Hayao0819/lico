@@ -8,6 +8,7 @@ import (
 
 	"github.com/Hayao0819/lico/conf"
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 
 	//"github.com/Hayao0819/lico/vars"
@@ -70,6 +71,15 @@ func loadStatus() []status {
 		}
 	}
 
+	// licoによって作成されたリンクの数
+	managedLink := 0
+	created, err := conf.ReadCreatedList(vars.CreatedListFile)
+	if err !=nil{
+		errs=append(errs, err)
+	}else{
+		managedLink=len(*created)
+	}
+
 	//r = append(r, status{key: "FileNum", value: len(*list)})
 	//r = append(r, status{key: "ConfiguredLink", value: configuredLink})
 	//r = append(r, status{key: "MissingLink", value: missingLink})
@@ -77,6 +87,7 @@ func loadStatus() []status {
 		newStatus("FileNum", len(*list), "登録されてるリンクの数(OSによって変化する場合があります)"),
 		newStatus("ConfiguredLink", configuredLink, "適切に配置されているリンクの数"),
 		newStatus("MissingLink", missingLink, "まだ設定されていないリンクの数"),
+		newStatus("ManagedLink", managedLink, "licoによって作成されたリンクの数"),
 	)
 
 	if len(errs) > 0 {
