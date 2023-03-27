@@ -8,6 +8,7 @@ import (
 
 var repoDir *string = &vars.RepoDir
 var listFile *string = &vars.BaseListFile
+
 //var createdListFile *string = &vars.CreatedListFile
 //var homeDir *string = &vars.HomeDir
 //var repoPathBase *string = &vars.RepoPathBase
@@ -34,7 +35,7 @@ func common() error {
 	}
 
 	vars.CreatedListFile, err = utils.Abs("", vars.CreatedListFile)
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 

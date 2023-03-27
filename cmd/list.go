@@ -50,10 +50,9 @@ func listCmd() *cobra.Command {
 				return errors.New("multiple output methods specified")
 			}
 
-			if nullSeparator{
-				listSeparator=string([]byte{0})
+			if nullSeparator {
+				listSeparator = string([]byte{0})
 			}
-
 
 			// 設定ファイルを読み込み
 			list, err := conf.ReadConf(*listFile)
@@ -81,9 +80,9 @@ func listCmd() *cobra.Command {
 
 				if absPathMode {
 					//fmt.Printf("%v%s%v\n", parsedRepoPath, listSeparator, parsedHomePath)
-					textToPrint=parsedRepoPath.String() + listSeparator + parsedHomePath.String()
+					textToPrint = parsedRepoPath.String() + listSeparator + parsedHomePath.String()
 					//continue
-				}else if relPathMode {
+				} else if relPathMode {
 					parsedRelRepoPath, err := parsedRepoPath.Rel(vars.RepoPathBase)
 					if err != nil {
 						return err
@@ -94,19 +93,17 @@ func listCmd() *cobra.Command {
 						return err
 					}
 
-					textToPrint=parsedRelRepoPath.String() + listSeparator+parsedRelHomePath.String()
+					textToPrint = parsedRelRepoPath.String() + listSeparator + parsedRelHomePath.String()
 					//fmt.Printf("%v%s%v\n", parsedRelRepoPath, listSeparator, parsedRelHomePath)
 					//continue
 				}
 
-
-				if utils.IsEmpty(textToPrint){
+				if utils.IsEmpty(textToPrint) {
 					fmt.Fprintln(os.Stderr, "このメッセージが出力されることはありえないはずです。バグを作者に報告してください。")
 					return errors.New("no mode specified")
 				}
 
-
-				if showIndexNo{
+				if showIndexNo {
 					textToPrint = fmt.Sprintf("%v: %v", entry.Index+1, textToPrint) //entry.Indexは0からスタートします
 				}
 
@@ -120,12 +117,12 @@ func listCmd() *cobra.Command {
 	cmd.Flags().BoolVarP(&relPathMode, "rel", "s", relPathMode, "テンプレートを解釈して相対パスで表示(デフォルト)")
 	cmd.Flags().StringVarP(&listSeparator, "sep", "", listSeparator, "リストの区切り文字を指定")
 	cmd.Flags().BoolVarP(&nullSeparator, "null", "", false, "リストの区切り文字にヌル文字を指定")
-	cmd.Flags().BoolVarP(&showIndexNo, "lineno","", showIndexNo, "設定されている行数を表示" )
+	cmd.Flags().BoolVarP(&showIndexNo, "lineno", "", showIndexNo, "設定されている行数を表示")
 
 	// Allow --line-no
 	cmd.Flags().SetNormalizeFunc(func(f *pflag.FlagSet, name string) pflag.NormalizedName {
-		if name == "line-no"{
-			name="lineno"
+		if name == "line-no" {
+			name = "lineno"
 		}
 		return pflag.NormalizedName(name)
 	})

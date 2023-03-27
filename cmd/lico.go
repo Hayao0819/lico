@@ -33,7 +33,7 @@ func runCmdVar(c *cobra.Command, args ...string) error {
 */
 /*
 func formatHomePath(path *p.Path) (*p.Path, error) {
-	rtn, err := path.Abs(*homePathBase)	
+	rtn, err := path.Abs(*homePathBase)
 	if ; err != nil {
 		return nil, err
 	}

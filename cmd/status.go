@@ -74,10 +74,10 @@ func loadStatus() []status {
 	// licoによって作成されたリンクの数
 	managedLink := 0
 	created, err := conf.ReadCreatedList(vars.CreatedListFile)
-	if err !=nil{
-		errs=append(errs, err)
-	}else{
-		managedLink=len(*created)
+	if err != nil {
+		errs = append(errs, err)
+	} else {
+		managedLink = len(*created)
 	}
 
 	//r = append(r, status{key: "FileNum", value: len(*list)})

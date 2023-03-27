@@ -36,17 +36,17 @@ func (entry *Entry) ExistsRepoPath() bool {
 	return err == nil
 }
 
-func (entry *Entry)FormatHome()(p.Path, error){
+func (entry *Entry) FormatHome() (p.Path, error) {
 	return entry.HomePath.Abs(vars.HomeDir)
 }
 
-func (entry *Entry)FormatRepo()(p.Path, error){
+func (entry *Entry) FormatRepo() (p.Path, error) {
 	return entry.RepoPath.Abs(vars.RepoPathBase)
 }
 
 // CreatedListに追記
-func addEntryToCreatedList(path p.Path) error{
-	if ! filepath.IsAbs(path.String()){
+func addEntryToCreatedList(path p.Path) error {
+	if !filepath.IsAbs(path.String()) {
 		return errors.New("it should be absolute path")
 	}
 	return utils.WriteLines([]string{path.String()}, vars.CreatedListFile)
@@ -67,9 +67,9 @@ func (entry *Entry) MakeSymLink() error {
 	}
 
 	// 確認
-	if err := entry.CheckSymLink() ; err == nil {
+	if err := entry.CheckSymLink(); err == nil {
 		return nil
-	//}else{
+		//}else{
 		//fmt.Fprintln(os.Stderr, err)
 	}
 
@@ -78,7 +78,7 @@ func (entry *Entry) MakeSymLink() error {
 	}
 
 	if err := os.Symlink(orig.String(), link.String()); err == nil {
-		if err := addEntryToCreatedList(link); err !=nil{
+		if err := addEntryToCreatedList(link); err != nil {
 			os.Remove(link.String())
 			return err
 		}
@@ -91,26 +91,26 @@ func (entry *Entry) MakeSymLink() error {
 }
 
 // リンクを削除する
-func (entry *Entry)RemoveSymLink()error{
+func (entry *Entry) RemoveSymLink() error {
 	link, err := entry.FormatRepo()
-	if err !=nil{
+	if err != nil {
 		return err
 	}
-	if ! link.Exists(){
+	if !link.Exists() {
 		return vars.ErrNotExist
 	}
-	if ! utils.IsSymlink(link.String()){
+	if !utils.IsSymlink(link.String()) {
 		return vars.ErrNotSymlink
 	}
 
-	created , err:= ReadCreatedList(vars.CreatedListFile)
-	if err !=nil{
+	created, err := ReadCreatedList(vars.CreatedListFile)
+	if err != nil {
 		return err
 	}
 
-	if res, err := created.HasHomeFile(link); err!=nil{
+	if res, err := created.HasHomeFile(link); err != nil {
 		return err
-	}else if !res{
+	} else if !res {
 		return vars.ErrNotManaged
 	}
 
@@ -145,19 +145,17 @@ func (entry *Entry) CheckSymLink() error {
 	return nil
 }
 
-func ReadCreatedList(path string)(*List, error){
+func ReadCreatedList(path string) (*List, error) {
 	lines, err := utils.ReadLines(path)
-	if err !=nil{
+	if err != nil {
 		return nil, err
 	}
 
 	var list List
 
-	for lineNo, line := range lines{
+	for lineNo, line := range lines {
 		list = append(list, NewEntryWithIndex("", p.Path(strings.TrimSpace(line)), lineNo))
 	}
 
 	return &list, nil
 }
-
-

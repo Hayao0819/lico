@@ -98,7 +98,7 @@ func (entries *List) HasHomeFile(path p.Path) (bool, error) {
 func ReadConf(path string) (*List, error) {
 	// parse config
 	lines, err := FormatTemplate(path)
-	if err !=nil{
+	if err != nil {
 		return nil, err
 	}
 
@@ -131,7 +131,7 @@ func ReadConf(path string) (*List, error) {
 
 // テンプレートを解析してPathを生成します
 func FormatTemplate(path string) ([]string, error) {
-	parsed:=[]string{}
+	parsed := []string{}
 
 	dirInfo, err := utils.GetOSEnv()
 	if err != nil {
@@ -139,13 +139,13 @@ func FormatTemplate(path string) ([]string, error) {
 	}
 
 	funcMap := template.FuncMap{
-		"environ": func (n string)(string){
+		"environ": func(n string) string {
 			return os.Getenv(n)
 		},
-		"isempty": func(s string)(bool){
+		"isempty": func(s string) bool {
 			return utils.IsEmpty(s)
 		},
-		"isset": func(key string)(bool){
+		"isset": func(key string) bool {
 			return !utils.IsEmpty(os.Getenv(key))
 		},
 	}
@@ -159,7 +159,7 @@ func FormatTemplate(path string) ([]string, error) {
 		return parsed, err
 	}
 
-	parsed = strings.Split(parsedBytes.String(), "\n") 
+	parsed = strings.Split(parsedBytes.String(), "\n")
 
 	return parsed, nil
 }
