@@ -37,7 +37,8 @@ func rmFileCmd() *cobra.Command {
 					errList = append(errList, vars.ErrNoSuchEntry(arg))
 				} else {
 					//abs, err := targetEntry.HomePath.Abs(vars.HomePathBase)
-					abs, err := formatRepoPath(&targetEntry.RepoPath)
+					//abs, err := formatRepoPath(&targetEntry.RepoPath)
+					abs, err := targetEntry.FormatHome()
 					if err != nil {
 						errList = append(errList, err)
 					}

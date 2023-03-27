@@ -3,8 +3,10 @@ package conf
 import (
 	//"errors"
 	//"fmt"
+	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	p "github.com/Hayao0819/lico/paths"
@@ -34,8 +36,19 @@ func (entry *Entry) ExistsRepoPath() bool {
 	return err == nil
 }
 
+func (entry *Entry)FormatHome()(p.Path, error){
+	return entry.HomePath.Abs(vars.HomeDir)
+}
+
+func (entry *Entry)FormatRepo()(p.Path, error){
+	return entry.RepoPath.Abs(vars.RepoPathBase)
+}
+
 // CreatedListに追記
 func addEntryToCreatedList(path p.Path) error{
+	if ! filepath.IsAbs(path.String()){
+		return errors.New("it should be absolute path")
+	}
 	return utils.WriteLines([]string{path.String()}, vars.CreatedListFile)
 }
 
@@ -119,3 +132,5 @@ func ReadCreatedList(path string)(*List, error){
 
 	return &list, nil
 }
+
+

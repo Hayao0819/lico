@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"path"
 
-	p "github.com/Hayao0819/lico/paths"
+	//p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
 	random "github.com/mazen160/go-random"
@@ -31,7 +31,7 @@ func runCmdVar(c *cobra.Command, args ...string) error {
 	return c.RunE(c, args)
 }
 */
-
+/*
 func formatHomePath(path *p.Path) (*p.Path, error) {
 	rtn, err := path.Abs(*homePathBase)	
 	if ; err != nil {
@@ -47,6 +47,7 @@ func formatRepoPath(path *p.Path) (*p.Path, error) {
 	}
 	return &rtn, nil
 }
+*/
 
 func lico() string {
 	list := []string{

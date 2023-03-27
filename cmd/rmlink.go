@@ -56,8 +56,8 @@ func rmLinkCmd() *cobra.Command {
 				if targetEntry == nil {
 					errList = append(errList, vars.ErrNoSuchEntry(arg))
 				} else {
-					//abs, err := targetEntry.HomePath.Abs(vars.HomePathBase)
-					abs, err := formatHomePath(&targetEntry.HomePath)
+					//abs, err := formatHomePath(&targetEntry.HomePath)
+					abs, err := targetEntry.FormatHome()
 					if err != nil {
 						errList = append(errList, err)
 					}

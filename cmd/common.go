@@ -9,9 +9,9 @@ import (
 var repoDir *string = &vars.RepoDir
 var listFile *string = &vars.BaseListFile
 //var createdListFile *string = &vars.CreatedListFile
-var homeDir *string = &vars.HomeDir
-var repoPathBase *string = &vars.RepoPathBase
-var homePathBase *string = &vars.HomePathBase
+//var homeDir *string = &vars.HomeDir
+//var repoPathBase *string = &vars.RepoPathBase
+//var homePathBase *string = &vars.HomePathBase
 
 func common() error {
 	// 重要なパスを正規化
@@ -38,8 +38,8 @@ func common() error {
 		return err
 	}
 
-	homePathBase = homeDir
-	repoPathBase = repoDir
+	//homePathBase = homeDir
+	//repoPathBase = repoDir
 
 	return nil
 }

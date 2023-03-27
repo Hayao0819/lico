@@ -23,7 +23,7 @@
     - [なぞのエラーで動かない](https://twitter.com/Hayao0819/status/1627668181992222721)
 - [ ] ソースコードの整理
   - [ ] `conf.ReadConf`の引数を削除し、`vars.ListFile`を用いる
-  - [ ] `cmd.formatRepoPath`と`cmd.formatHomePath`を`conf`に移動
+  - [x] `cmd.formatRepoPath`と`cmd.formatHomePath`を`conf`に移動
 - [ ] statusコマンドで見れる情報を増やす
   - [x] コンフィグが設定済みか
   - [x] リポジトリディレクトリ、設定ファイルのパス
@@ -34,3 +34,4 @@
     - [x] 最低限の表
     - [ ] 色付きの表
 - [ ] [これ](https://qiita.com/tkit/items/3cdeafcde2bd98612428)でいい感じにする
+- [ ] ログを何らかのパッケージを用いていい感じに表示する

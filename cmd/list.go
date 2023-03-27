@@ -11,6 +11,8 @@ import (
 
 	"github.com/Hayao0819/lico/conf"
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
+
 	//"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -66,11 +68,13 @@ func listCmd() *cobra.Command {
 
 				textToPrint := ""
 
-				parsedRepoPath, err := formatRepoPath(&entry.RepoPath)
+				//parsedRepoPath, err := formatRepoPath(&entry.RepoPath)
+				parsedRepoPath, err := entry.FormatRepo()
 				if err != nil {
 					return err
 				}
-				parsedHomePath, err := formatHomePath(&entry.HomePath)
+				//parsedHomePath, err := formatHomePath(&entry.HomePath)
+				parsedHomePath, err := entry.FormatHome()
 				if err != nil {
 					return err
 				}
@@ -80,12 +84,12 @@ func listCmd() *cobra.Command {
 					textToPrint=parsedRepoPath.String() + listSeparator + parsedHomePath.String()
 					//continue
 				}else if relPathMode {
-					parsedRelRepoPath, err := parsedRepoPath.Rel(*repoPathBase)
+					parsedRelRepoPath, err := parsedRepoPath.Rel(vars.RepoPathBase)
 					if err != nil {
 						return err
 					}
 
-					parsedRelHomePath, err := parsedHomePath.Rel(*homePathBase)
+					parsedRelHomePath, err := parsedHomePath.Rel(vars.HomeDir)
 					if err != nil {
 						return err
 					}
