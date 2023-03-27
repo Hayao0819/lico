@@ -90,6 +90,33 @@ func (entry *Entry) MakeSymLink() error {
 
 }
 
+// リンクを削除する
+func (entry *Entry)RemoveSymLink()error{
+	link, err := entry.FormatRepo()
+	if err !=nil{
+		return err
+	}
+	if ! link.Exists(){
+		return vars.ErrNotExist
+	}
+	if ! utils.IsSymlink(link.String()){
+		return vars.ErrNotSymlink
+	}
+
+	created , err:= ReadCreatedList(vars.CreatedListFile)
+	if err !=nil{
+		return err
+	}
+
+	if res, err := created.HasHomeFile(link); err!=nil{
+		return err
+	}else if !res{
+		return vars.ErrNotManaged
+	}
+
+	return os.Remove(link.String())
+}
+
 // リンクが正常に設定されているかチェックする
 func (entry *Entry) CheckSymLink() error {
 	link := entry.HomePath.String()

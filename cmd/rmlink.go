@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"errors"
-	"os"
+	//"os"
 	"strings"
 
 	"github.com/Hayao0819/lico/conf"
@@ -56,12 +56,7 @@ func rmLinkCmd() *cobra.Command {
 				if targetEntry == nil {
 					errList = append(errList, vars.ErrNoSuchEntry(arg))
 				} else {
-					//abs, err := formatHomePath(&targetEntry.HomePath)
-					abs, err := targetEntry.FormatHome()
-					if err != nil {
-						errList = append(errList, err)
-					}
-					if err := os.Remove(abs.String()); err != nil {
+					if targetEntry.RemoveSymLink() != nil {
 						errList = append(errList, err)
 					}
 				}

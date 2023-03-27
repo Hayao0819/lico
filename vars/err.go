@@ -24,6 +24,7 @@ var (
 var ErrNotSymlink = errors.New("file is not symlink")
 var ErrLinkToDiffFile = errors.New("link to different file")
 var ErrNoRepoDir = errors.New("repository has not been cloned. Please run init command")
+var ErrNotManaged = errors.New("this file is not managed by lico")
 
 // 参考: https://0e0.pw/5SyM
 type fileErr struct {
