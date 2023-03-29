@@ -112,11 +112,12 @@ func ReadConf(path string) (*List, error) {
 	emptyReg, _ := regexp.Compile("^ *$")
 
 	for lineNo, line := range lines {
-
+		// コメントと空行を除外
 		if commentReg.MatchString(line) || emptyReg.MatchString(line) {
 			continue
 		}
 
+		// :で分割
 		splited = strings.Split(line, ":")
 		repoPath = p.Path(strings.TrimSpace(splited[0]))
 		homePath = p.Path(strings.TrimSpace(splited[1]))

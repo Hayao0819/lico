@@ -26,6 +26,7 @@ func NewEntry(repoPath, homePath p.Path) Entry {
 	return Entry{RepoPath: repoPath, HomePath: homePath}
 }
 
+// Entryを行数付きで作成します
 func NewEntryWithIndex(repoPath, homePath p.Path, index int) Entry {
 	return Entry{RepoPath: repoPath, HomePath: homePath, Index: index}
 }
