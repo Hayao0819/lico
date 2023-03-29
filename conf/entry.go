@@ -19,6 +19,11 @@ type Entry struct {
 	RepoPath p.Path
 	HomePath p.Path
 	Index    int //0からスタートする行数
+	Opt     EntryOpt
+}
+
+type EntryOpt struct {
+	Format bool
 }
 
 // 新しいEntryを生成します
@@ -29,6 +34,33 @@ func NewEntry(repoPath, homePath p.Path) Entry {
 // Entryを行数付きで作成します
 func NewEntryWithIndex(repoPath, homePath p.Path, index int) Entry {
 	return Entry{RepoPath: repoPath, HomePath: homePath, Index: index}
+}
+
+func NewEntryWithIndexAndOpt(repoPath, homePath p.Path, index int, opt EntryOpt)Entry{
+	return Entry{RepoPath: repoPath, HomePath: homePath, Index: index, Opt: opt}
+}
+
+func ParseEntryOpt(line string)(EntryOpt, error){
+	opt := EntryOpt{}
+	//syntaxErr := errors.New("syntax error in option")
+	unknownErr := errors.New("unknown option name")
+	
+	split := strings.Split(line, " ")
+	for _, s := range split{
+		if utils.IsEmpty(line){
+			continue
+		}
+
+		switch s {
+			case "EnableFormat": 
+				opt.Format=true
+			case "DisableFormat":
+				opt.Format=false
+			default:
+				return opt, unknownErr
+		}
+	}
+	return opt, nil
 }
 
 // repoPathが存在するかどうかを確認する

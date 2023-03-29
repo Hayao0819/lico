@@ -107,6 +107,7 @@ func ReadConf(path string) (*List, error) {
 	var splited []string
 	var repoPath p.Path
 	var homePath p.Path
+	var entryOpt EntryOpt
 
 	commentReg, _ := regexp.Compile("^ *#")
 	emptyReg, _ := regexp.Compile("^ *$")
@@ -122,9 +123,17 @@ func ReadConf(path string) (*List, error) {
 		repoPath = p.Path(strings.TrimSpace(splited[0]))
 		homePath = p.Path(strings.TrimSpace(splited[1]))
 
-		//fmt.Println(repoPath+"=="+homePath)
+		// オプションが有る場合
+		if len(splited) >= 3{
+			entryOpt, err = ParseEntryOpt(strings.TrimSpace(splited[2]))
+			if err !=nil{
+				//return nil, errors.New("Parse error in "+ string(lineNo+1) + ":" + err.Error())
+				return nil, fmt.Errorf("parse error in %v : %s", lineNo+1 , err)
+			}
 
-		item = NewEntryWithIndex(repoPath, homePath, lineNo)
+		}
+
+		item = NewEntryWithIndexAndOpt(repoPath, homePath, lineNo, entryOpt)
 		list = append(list, item)
 	}
 	return &list, nil
