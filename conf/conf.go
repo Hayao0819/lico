@@ -126,7 +126,7 @@ func ReadConf(path string) (*List, error) {
 
 		//fmt.Println(repoPath+"=="+homePath)
 
-		item = NewEntryWithIndex(repoPath, homePath, lineNo)
+		item = NewEntryWithIndex(repoPath, homePath, lineNo+1)
 		list = append(list, item)
 	}
 	return &list, nil
