@@ -89,3 +89,20 @@ func CommentOut(path string, targetLineNo int) error {
 
 	return WriteLines(newFileLine, path)
 }
+
+func RemoveLine(path string, targetLineNo int)error{
+	var newFileLine []string
+	fileLines, err := ReadLines(path)
+	if err != nil {
+		return err
+	}
+	lineNo := 0
+	for _, line := range fileLines {
+		lineNo++
+		if targetLineNo != lineNo {
+			newFileLine = append(newFileLine, line)
+			continue
+		}
+	}
+	return WriteLines(newFileLine, path)
+}

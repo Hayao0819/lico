@@ -127,7 +127,8 @@ func (entry *Entry) RemoveSymLink() error {
 		return err
 	}
 
-	if utils.CommentOut(vars.CreatedListFile, creatd_entry.Index) !=nil{
+	// createdlistから該当行を削除
+	if utils.RemoveLine(vars.CreatedListFile, creatd_entry.Index) !=nil{
 		return err
 	}
 	return nil
