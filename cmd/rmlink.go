@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"errors"
+	//"fmt"
 	//"os"
 	"strings"
 
@@ -52,10 +53,11 @@ func rmLinkCmd() *cobra.Command {
 			for _, arg := range rmList {
 				targetPath := p.New(arg)
 				targetEntry, err := list.GetItemFromPath(targetPath)
+				//fmt.Println(targetEntry.HomePath)
 				if err != nil {
 					errList = append(errList, err)
 				} else {
-					if targetEntry.RemoveSymLink() != nil {
+					if err := targetEntry.RemoveSymLink(); err != nil {
 						errList = append(errList, err)
 					}
 				}
