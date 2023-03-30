@@ -23,7 +23,12 @@ func hasCorrectRepoDir() bool {
 }
 
 func runCmd(f func() *cobra.Command, args ...string) error {
-	return f().RunE(f(), args)
+	//return f().RunE(f(), args)
+	cmd := f()
+	cmd.SilenceUsage=true
+	cmd.SilenceErrors=true
+	cmd.SetArgs(args)
+	return cmd.Execute()
 }
 
 /*
