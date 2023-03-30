@@ -176,7 +176,7 @@ func ReadCreatedList(path string) (*List, error) {
 	var list List
 
 	for lineNo, line := range lines {
-		list = append(list, NewEntryWithIndex("", p.Path(strings.TrimSpace(line)), lineNo))
+		list = append(list, NewEntryWithIndex("", p.Path(strings.TrimSpace(line)), lineNo+1))
 	}
 
 	return &list, nil
