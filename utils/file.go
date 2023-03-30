@@ -108,7 +108,7 @@ func RemoveLine(path string, targetLineNo int)error{
 }
 
 func AppendLine(path , line string)error{
-	file, err := os.OpenFile("text.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err !=nil{
 		return err
 	}
