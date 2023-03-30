@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/osenv"
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +20,7 @@ func envCmd() *cobra.Command {
 		Args: cobra.RangeArgs(0, 1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// envを取得
-			env, err := utils.GetOSEnv()
+			env, err := osenv.Get()
 			if err != nil {
 				return err
 			}

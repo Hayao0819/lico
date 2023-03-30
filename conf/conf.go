@@ -14,6 +14,7 @@ import (
 
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/osenv"
 )
 
 // 設定ファイル全体
@@ -134,7 +135,7 @@ func ReadConf(path string) (*List, error) {
 func FormatTemplate(path string) ([]string, error) {
 	parsed := []string{}
 
-	dirInfo, err := utils.GetOSEnv()
+	dirInfo, err := osenv.Get()
 	if err != nil {
 		return parsed, err
 	}

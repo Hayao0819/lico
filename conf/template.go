@@ -5,12 +5,12 @@ import (
 	"strings"
 
 	p "github.com/Hayao0819/lico/paths"
-	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/osenv"
 )
 
 func replaceToTemplate(path string) (p.Path, error) {
 	var parsed p.Path
-	dirInfo, err := utils.GetOSEnv()
+	dirInfo, err := osenv.Get()
 	if err != nil {
 		return parsed, err
 	}
