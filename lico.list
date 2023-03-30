@@ -1,3 +1,4 @@
 # リポジトリのファイル : 配置先のパス
 
 ./README.md:{{ .Home }}/README.md
+./LICENSE.txt:{{ .Home }}/LICENSE.txt

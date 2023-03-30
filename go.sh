@@ -55,7 +55,7 @@ case "${mode}" in
         "$(build_cmd)" "$@"
         ;;
     "drun")
-        call_myself "run" -l "$script_path/lico.list" "$@"
+        call_myself "run" -l "$script_path/lico.list" -r "$script_path" "$@"
         ;;
     "fmt")
         check_cmd "gofmt"
