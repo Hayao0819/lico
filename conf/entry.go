@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
@@ -109,13 +108,29 @@ func (entry *Entry) RemoveSymLink() error {
 		return err
 	}
 
+	// createdリストに含まれているかどうか
 	if res, err := created.HasHomeFile(link); err != nil {
+		// createdリストの取得に失敗
 		return err
 	} else if !res {
+		// リストに含まれていない
 		return vars.ErrNotManaged
 	}
 
-	return os.Remove(link.String())
+	if  os.Remove(link.String()) != nil{
+		// 削除に失敗
+		return err
+	}
+
+	creatd_entry, err := created.GetItemFromPath(link)
+	if err !=nil{
+		return err
+	}
+
+	if utils.CommentOut(vars.CreatedListFile, creatd_entry.Index) !=nil{
+		return err
+	}
+	return nil
 }
 
 // リンクが正常に設定されているかチェックする
@@ -146,17 +161,3 @@ func (entry *Entry) CheckSymLink() error {
 	return nil
 }
 
-func ReadCreatedList(path string) (*List, error) {
-	lines, err := utils.ReadLines(path)
-	if err != nil {
-		return nil, err
-	}
-
-	var list List
-
-	for lineNo, line := range lines {
-		list = append(list, NewEntryWithIndex("", p.Path(strings.TrimSpace(line)), lineNo))
-	}
-
-	return &list, nil
-}

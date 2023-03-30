@@ -12,9 +12,10 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/Hayao0819/lico/osenv"
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
-	"github.com/Hayao0819/lico/osenv"
+	"github.com/Hayao0819/lico/vars"
 )
 
 // 設定ファイル全体
@@ -44,12 +45,12 @@ func (item *Entry) String(replace bool) (string, error) {
 }
 
 // 指定されたパスを持つEntryを返します
-func (list *List) GetItemFromPath(path p.Path) *Entry {
+func (list *List) GetItemFromPath(path p.Path) (*Entry, error) {
 	// Todo
 	for _, item := range *list {
 		//fmt.Printf("%v and %v, %v and %v\n", item.HomePath, path, item.RepoPath, path)
 		if item.HomePath == path || item.RepoPath == path {
-			return &item
+			return &item, nil
 		} else {
 			homeIsSame, err := p.Is(item.HomePath, path)
 			if err != nil {
@@ -60,11 +61,11 @@ func (list *List) GetItemFromPath(path p.Path) *Entry {
 				continue
 			}
 			if homeIsSame || repoIsSame {
-				return &item
+				return &item, nil
 			}
 		}
 	}
-	return nil
+	return nil, vars.ErrNoSuchEntry(path.String())
 }
 
 // パスがリポジトリファイルに含まれているかどうか
@@ -164,4 +165,19 @@ func FormatTemplate(path string) ([]string, error) {
 	parsed = strings.Split(parsedBytes.String(), "\n")
 
 	return parsed, nil
+}
+
+func ReadCreatedList(path string) (*List, error) {
+	lines, err := utils.ReadLines(path)
+	if err != nil {
+		return nil, err
+	}
+
+	var list List
+
+	for lineNo, line := range lines {
+		list = append(list, NewEntryWithIndex("", p.Path(strings.TrimSpace(line)), lineNo))
+	}
+
+	return &list, nil
 }

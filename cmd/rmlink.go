@@ -7,7 +7,6 @@ import (
 
 	"github.com/Hayao0819/lico/conf"
 	p "github.com/Hayao0819/lico/paths"
-	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 )
 
@@ -52,9 +51,9 @@ func rmLinkCmd() *cobra.Command {
 
 			for _, arg := range rmList {
 				targetPath := p.New(arg)
-				targetEntry := list.GetItemFromPath(targetPath)
-				if targetEntry == nil {
-					errList = append(errList, vars.ErrNoSuchEntry(arg))
+				targetEntry, err := list.GetItemFromPath(targetPath)
+				if err != nil {
+					errList = append(errList, err)
 				} else {
 					if targetEntry.RemoveSymLink() != nil {
 						errList = append(errList, err)

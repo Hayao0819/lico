@@ -1,9 +1,6 @@
 package cmd
 
 import (
-	//"errors"
-	"fmt"
-
 	"github.com/Hayao0819/lico/conf"
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
@@ -33,9 +30,9 @@ func unlinkCmd() *cobra.Command {
 
 			targetPath := p.NewAbs(args[0])
 
-			targetItem := list.GetItemFromPath(targetPath)
-			if targetItem == nil {
-				return fmt.Errorf("no such file is registered")
+			targetItem, err := list.GetItemFromPath(targetPath)
+			if err != nil {
+				return err
 			}
 
 			if !noEditListMode {
