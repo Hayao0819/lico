@@ -48,10 +48,11 @@ func unlinkCmd() *cobra.Command {
 				}
 			}
 
-			//if err = rmLinkCmd().RunE(rmLinkCmd(), []string{targetPath.String()}); err != nil {
+			/*
 			if err = runCmd(rmLinkCmd, targetPath.String()); err != nil {
 				return err
 			}
+			*/
 			return nil
 		},
 	}
