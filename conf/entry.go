@@ -92,7 +92,7 @@ func (entry *Entry) MakeSymLink() error {
 
 // リンクを削除する
 func (entry *Entry) RemoveSymLink() error {
-	link, err := entry.FormatRepo()
+	link, err := entry.FormatHome()
 	if err != nil {
 		return err
 	}
