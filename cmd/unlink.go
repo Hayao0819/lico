@@ -36,12 +36,17 @@ func unlinkCmd() *cobra.Command {
 			}
 
 			if !noEditListMode {
-				if err = utils.CommentOut(*listFile, targetItem.Index); err != nil {
-					return err
+				if delLineMode {
+					if err = utils.RemoveLine(*listFile, targetItem.Index); err !=nil{
+						return err
+					}
+				}else{
+					// コメントアウトを実行
+					if err = utils.CommentOut(*listFile, targetItem.Index); err != nil {
+						return err
+					}
 				}
 			}
-
-			// -dをあとで実装する
 
 			//if err = rmLinkCmd().RunE(rmLinkCmd(), []string{targetPath.String()}); err != nil {
 			if err = runCmd(rmLinkCmd, targetPath.String()); err != nil {
