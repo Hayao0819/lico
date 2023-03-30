@@ -107,13 +107,13 @@ func RemoveLine(path string, targetLineNo int)error{
 	return WriteLines(newFileLine, path)
 }
 
-func AppendLine(path , line string)error{
+func AppendLine(line , path string)error{
 	file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err !=nil{
 		return err
 	}
 	defer file.Close()
 
-	_, err = file.WriteString(line)
+	_, err = file.WriteString(fmt.Sprintln(line))
 	return err
 }
