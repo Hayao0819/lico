@@ -83,12 +83,12 @@ func listCmd() *cobra.Command {
 					textToPrint = parsedRepoPath.String() + listSeparator + parsedHomePath.String()
 					//continue
 				} else if relPathMode {
-					parsedRelRepoPath, err := parsedRepoPath.Rel(vars.RepoPathBase)
+					parsedRelRepoPath, err := parsedRepoPath.Rel(*vars.RepoPathBase)
 					if err != nil {
 						return err
 					}
 
-					parsedRelHomePath, err := parsedHomePath.Rel(vars.HomeDir)
+					parsedRelHomePath, err := parsedHomePath.Rel(*vars.HomePathBase)
 					if err != nil {
 						return err
 					}

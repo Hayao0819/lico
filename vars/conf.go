@@ -5,4 +5,11 @@ var BaseListFile string = "~/.lico/repo/lico.list"
 var CreatedListFile string = "~/.lico/created.list"
 
 var HomeDir string
-var RepoPathBase, HomePathBase string
+//var RepoPathBase, HomePathBase *string
+
+var (
+	RepoPathBase *string = &RepoDir
+	HomePathBase *string = &HomeDir
+)
+
+

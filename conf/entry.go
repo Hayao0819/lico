@@ -42,7 +42,7 @@ func (entry *Entry) FormatHome() (p.Path, error) {
 }
 
 func (entry *Entry) FormatRepo() (p.Path, error) {
-	return entry.RepoPath.Abs(vars.RepoPathBase)
+	return entry.RepoPath.Abs(*vars.RepoPathBase)
 }
 
 // CreatedListに追記
@@ -56,13 +56,13 @@ func addEntryToCreatedList(path p.Path) error {
 // リンクを作成する
 func (entry *Entry) MakeSymLink() error {
 	// ホームパス
-	link, err := entry.HomePath.Abs(vars.HomePathBase)
+	link, err := entry.HomePath.Abs(*vars.HomePathBase)
 	if err != nil {
 		return err
 	}
 
 	// リポジトリパス
-	orig, err := entry.RepoPath.Abs(vars.RepoPathBase)
+	orig, err := entry.RepoPath.Abs(*vars.RepoPathBase)
 	if err != nil {
 		return err
 	}

@@ -21,13 +21,11 @@ func common() error {
 	if err != nil {
 		return err
 	}
-	//fmt.Printf("リスト: %v\n", listFile)
 
 	vars.RepoDir, err = utils.Abs("", vars.RepoDir)
 	if err != nil {
 		return err
 	}
-	//fmt.Printf("リポジトリ: %v\n", repoDir)
 
 	vars.HomeDir, err = os.UserHomeDir()
 	if err != nil {
@@ -38,9 +36,6 @@ func common() error {
 	if err != nil {
 		return err
 	}
-
-	//homePathBase = homeDir
-	//repoPathBase = repoDir
 
 	return nil
 }
