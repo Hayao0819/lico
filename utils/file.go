@@ -106,3 +106,14 @@ func RemoveLine(path string, targetLineNo int)error{
 	}
 	return WriteLines(newFileLine, path)
 }
+
+func AppendLine(path , line string)error{
+	file, err := os.OpenFile("text.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err !=nil{
+		return err
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(line)
+	return err
+}
