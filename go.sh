@@ -28,10 +28,20 @@ call_myself(){
     "${script_path}/$(basename "$0")" "$@" || return "$?"
 }
 
-build_cmd(){
-    check_cmd "goreleaser"
+run_build(){
+    check_cmd "goreleaser"  || {
+        echo "Please run this: go install github.com/goreleaser/goreleaser@latest"
+        return 1
+    }
     goreleaser build --snapshot --clean --single-target >&2
-    "${script_path}/getpath.py" 
+}
+
+get_built_binary(){
+    if [ ! -e "${script_path}/dist/artifacts.json" ]; then
+        echo "Run 'run_build' before calling 'get_built_binary'" >&2
+        return 1
+    fi
+    "${script_path}/getpath.py"
 }
 
 check_cmd(){
@@ -47,7 +57,8 @@ check_cmd go
 
 case "${mode}" in
     "build")
-        mv "$(build_cmd)" "${script_path}/lico"
+        run_build
+        mv "$(get_built_binary)" "${script_path}/lico"
         ;;
     "install")
         call_myself "build"
@@ -61,9 +72,8 @@ case "${mode}" in
         fi
         ;;
     "run")
-        #go run -ldflags "$ldflags" -- "${go_files[@]}" "$@"
-        #"$script_path/$(basename "$0")" "build"
-        "$(build_cmd)" "$@"
+        run_build
+        "$(get_built_binary)" "$@"
         ;;
     "drun")
         call_myself "run" -l "$script_path/lico.list" -r "$script_path" "$@"
