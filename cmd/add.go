@@ -23,7 +23,7 @@ func addCmd() *cobra.Command {
 			entry := conf.NewEntry(p.New(args[0]), p.New(args[1]))
 
 			// Entry一覧を生成
-			list, err := conf.ReadConf(*listFile)
+			list, err := conf.ReadConf()
 			if err != nil {
 				return err
 			}

@@ -55,7 +55,7 @@ func listCmd() *cobra.Command {
 			}
 
 			// 設定ファイルを読み込み
-			list, err := conf.ReadConf(*listFile)
+			list, err := conf.ReadConf()
 			if err != nil {
 				//fmt.Fprintln(os.Stderr, err)
 				return err

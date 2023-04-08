@@ -21,7 +21,7 @@ func setCmd() *cobra.Command {
 もし不正なファイルが設定されていた場合、そのファイルは無視して続行されます。
 `,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			list, err := conf.ReadConf(*listFile)
+			list, err := conf.ReadConf()
 			var errlist []error
 			if err != nil {
 				return err

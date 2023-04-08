@@ -37,7 +37,7 @@ func rmLinkCmd() *cobra.Command {
 			var err error
 			var rmList []string
 			var errList []error
-			if list, err = conf.ReadConf(*listFile); err != nil {
+			if list, err = conf.ReadConf(); err != nil {
 				return err
 			}
 

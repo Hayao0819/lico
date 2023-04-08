@@ -97,7 +97,9 @@ func (entries *List) HasHomeFile(path p.Path) (bool, error) {
 }
 
 // 設定ファイルを読み込みます
-func ReadConf(path string) (*List, error) {
+func ReadConf() (*List, error) {
+	path := vars.BaseListFile
+
 	// parse config
 	lines, err := FormatTemplate(path)
 	if err != nil {

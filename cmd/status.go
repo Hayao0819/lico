@@ -57,7 +57,7 @@ func loadStatus() []status {
 	}
 
 	// 設定済みリンクの数
-	list, err := conf.ReadConf(*listFile)
+	list, err := conf.ReadConf()
 	if err != nil {
 		//return []status{}, err
 		errs = append(errs, err)
