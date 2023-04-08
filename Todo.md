@@ -22,7 +22,7 @@
   - [ ] homebrewパッケージを作成する
     - [なぞのエラーで動かない](https://twitter.com/Hayao0819/status/1627668181992222721)
 - [ ] ソースコードの整理
-  - [ ] `conf.ReadConf`の引数を削除し、`vars.ListFile`を用いる
+  - [x] `conf.ReadConf`の引数を削除し、`vars.ListFile`を用いる
   - [x] `cmd.formatRepoPath`と`cmd.formatHomePath`を`conf`に移動
 - [ ] statusコマンドで見れる情報を増やす
   - [x] コンフィグが設定済みか

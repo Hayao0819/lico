@@ -103,7 +103,7 @@ func (entry *Entry) RemoveSymLink() error {
 		return vars.ErrNotSymlink
 	}
 
-	created, err := ReadCreatedList(vars.CreatedListFile)
+	created, err := ReadCreatedList()
 	if err != nil {
 		return err
 	}

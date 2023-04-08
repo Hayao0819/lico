@@ -8,7 +8,6 @@ import (
 
 	"github.com/Hayao0819/lico/conf"
 	"github.com/Hayao0819/lico/utils"
-	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 
 	//"github.com/Hayao0819/lico/vars"
@@ -73,7 +72,7 @@ func loadStatus() []status {
 
 	// licoによって作成されたリンクの数
 	managedLink := 0
-	created, err := conf.ReadCreatedList(vars.CreatedListFile)
+	created, err := conf.ReadCreatedList()
 	if err != nil {
 		errs = append(errs, err)
 	} else {

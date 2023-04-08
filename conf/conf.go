@@ -169,7 +169,9 @@ func FormatTemplate(path string) ([]string, error) {
 	return parsed, nil
 }
 
-func ReadCreatedList(path string) (*List, error) {
+func ReadCreatedList() (*List, error) {
+	path := vars.CreatedListFile
+
 	lines, err := utils.ReadLines(path)
 	if err != nil {
 		return nil, err
