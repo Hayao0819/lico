@@ -20,6 +20,12 @@ go install github.com/Hayao0819/lico@HEAD
 
 ### バイナリをダウンロードする
 
+#### HomeBrewの場合
+
+```bash
+brew tap Hayao0819/tap
+brew install lico
+```
 #### Linux , macOSの場合
 
 このスクリプトはWindowsでは動作しません
