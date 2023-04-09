@@ -62,7 +62,7 @@ brews:
     test: |
       system "#{bin}/lico help"
     install: |
-      bin.install lico
+      bin.install "lico"
     dependencies:
       - name: git
 
