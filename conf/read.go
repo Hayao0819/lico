@@ -38,11 +38,7 @@ func ReadConf() (*List, error) {
 		return nil, err
 	}
 
-	var list List
-	var item Entry
-	var splited []string
-	var repoPath p.Path
-	var homePath p.Path
+	list := List{}
 
 	commentReg, _ := regexp.Compile("^ *#")
 	emptyReg, _ := regexp.Compile("^ *$")
@@ -54,14 +50,16 @@ func ReadConf() (*List, error) {
 		}
 
 		// :で分割
-		splited = strings.Split(line, ":")
-		repoPath = p.Path(strings.TrimSpace(splited[0]))
-		homePath = p.Path(strings.TrimSpace(splited[1]))
+		splited := strings.Split(line, ":")
+		repoPath := p.Path(strings.TrimSpace(splited[0]))
+		homePath := p.Path(strings.TrimSpace(splited[1]))
 
-		//fmt.Println(repoPath+"=="+homePath)
-
-		item = NewEntryWithIndex(repoPath, homePath, lineNo+1)
+		item := NewEntryWithIndex(repoPath, homePath, lineNo+1)
 		list = append(list, item)
 	}
 	return &list, nil
 }
+
+
+
+

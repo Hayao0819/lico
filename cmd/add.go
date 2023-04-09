@@ -34,9 +34,17 @@ func addCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			//fmt.Printf("hasHomeFile=%v hasRepoFile=%v\n", hasHomeFile, hasRepoFile)
 			if hasHomeFile || hasRepoFile {
 				return errors.New("this file has been managed. Please unregister it first")
+			}
+
+			// Ignoreに含まれているか確認
+			ignoreList, err := conf.ReadIgnoreList()
+			if err !=nil{
+				return err
+			}
+			if status, reg := ignoreList.MatchEntry(entry); status{
+				return fmt.Errorf("this path is ignored in \"%s\"", reg)
 			}
 
 			// ファイル一覧に追記

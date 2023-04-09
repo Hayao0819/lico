@@ -37,5 +37,10 @@ func common() error {
 		return err
 	}
 
+	vars.IgnoreListFile, err = utils.Abs("", vars.IgnoreListFile)
+	if err !=nil{
+		return err
+	}
+
 	return nil
 }
