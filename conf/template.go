@@ -47,8 +47,10 @@ func FormatTemplate(path string) ([]string, error) {
 		"isempty": func(s string) bool {
 			return utils.IsEmpty(s)
 		},
-		"isset": func(key string) bool {
-			return !utils.IsEmpty(os.Getenv(key))
+		"isset": func(v string) bool {
+			//return !utils.IsEmpty(os.Getenv(key))
+			_ , s := os.LookupEnv(v)
+			return s
 		},
 		"is_installed": func (c string)bool{
 			_, err := exec.LookPath(c)
