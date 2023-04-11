@@ -6,8 +6,9 @@
 - [ ] 除外リストを設定できるようにする
   - [ ] ファイルの内容で除外する
   - [x] ファイルパスで除外する 
+  - [ ] gitignoreと同じ構文を用いてignoreを柔軟にする
+    - https://github.com/sabhiram/go-gitignore
 - [ ] 英語化
 - [ ] [これ](https://qiita.com/tkit/items/3cdeafcde2bd98612428)でいい感じにする
-- [ ] gitignoreと同じ構文を用いてignoreを柔軟にする
-  - https://github.com/sabhiram/go-gitignore
 - [ ] ログを何らかのパッケージを用いていい感じに表示する
+- [ ] パッケージの自動インストールを追加
