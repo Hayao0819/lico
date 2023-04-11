@@ -35,9 +35,11 @@ zsh/{{ .OS }}/zshrc:{{ .Home }}/.zshrc
 
 関数名 | 引数 | 返り値 | 説明
 --- | --- | --- | ---
-environ | string | string | 環境変数を参照する
-isset | string | bool | 変数がセットされているか確認する
-isempty | string | bool | 文字が空かどうかを確認する
+environ | string | string | 環境変数を参照
+isset | string | bool | 変数がセットされているか
+isempty | string | bool | 文字が空かどうか
+is_installed | string | bool | コマンドがインストールされているか
+isunix | | bool | OSがUnix系・Unix互換かどうか
 
 ### コメント
 
