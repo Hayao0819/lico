@@ -1,5 +1,5 @@
 #!/bin/sh
-set -eu #-o pipefail
+set -e -u #-o pipefail
 
 script_path="$(cd "$(dirname "${0}")" || exit 1; pwd)"
 cd "$script_path" || exit 1
@@ -25,7 +25,7 @@ mode="${1-""}"
 shift 1
 
 call_myself(){
-    "${script_path}/$(basename "$0")" "$@"
+    "${script_path}/$(basename "$0")" "$@" || return "$?"
 }
 
 build_cmd(){
