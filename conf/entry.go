@@ -77,6 +77,10 @@ func (entry *Entry) MakeSymLink() error {
 		return vars.ErrNotExist
 	}
 
+	if link.Exists(){
+		return nil
+	}
+
 	if err := os.Symlink(orig.String(), link.String()); err == nil {
 		if err := addEntryToCreatedList(link); err != nil {
 			os.Remove(link.String())
