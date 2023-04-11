@@ -52,6 +52,9 @@ func FormatTemplate(path string) ([]string, error) {
 			_, s := os.LookupEnv(c)
 			return s
 		},
+		"isunix": func()bool{
+			return dirInfo.Get("OS") == "linux" || dirInfo.Get("OS") == "darwin"
+		},
 	}
 	
 
