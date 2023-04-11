@@ -1,0 +1,34 @@
+# Maintaoner: Yamada Hayao <hayao@fascode.net>
+
+pkgname="lico-git"
+pkgver="1.0"
+pkgrel="1"
+pkgdesc="Simple and flexible dotfiles manager written in Golang"
+arch=('x86_64')
+url="https://github.com/Hayao0819/lico"
+license=('MIT' 'custom')
+makedepends=('git' 'go')
+source=(
+    "git+https://github.com/Hayao0819/lico.git"
+)
+
+md5sums=("SKIP")
+
+pkgver(){
+    cd "$srcdir/lico"
+    git describe --long | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build(){
+    cd "$srcdir/lico"
+    "$srcdir/go.sh" build
+}
+
+package(){
+    mkdir -p "${pkgdir}/usr/bin/"
+    cp "${srcdir}/lico" "${pkgdir}/usr/bin/"
+    chmod 755 "${pkgdir}/usr/bin/"
+}
+
+
+
