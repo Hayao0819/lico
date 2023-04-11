@@ -4,7 +4,8 @@ before:
     - go generate ./...
 
 builds:
-  - env:
+  - id: lico-build
+    env:
       - CGO_ENABLED=0
     main: ./main.go
     goos:
@@ -65,6 +66,22 @@ brews:
       bin.install "lico"
     dependencies:
       - name: git
+
+nfpms:
+  - id: lico-packaging
+    package_name: lico
+    builds:
+      - "lico-build"
+    vendor: Hayao0819
+    homepage: "https://github.com/Hayao0819/lico"
+    maintainer: Hayao0819 <hayao@fascode.net>
+    description: "CLI tool for managing dotfiles"
+    license: MIT
+    formats:
+      - deb
+      - rpm
+    version_metadata: git
+    
 
 
 # The lines beneath this are called `modelines`. See `:help modeline`
