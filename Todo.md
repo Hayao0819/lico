@@ -1,37 +1,11 @@
 ## Todo
 
-- Gitの操作を[go-git](https://github.com/go-git/go-git)で書き直す
-- [x] rmlinkコマンドを実装する
-- [x] rmfileを実装する
-- [x] commitコマンドを実装する
-- [x] unlink時にrmlinkコマンドを実行する
-- [x] `list`コマンドで以下のオプションを追加する
-  - [x] テンプレート構文を解釈してフルパスで表示
-  - [x] テンプレート構文を解釈して相対パスで表示
-  - [x] テンプレート構文を解釈せず生の値をそのまま表示
+- [ ] Gitの操作を[go-git](https://github.com/go-git/go-git)で書き直す
 - [ ] テストを書く
 - [ ] ドキュメントを書く
 - [ ] 除外リストを設定できるようにする
   - [ ] ファイルの内容で除外する
   - [x] ファイルパスで除外する 
 - [ ] 英語化
-- [ ] パッケージング  
-  - [ ] debパッケージを作成する 
-  - [ ] rpmパッケージを作成する
-  - [ ] pacmanパッケージを作成する
-  - [x] homebrewパッケージを作成する
-    - ~~[なぞのエラーで動かない](https://twitter.com/Hayao0819/status/1627668181992222721)~~
-- [x] ソースコードの整理
-  - [x] `conf.ReadConf`の引数を削除し、`vars.ListFile`を用いる
-  - [x] `cmd.formatRepoPath`と`cmd.formatHomePath`を`conf`に移動
-- [x] statusコマンドで見れる情報を増やす
-  - [x] コンフィグが設定済みか
-  - [x] リポジトリディレクトリ、設定ファイルのパス
-  - [x] リモートリポジトリのURL
-  - 他にほしい情報があったら追記する
-- [x] statusコマンドを見やすくする
-  - [x] [これ](https://github.com/jedib0t/go-pretty)を使って見やすいモードを追加する
-    - [x] 最低限の表
-    - [x] 色付きの表
 - [ ] [これ](https://qiita.com/tkit/items/3cdeafcde2bd98612428)でいい感じにする
 - [ ] ログを何らかのパッケージを用いていい感じに表示する
