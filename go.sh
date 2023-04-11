@@ -49,6 +49,17 @@ case "${mode}" in
     "build")
         mv "$(build_cmd)" "${script_path}/lico"
         ;;
+    "install")
+        call_myself "build"
+        if [ "$(id -u)" = 0 ]; then
+            cp "$script_path/lico" /usr/local/bin/
+        elif [ -e "$HOME/.bin" ]; then
+            cp "$script_path/lico" "$HOME/.bin"
+        else
+            echo "You should run this script as root to install lico" >&2
+            exit 1
+        fi
+        ;;
     "run")
         #go run -ldflags "$ldflags" -- "${go_files[@]}" "$@"
         #"$script_path/$(basename "$0")" "build"
@@ -70,7 +81,7 @@ case "${mode}" in
         goreleaser release --snapshot --clean
         ;;
     *)
-        echo "No such command"
+        echo "No such command" >&2
         call_myself ""
         exit 1
         ;;
