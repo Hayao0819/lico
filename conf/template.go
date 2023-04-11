@@ -3,14 +3,16 @@ package conf
 import (
 	"bytes"
 	"fmt"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"text/template"
 
+	"os"
+
 	"github.com/Hayao0819/lico/osenv"
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
-	"os"
 )
 
 func replaceToTemplate(path string) (p.Path, error) {
@@ -49,8 +51,12 @@ func FormatTemplate(path string) ([]string, error) {
 			return !utils.IsEmpty(os.Getenv(key))
 		},
 		"is_installed": func (c string)bool{
-			_, s := os.LookupEnv(c)
-			return s
+			_, err := exec.LookPath(c)
+			if err == nil{
+				return true
+			}else{
+				return false
+			}
 		},
 	}
 	
