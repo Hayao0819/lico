@@ -52,7 +52,7 @@ func ReadConf() (*List, error) {
 
 		// :で分割
 		splited := strings.Split(line, ":")
-		if len(splited) >= 3 || len(splited) <= 1{   // if 1<= x <= 3; then
+		if len(splited) >= 4 || len(splited) <= 1{   // if 1<= x <= 4; then
 			return nil, fmt.Errorf("wrong syntax in line: %v", lineNo+1)
 		}
 
@@ -60,7 +60,19 @@ func ReadConf() (*List, error) {
 		repoPath := p.Path(strings.TrimSpace(splited[0]))
 		homePath := p.Path(strings.TrimSpace(splited[1]))
 
+		// 作成
 		item := NewEntryWithIndex(repoPath, homePath, lineNo+1)
+
+		// オプション付き
+		if len(splited) == 3{
+			option, err := ParseEntryOption(strings.TrimSpace(splited[2]))
+			if err !=nil{
+				return nil, err
+			}
+			item.Option = option
+		}
+
+		// 一覧追加
 		list = append(list, item)
 	}
 	return &list, nil

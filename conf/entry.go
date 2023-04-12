@@ -18,6 +18,7 @@ type Entry struct {
 	RepoPath p.Path
 	HomePath p.Path
 	Index    int //0からスタートする行数
+	Option   *EntryOption
 }
 
 // 新しいEntryを生成します
@@ -29,6 +30,13 @@ func NewEntry(repoPath, homePath p.Path) Entry {
 func NewEntryWithIndex(repoPath, homePath p.Path, index int) Entry {
 	return Entry{RepoPath: repoPath, HomePath: homePath, Index: index}
 }
+
+// Entryを行数、オプション付きで作成します
+/*
+func NewFullEntry(repoPath, homePath p.Path, index int, opt *EntryOption)(Entry){
+	return Entry{RepoPath: repoPath, HomePath: homePath, Index: index, Option: opt}
+}
+*/
 
 // repoPathが存在するかどうかを確認する
 func (entry *Entry) ExistsRepoPath() bool {
