@@ -11,11 +11,11 @@ func Get() (osEnv, error) {
 	var env osEnv
 	switch runtime.GOOS {
 	case "windows":
-		env = WindowsDirs
+		env = WindowsInfo
 	case "linux":
-		env = LinuxDirs
+		env = LinuxInfo
 	case "darwin":
-		env = MacDirs
+		env = MacInfo
 	default:
 		return env, errors.New("unsupported os")
 	}
