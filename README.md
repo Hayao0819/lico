@@ -4,11 +4,9 @@
 ![](https://img.shields.io/github/license/Hayao0819/lico?style=flat-square)
 
 
-Licoはシンプルで軽量なDotfilesマネージャーです。全てのファイルをGitで管理し、自由なファイル構造を維持できます。
+全てのファイルをGitで管理し、自由なファイル構造を維持できます。
 
-このツールは[ssh0/dot](https://github.com/ssh0/dot)に影響を受けて開発されています。
-
-**このツールはまだ開発途中です。常用はおすすめしません。**
+**このツールはまだ開発途中で、仕様が安定していません。**
 
 ## 使い方
 
@@ -19,7 +17,7 @@ Licoはシンプルで軽量なDotfilesマネージャーです。全てのフ�
 ## Special Thanks
 
 - [まちカドまぞく](https://www.tbs.co.jp/anime/machikado/)
-- [ssh0/dot](https://github.com/ssh0/dot)
+- [ビッグバネイト: ssh0/dot](https://github.com/ssh0/dot)
 - [mazen160/go-random](https://github.com/mazen160/go-random)
 - [spf13/cobra](https://github.com/spf13/cobra)
 - [watasuke102/mit-sushi-ware](https://github.com/watasuke102/mit-sushi-ware)
