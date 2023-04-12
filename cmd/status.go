@@ -62,12 +62,16 @@ func loadStatus() []status {
 		errs = append(errs, err)
 	}
 	var configuredLink, missingLink int
-	for _, l := range *list {
-		if e := l.CheckSymLink(); e == nil {
-			configuredLink++
-		} else {
-			missingLink++
+	if list != nil {
+		for _, l := range *list {
+			if e := l.CheckSymLink(); e == nil {
+				configuredLink++
+			} else {
+				missingLink++
+			}
 		}
+	}else{
+		list = &conf.List{}
 	}
 
 	// licoによって作成されたリンクの数
