@@ -10,10 +10,10 @@ import (
 )
 
 // OS依存の情報を保持します
-type osEnv map[string]string
+type E map[string]string
 
 // 新しいosEnvを生成します
-func newOSEnv() osEnv {
+func newOSEnv() E {
 	user, _ := user.Current()
 	env := map[string]string{
 		"Home":     utils.GetHomeDir(),
@@ -25,7 +25,7 @@ func newOSEnv() osEnv {
 		env[index] = value
 	}
 
-	return osEnv(env)
+	return E(env)
 }
 
 // 環境変数を取得
@@ -41,18 +41,18 @@ func getVars() map[string]string {
 	return rtn
 }
 
-func (o *osEnv) Add(key, value string) *osEnv {
+func (o *E) Add(key, value string) *E {
 	m := *o
 	m[key] = value
-	return (*osEnv)(&m)
+	return (*E)(&m)
 }
 
-func (o *osEnv) Get(key string) string {
+func (o *E) Get(key string) string {
 	m := *o
 	return m[key]
 }
 
-func (env *osEnv) GetKeys() []string {
+func (env *E) GetKeys() []string {
 	var arr []string
 	for index := range *env {
 		arr = append(arr, index)
@@ -61,7 +61,7 @@ func (env *osEnv) GetKeys() []string {
 	return arr
 }
 
-func (env osEnv) GetSortedKeys() []string {
+func (env E) GetSortedKeys() []string {
 	type osEvnStruct struct {
 		name  string
 		value string

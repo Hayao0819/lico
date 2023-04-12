@@ -7,8 +7,8 @@ import (
 	"github.com/Hayao0819/lico/vars"
 )
 
-func Get() (osEnv, error) {
-	var env osEnv
+func Get() (E, error) {
+	var env E
 	switch runtime.GOOS {
 	case "windows":
 		env = WindowsInfo
