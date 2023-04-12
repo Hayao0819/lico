@@ -12,29 +12,46 @@ import (
 
 // リンクが正常に設定されているかチェックする
 func (entry *Entry) CheckSymLink() error {
-	link := entry.HomePath.String()
+	// 前処理
+	link_path, err := entry.FormatHome()
+	if err !=nil{
+		return err
+	}
+	link := link_path.String()
+
+	repo_path , err := entry.FormatRepo()
+	if err !=nil{
+		return err
+	}
+	//repo := repo_path.String()
+
+	// リンクが存在するかどうか
 	if !utils.Exists(link) {
+		println(link)
 		return vars.ErrNotExist
 	}
 
+	// リンクがシンボリックリンクかどうか
 	if !utils.IsSymlink(link) {
 		return vars.ErrNotSymlink
 	}
 
+	// 適切なシンボリックリンクかどうか
 	readlink, err := os.Readlink(link)
 	if err != nil {
 		return err
 	}
 
-	isSameFile, err := p.Is(p.New(readlink), entry.RepoPath)
+	// 同じファイルかどうか
+	isSameFile, err := p.Is(p.New(readlink), repo_path)
 	if err != nil {
 		return err
 	}
-
 	if !isSameFile {
 		return vars.ErrLinkToDiffFile
 	}
 
+	// 正常
 	return nil
 }
 
