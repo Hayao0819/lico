@@ -1,12 +1,13 @@
 package conf
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 
+	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
-	p "github.com/Hayao0819/lico/paths"
 )
 
 
@@ -51,6 +52,11 @@ func ReadConf() (*List, error) {
 
 		// :で分割
 		splited := strings.Split(line, ":")
+		if len(splited) >= 3 || len(splited) <= 1{   // if 1<= x <= 3; then
+			return nil, fmt.Errorf("wrong syntax in line: %v", lineNo+1)
+		}
+
+		// 代入ReadConf
 		repoPath := p.Path(strings.TrimSpace(splited[0]))
 		homePath := p.Path(strings.TrimSpace(splited[1]))
 
