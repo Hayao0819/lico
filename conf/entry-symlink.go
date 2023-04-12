@@ -27,7 +27,7 @@ func (entry *Entry) CheckSymLink() error {
 
 	// リンクが存在するかどうか
 	if !utils.Exists(link) {
-		println(link)
+		//println(link)
 		return vars.ErrNotExist
 	}
 
