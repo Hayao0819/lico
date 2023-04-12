@@ -14,6 +14,12 @@
 - [導入](./docs/init.md)
 - [設定](./docs/config.md)
 
+## 設定例
+
+licoを使ったリポジトリがあれば教えて下さい。追加します。
+
+- [Hayao0819/dotfiles]
+
 ## Special Thanks
 
 - [まちカドまぞく](https://www.tbs.co.jp/anime/machikado/)
