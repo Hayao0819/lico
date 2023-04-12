@@ -1,14 +1,11 @@
 package conf
 
 import (
-	"regexp"
-
-	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
+	gi "github.com/sabhiram/go-gitignore"
 )
 
-
-type IgnoreList []*regexp.Regexp
+type IgnoreList gi.GitIgnore
 
 // lico.ignoreを読み込んでIgnoreListを生成する
 func ReadIgnoreList()(*IgnoreList, error){
@@ -17,29 +14,19 @@ func ReadIgnoreList()(*IgnoreList, error){
 		return nil, err
 	}
 
-	exps := IgnoreList{}
+	gitignore := gi.CompileIgnoreLines(lines...)
 
-	for _, line := range lines{
-		if utils.IsEmpty(line){
-			continue
-		}
-		e, err := regexp.Compile(line)
-		if err !=nil{
-			return nil, err
-		}
-		exps = append(exps, e)
-	}
-	return &exps, nil
+	return (*IgnoreList)(gitignore), nil
 }
 
 // パスがIgnoreListに含まれているかどうか
 func (i *IgnoreList)MatchString(s string)(bool, string){
-	for _, r := range *i {
-		if r.MatchString(s) {
-			return true, r.String()
-		}
+	g := gi.GitIgnore(*i)
+	b, h := g.MatchesPathHow(s)
+	if h == nil{
+		return b, ""
 	}
-	return false, ""
+	return b, h.Line
 }
 
 // entryがIgnoreListに含まれているかどうか
