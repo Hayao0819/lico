@@ -20,7 +20,14 @@ func setCmd() *cobra.Command {
 		Long: `リストに従ってシンボリックリンクを作成します
 もし不正なファイルが設定されていた場合、そのファイルは無視して続行されます。
 `,
-		RunE: func(cmd *cobra.Command, args []string) error {
+		RunE: func(cmd *cobra.Command, ars []string) error {
+			run_by_admin := false
+			// Check root
+			if os.Getegid() == 0{
+				run_by_admin = true
+			}
+
+			// get conf
 			list, err := conf.ReadConf()
 			var errlist []error
 			if err != nil {
@@ -28,6 +35,21 @@ func setCmd() *cobra.Command {
 			}
 
 			for _, entry := range *list {
+				
+				if run_by_admin && ! entry.Option.WithRoot {
+					// rootとして実行かつWithRootではない
+					if err := entry.CheckSymLink(); err !=nil{
+						fmt.Fprintln(os.Stderr, "一般ユーザーとして実行して全てのシンボリックリンクを作成してください")
+					}
+					continue
+				}else if ! run_by_admin && entry.Option.WithRoot{
+					// 一般ユーザーとして実行かつWithRoot
+					if err := entry.CheckSymLink(); err !=nil{
+						fmt.Fprintln(os.Stderr, "Rootとして実行して全てのシンボリックリンクを作成してください")
+					}
+					continue
+				}
+
 				err := entry.MakeSymLink()
 				if err != nil {
 					errlist = append(errlist, err)
