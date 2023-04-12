@@ -23,6 +23,9 @@ func ReadIgnoreList()(*IgnoreList, error){
 func (i *IgnoreList)MatchString(s string)(bool, string){
 	g := gi.GitIgnore(*i)
 	b, h := g.MatchesPathHow(s)
+	if h == nil{
+		return b, ""
+	}
 	return b, h.Line
 }
 
