@@ -42,5 +42,10 @@ func common() error {
 		return err
 	}
 
+	vars.PkgListFile, err = utils.Abs("", vars.PkgListFile)
+	if err !=nil{
+		return err
+	}
+
 	return nil
 }
