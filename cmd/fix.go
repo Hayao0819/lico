@@ -79,6 +79,9 @@ func linkcmd() *cobra.Command{
 				if _, err = list.GetItemFromPath(home); err !=nil{
 					// すでに登録解除されたリンク
 					fmt.Fprintf(os.Stderr, "リストにないリンク: %v\n", home)
+					if e.RemoveSymLink() != nil {
+						return err
+					}
 					if utils.RemoveLine(vars.CreatedListFile, e.Index) != nil{
 						return err
 					}
