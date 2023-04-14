@@ -1,4 +1,4 @@
-package pkglist
+package pkg
 
 type P string
 

@@ -1,28 +1,56 @@
-package pkglist
+package pkg
 
 import (
+	"encoding/json"
+	//"fmt"
 	"os"
 
 	"github.com/Hayao0819/lico/vars"
 )
 
-type OSInfo map[string]struct{
-	Id string `json:"id"`
-	Pkgs []P `json:"pkgs"`
-}
+type OSList map[string][]P
 
-type PkgList []OSInfo
 
-func ReadPkgList()(*PkgList, error){
-	file, err := os.Open(vars.PkgListFile)
+type List map[string]OSList
+
+
+func ReadList()(*List, error){
+	file, err := os.ReadFile(vars.PkgListFile)
 	if err != nil{
 		return nil, err
 	}
-	defer file.Close()
+	
+	pkglist := List{}
 
+	if json.Unmarshal(file, &pkglist); err !=nil{
+		return nil, err
+	}
 
-	// いい感じに構造体にデコードする処理をあとで書く
+	//fmt.Println(pkglist)
 
-	return nil, nil
+	return &pkglist, nil
 }
 
+func (p *List)OSList()([]string){
+	keys := []string{}
+	for k := range *p{
+		keys = append(keys, k)
+	}
+	return keys
+}
+
+
+func (p *List)GetOS(name string)(*OSList){
+	oslist := (*p)[name]
+	return &oslist
+}
+
+func (o *OSList)GetPkgs(id string)(*[]P){
+	p := (*o)[id]
+	return &p
+}
+
+func (p *List)GetCurrent()(*[]P, error){
+	// あとで実装する
+	return nil, nil
+}
