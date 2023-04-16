@@ -4,7 +4,6 @@ set -e -u #-o pipefail
 script_path="$(cd "$(dirname "${0}")" || exit 1; pwd)"
 cd "$script_path" || exit 1
 
-#go_files=("${script_path}/main.go")
 
 mode="${1-""}"
 
