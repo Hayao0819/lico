@@ -6,26 +6,32 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/Hayao0819/go-distro"
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
 )
 
 // OS依存の情報を保持します
 type E map[string]string
 
 // 新しいosEnvを生成します
-func newOSEnv() E {
+func Get() (E, error) {
 	user, _ := user.Current()
+	d := distro.Get()
 	env := map[string]string{
 		"Home":     utils.GetHomeDir(),
-		"OS":       "",
+		"OS":       d.Name(),
+		"OSVer":    d.Version().ID(),
 		"UserName": user.Username,
+		"Repo":     vars.RepoDir,
+		"List":     vars.BaseListFile,
 	}
 
 	for index, value := range getVars() {
 		env[index] = value
 	}
 
-	return E(env)
+	return E(env), nil
 }
 
 // 環境変数を取得
