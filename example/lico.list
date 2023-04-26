@@ -1,0 +1,5 @@
+# リポジトリのファイル : 配置先のパス
+
+./config/example1.txt : {{ .Repo }}/your-home/ex1.txt
+./config/example2.txt : {{ .Repo }}/your-home/ex2.txt
+
