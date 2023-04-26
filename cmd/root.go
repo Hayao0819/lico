@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 )
 
@@ -38,6 +39,8 @@ func rootCmd() *cobra.Command {
 	cmd.PersistentFlags().StringVarP(listFile, "list", "l", *listFile, "ファイルリストを指定します")
 	cmd.PersistentFlags().StringVarP(repoDir, "repo", "r", *repoDir, "リポジトリディレクトリを指定します")
 	cmd.PersistentFlags().BoolVarP(&showVersion, "version", "", false, "バージョン情報を表示します")
+	cmd.PersistentFlags().StringVarP(&vars.CreatedListFile, "created-list", "", vars.CreatedListFile, "作成されたリンクを保存するファイルを指定します")
+	cmd.Flags().MarkHidden("created-list")
 	cmd.Flags().BoolVarP(&licoOpt, "lico", "", licoOpt, "")
 	cmd.Flags().MarkHidden("lico")
 
