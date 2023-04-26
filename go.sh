@@ -74,8 +74,8 @@ case "${mode}" in
         run_build
         "$(get_built_binary)" "$@"
         ;;
-    "drun")
-        call_myself "run" -l "$script_path/lico.list" -r "$script_path" "$@"
+    "drun" | "example")
+        call_myself "run" -l "${script_path}/example/lico.list" -r "${script_path}/example" --created-list "$script_path/example/created.list" "$@"
         ;;
     "fmt")
         check_cmd "gofmt"
