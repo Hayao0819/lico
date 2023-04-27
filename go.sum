@@ -1,5 +1,5 @@
-github.com/Hayao0819/go-distro v0.0.0-20230427080528-ebf1584281ee h1:fpAv9uyVxpjU/98QYbUP81hTZgRBk86CQb6FWzwoC00=
-github.com/Hayao0819/go-distro v0.0.0-20230427080528-ebf1584281ee/go.mod h1:CTiKrXTC0P7UXl2c4pv094YSnaR8smXm71U9qALzLeg=
+github.com/Hayao0819/go-distro v0.0.0-20230427101609-e4e2d337dbca h1:Dm2gfmgoDk2djK8KhFeIVGjPqS0B264cDT2DigGvmvM=
+github.com/Hayao0819/go-distro v0.0.0-20230427101609-e4e2d337dbca/go.mod h1:CTiKrXTC0P7UXl2c4pv094YSnaR8smXm71U9qALzLeg=
 github.com/Hayao0819/sysinfo-ng v0.0.0-20230423150602-65ccee852cc0 h1:jVT59/ltgvXMN2P/r+Rwyf8FA3Y9T4nXBpI53UgdKsM=
 github.com/Hayao0819/sysinfo-ng v0.0.0-20230423150602-65ccee852cc0/go.mod h1:tQI+TRmIyGa4vmVDQINIl/4IYUVeQiHOliQw8Xj/qXc=
 github.com/ashcrow/osrelease v0.0.0-20180626175927-9b292693c55c h1:icme0QhxrgZOxTBnT6K8dfGLwbKWSOVwPB95XTbo8Ws=
