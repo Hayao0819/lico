@@ -10,6 +10,7 @@ import (
 
 	"os"
 
+	"github.com/Hayao0819/go-distro/goos"
 	"github.com/Hayao0819/lico/osenv"
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
@@ -61,7 +62,7 @@ func FormatTemplate(path string) ([]string, error) {
 			}
 		},
 		"isunix": func()bool{
-			return dirInfo.Get("OS") == "linux" || dirInfo.Get("OS") == "darwin"
+			return goos.IsUnix()
 		},
 	}
 	

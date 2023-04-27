@@ -3,7 +3,7 @@ module github.com/Hayao0819/lico
 go 1.19
 
 require (
-	github.com/Hayao0819/go-distro v0.0.0-20230424151958-5d95b923b10a
+	github.com/Hayao0819/go-distro v0.0.0-20230427080528-ebf1584281ee
 	github.com/jedib0t/go-pretty/v6 v6.4.5
 	github.com/manifoldco/promptui v0.9.0
 	github.com/mazen160/go-random v0.0.0-20210308102632-d2b501c85c03
