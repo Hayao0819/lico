@@ -6,7 +6,7 @@ before:
 builds:
   - id: lico-build
     env:
-      - CGO_ENABLED=0
+      - CGO_ENABLED=1
     main: ./main.go
     goos:
       - linux
