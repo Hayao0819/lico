@@ -64,6 +64,35 @@ func FormatTemplate(path string) ([]string, error) {
 		"isunix": func()bool{
 			return goos.IsUnix()
 		},
+		"readdir": func (p string)[]string{
+			direntry, err := os.ReadDir(p)
+			if err != nil{
+				return []string{}
+			}
+			files := []string{}
+			for _, entry := range direntry{
+				files = append(files, entry.Name())
+			}
+			fmt.Println(files)
+			return files
+		},
+		"readdir_files": func (p string)[]string{
+			direntry, err := os.ReadDir(p)
+			if err != nil{
+				return []string{}
+			}
+			files := []string{}
+			for _, entry := range direntry{
+				if entry.IsDir(){
+					continue
+				}
+				files = append(files, entry.Name())
+			}
+			return files
+		},
+		"joinpath": func (p ...string)string{
+			return filepath.Join(p...)
+		},
 	}
 	
 
