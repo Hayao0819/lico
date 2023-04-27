@@ -1,11 +1,7 @@
-github.com/Hayao0819/go-distro v0.0.0-20230427101609-e4e2d337dbca h1:Dm2gfmgoDk2djK8KhFeIVGjPqS0B264cDT2DigGvmvM=
-github.com/Hayao0819/go-distro v0.0.0-20230427101609-e4e2d337dbca/go.mod h1:CTiKrXTC0P7UXl2c4pv094YSnaR8smXm71U9qALzLeg=
-github.com/Hayao0819/sysinfo-ng v0.0.0-20230423150602-65ccee852cc0 h1:jVT59/ltgvXMN2P/r+Rwyf8FA3Y9T4nXBpI53UgdKsM=
-github.com/Hayao0819/sysinfo-ng v0.0.0-20230423150602-65ccee852cc0/go.mod h1:tQI+TRmIyGa4vmVDQINIl/4IYUVeQiHOliQw8Xj/qXc=
+github.com/Hayao0819/go-distro v0.0.0-20230427112622-3498babe0cbd h1:uY1TJ4SZ/Eq4IrJnlXyiuzLc7Mz76EgzumsXTFYwpq4=
+github.com/Hayao0819/go-distro v0.0.0-20230427112622-3498babe0cbd/go.mod h1:C7RUU7FdBZWMNpHLW23ZoaRZnFraq9CEyEPgA6KIuwY=
 github.com/ashcrow/osrelease v0.0.0-20180626175927-9b292693c55c h1:icme0QhxrgZOxTBnT6K8dfGLwbKWSOVwPB95XTbo8Ws=
 github.com/ashcrow/osrelease v0.0.0-20180626175927-9b292693c55c/go.mod h1:BRljTyotlu+6N+Qlu5MhjxpdmccCnp9lDvZjNNV8qr4=
-github.com/blabber/go-freebsd-sysctl v0.0.0-20201130114544-503969f39d8f h1:gMH+lz/KRpSqdoL+IQjgd91bP1LB8vrVEfNxr47GYC8=
-github.com/blabber/go-freebsd-sysctl v0.0.0-20201130114544-503969f39d8f/go.mod h1:cTRyHktEaXkKTTEyZ0hAgS7H4V0AVoKhB8Dx0tVr/tY=
 github.com/chzyer/logex v1.1.10 h1:Swpa1K6QvQznwJRcfTfQJmTE72DqScAa40E+fbHEXEE=
 github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWRnGsAI=
 github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e h1:fY5BOSpyZCqRo5OhCuC+XN+r/bBCmeuuJtjz+bCNIf8=
@@ -47,10 +43,7 @@ github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.7.4/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
 github.com/stretchr/testify v1.8.2 h1:+h33VjcLVPDHtOdpUCuF+7gSuG3yGIftsP1YvFihtJ8=
-github.com/thlib/go-timezone-local v0.0.0-20210907160436-ef149e42d28e h1:BuzhfgfWQbX0dWzYzT1zsORLnHRv3bcRcsaUk0VmXA8=
-github.com/thlib/go-timezone-local v0.0.0-20210907160436-ef149e42d28e/go.mod h1:/Tnicc6m/lsJE0irFMA0LfIwTBo4QP7A8IfyIv4zZKI=
 golang.org/x/sys v0.0.0-20181122145206-62eef0e2fa9b/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
-golang.org/x/sys v0.0.0-20210831042530-f4d43177bf5e/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.1.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.5.0 h1:MUK/U/4lj1t1oPg0HfuXDN/Z1wv31ZJ/YcPiGccS4DU=
 golang.org/x/sys v0.5.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
