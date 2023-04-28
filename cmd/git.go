@@ -21,7 +21,7 @@ func gitCmd() *cobra.Command {
 				return vars.ErrNoRepoDir
 			}
 
-			return utils.RunCmd("git", append([]string{"-C", *repoDir}, args...)...)
+			return utils.RunCmd("git", append([]string{"-C", vars.RepoDir}, args...)...)
 		},
 	}
 

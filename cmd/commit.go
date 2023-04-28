@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 	//"github.com/Hayao0819/lico/conf"
 	//"github.com/Hayao0819/lico/vars"
@@ -23,7 +24,7 @@ func commitCmd() *cobra.Command {
 			}
 
 			var err error
-			gitArgs := []string{"-C", *repoDir}
+			gitArgs := []string{"-C", vars.RepoDir}
 			if !utils.IsEmpty(gitflags) {
 				gitArgs = append(gitArgs, gitflags)
 			}

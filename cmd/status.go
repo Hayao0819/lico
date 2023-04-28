@@ -8,6 +8,7 @@ import (
 
 	"github.com/Hayao0819/lico/conf"
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 
 	//"github.com/Hayao0819/lico/vars"
@@ -35,15 +36,15 @@ func loadStatus() []status {
 
 	// リポジトリパス
 	//r = append(r, status{key: "RepoDir", value: *repoDir})
-	r = append(r, newStatus("RepoDir", *repoDir, "Dotfilesリポジトリのパス"))
+	r = append(r, newStatus("RepoDir", vars.RepoDir, "Dotfilesリポジトリのパス"))
 
 	//リポジトリパスがシンボリックリンクかどうか
 	//r= append(r, status{key: "IsSymlink", value: utils.IsSymlink(*repoDir)})
-	r = append(r, newStatus("IsSymlink", utils.IsSymlink(*repoDir), "RepoDirがシンボリックリンクかどうか"))
+	r = append(r, newStatus("IsSymlink", utils.IsSymlink(vars.RepoDir), "RepoDirがシンボリックリンクかどうか"))
 
 	// リストファイル
 	//r = append(r, status{key: "ListFile", value: *listFile})
-	r = append(r, newStatus("ListFile", *listFile, "リストファイルのパス"))
+	r = append(r, newStatus("ListFile", vars.BaseListFile, "リストファイルのパス"))
 
 	// リポジトリ
 	if repoList, err := getRepoUrl(); err == nil {

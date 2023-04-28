@@ -5,7 +5,9 @@ import (
 	"os"
 
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
+
 	//"github.com/Hayao0819/lico/utils"
 	//"github.com/Hayao0819/lico/conf"
 	//"github.com/Hayao0819/lico/vars"
@@ -24,7 +26,7 @@ func rmrepoCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if !noConfirm {
 				p := promptui.Select{
-					Label: fmt.Sprintf("%vを削除します。よろしいですか？", *repoDir),
+					Label: fmt.Sprintf("%vを削除します。よろしいですか？", vars.RepoDir),
 					Items: []string{"Yes", "No"},
 				}
 				_, selected, err := p.Run()
@@ -38,10 +40,10 @@ func rmrepoCmd() *cobra.Command {
 			}
 
 			if err := func() error {
-				if utils.IsSymlink(*repoDir) {
-					return os.Remove(*repoDir)
+				if utils.IsSymlink(vars.RepoDir) {
+					return os.Remove(vars.RepoDir)
 				} else {
-					return os.RemoveAll(*repoDir)
+					return os.RemoveAll(vars.RepoDir)
 				}
 			}(); err != nil {
 				return err

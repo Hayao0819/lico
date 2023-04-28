@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"strings"
 
+	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 )
 
@@ -15,7 +16,7 @@ var editorBin string
 func editCmd() *cobra.Command {
 	cmd := cobra.Command{
 		Use:   "edit",
-		Short: fmt.Sprintf("%vを手動で編集", *listFile),
+		Short: fmt.Sprintf("%vを手動で編集", vars.BaseListFile),
 		Long: `リストファイルを手動で編集します。
 
 エディタはオプションもしくは環境変数"EDITOR"で指定されたものが起動されます。
@@ -25,7 +26,7 @@ func editCmd() *cobra.Command {
 				return errors.New("cannot find an editor")
 			}
 
-			editorRun := exec.Command("sh", "-c", "--", fmt.Sprintf("%v %v", editorBin, *listFile))
+			editorRun := exec.Command("sh", "-c", "--", fmt.Sprintf("%v %v", editorBin, vars.BaseListFile))
 			editorRun.Stdout = os.Stdout
 			editorRun.Stdin = os.Stdin
 			editorRun.Stderr = os.Stderr

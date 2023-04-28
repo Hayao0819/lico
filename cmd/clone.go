@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 )
 
@@ -30,11 +31,11 @@ func cloneCmd() *cobra.Command {
 				//return fmt.Errorf("(まだ実装して)ないです。")
 
 				// リポジトリを削除
-				os.RemoveAll(*repoDir)
-				if err := os.Symlink(cloneFrom, *repoDir); err != nil {
+				os.RemoveAll(vars.RepoDir)
+				if err := os.Symlink(cloneFrom, vars.RepoDir); err != nil {
 					return err
 				}
-			} else if err := utils.RunCmd("git", "clone", cloneFrom, *repoDir); err != nil {
+			} else if err := utils.RunCmd("git", "clone", cloneFrom, vars.RepoDir); err != nil {
 				return err
 			}
 

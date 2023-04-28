@@ -7,6 +7,7 @@ import (
 
 	"github.com/Hayao0819/lico/conf"
 	p "github.com/Hayao0819/lico/paths"
+	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 )
 
@@ -48,7 +49,7 @@ func addCmd() *cobra.Command {
 			}
 
 			// ファイル一覧に追記
-			lf, err := os.OpenFile(*listFile, os.O_APPEND|os.O_WRONLY, 0600)
+			lf, err := os.OpenFile(vars.BaseListFile, os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
 				return err
 			}

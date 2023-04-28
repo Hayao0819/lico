@@ -4,6 +4,7 @@ import (
 	"github.com/Hayao0819/lico/conf"
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 )
 
@@ -37,12 +38,12 @@ func unlinkCmd() *cobra.Command {
 
 			if !noEditListMode {
 				if delLineMode {
-					if err = utils.RemoveLine(*listFile, targetItem.Index); err !=nil{
+					if err = utils.RemoveLine(vars.BaseListFile, targetItem.Index); err !=nil{
 						return err
 					}
 				}else{
 					// コメントアウトを実行
-					if err = utils.CommentOut(*listFile, targetItem.Index); err != nil {
+					if err = utils.CommentOut(vars.BaseListFile, targetItem.Index); err != nil {
 						return err
 					}
 				}

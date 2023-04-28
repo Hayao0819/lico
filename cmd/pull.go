@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 )
 
@@ -19,7 +20,7 @@ func pullCmd() *cobra.Command {
 			if !hasCorrectRepoDir() {
 				fmt.Fprintln(os.Stderr, "リポジトリがありません。cloneコマンドを用いて初期化してください。")
 			} else {
-				if err := utils.RunCmd("git", "-C", *repoDir, "pull"); err != nil {
+				if err := utils.RunCmd("git", "-C", vars.RepoDir, "pull"); err != nil {
 					return err
 				}
 			}

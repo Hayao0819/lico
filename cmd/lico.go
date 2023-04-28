@@ -15,8 +15,8 @@ import (
 )
 
 func hasCorrectRepoDir() bool {
-	isDir := utils.IsDir(*repoDir)
-	hasGitDir := utils.Exists(fmt.Sprint(path.Join(*repoDir, ".git")))
+	isDir := utils.IsDir(vars.RepoDir)
+	hasGitDir := utils.Exists(fmt.Sprint(path.Join(vars.RepoDir, ".git")))
 	//fmt.Println(isDir)
 	//fmt.Println(hasGitDir)
 	return isDir || hasGitDir
@@ -76,7 +76,7 @@ func getRepoUrl() ([]string, error) {
 		return []string{}, vars.ErrNoRepoDir
 	}
 
-	remoteList, stderr, err := utils.RunCmdAndGet("git", "-C", *repoDir, "remote", "show")
+	remoteList, stderr, err := utils.RunCmdAndGet("git", "-C", vars.RepoDir, "remote", "show")
 	if err != nil {
 		fmt.Fprintln(os.Stderr, stderr)
 		return []string{}, err
@@ -87,7 +87,7 @@ func getRepoUrl() ([]string, error) {
 		if utils.IsEmpty(r) {
 			continue
 		}
-		u, stderr, err := utils.RunCmdAndGet("git", "-C", *repoDir, "config", "--get", fmt.Sprintf("remote.%v.url", r))
+		u, stderr, err := utils.RunCmdAndGet("git", "-C", vars.RepoDir, "config", "--get", fmt.Sprintf("remote.%v.url", r))
 		if err != nil {
 			fmt.Fprintln(os.Stderr, stderr)
 			return []string{}, err
