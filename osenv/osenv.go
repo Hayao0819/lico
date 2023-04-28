@@ -23,7 +23,7 @@ func Get() (E, error) {
 		"OS":       d.Name(),
 		"OSVer":    d.Version().ID(),
 		"UserName": user.Username,
-		"Repo":     vars.RepoDir,
+		"Repo":     vars.GetRepoDir(),
 		"List":     vars.GetList(),
 	}
 

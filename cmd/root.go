@@ -22,6 +22,9 @@ func rootCmd() *cobra.Command {
 設定ファイルを1つのGitリポジトリで管理します。
 テンプレート記法を用いて柔軟な設定が可能です。`,
 		SilenceUsage: true, //コマンド失敗時に使い方を表示しない
+		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			return common()
+		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if showVersion {
 				return runCmd(versionCmd)
@@ -36,10 +39,10 @@ func rootCmd() *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&vars.List, "list", "l", vars.GetList(), "ファイルリストを指定します")
+	cmd.PersistentFlags().StringVarP(&vars.List, "list", "l", "", "ファイルリストを指定します")
 	cmd.PersistentFlags().StringVarP(&vars.RepoDir, "repo", "r", vars.RepoDir, "リポジトリディレクトリを指定します")
 	cmd.PersistentFlags().BoolVarP(&showVersion, "version", "", false, "バージョン情報を表示します")
-	cmd.PersistentFlags().StringVarP(&vars.Created, "created-list", "", vars.GetCreated(), "作成されたリンクを保存するファイルを指定します")
+	cmd.PersistentFlags().StringVarP(&vars.Created, "created-list", "", "", "作成されたリンクを保存するファイルを指定します")
 	cmd.Flags().MarkHidden("created-list")
 	cmd.Flags().BoolVarP(&licoOpt, "lico", "", licoOpt, "")
 	cmd.Flags().MarkHidden("lico")
@@ -47,15 +50,8 @@ func rootCmd() *cobra.Command {
 	return cmd
 }
 
-// コマンドを実行します
-// 引数: バージョン, コミット, 日付
 func Execute() error {
 	var err error
-	err = common()
-	if err != nil {
-		return err
-	}
-
 	err = root.Execute()
 	if err != nil {
 		return err

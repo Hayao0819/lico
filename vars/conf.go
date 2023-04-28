@@ -1,8 +1,8 @@
 package vars
 
 import (
-	"path"
 	"os"
+	"path"
 	"github.com/Hayao0819/lico/utils"
 )
 
@@ -28,6 +28,10 @@ var (
 	RepoPathBase *string = &RepoDir
 	HomePathBase *string = &HomeDir
 )
+
+func GetRepoDir()string{
+	return RepoDir
+}
 
 func GetList()string{
 	if ! utils.IsEmpty(List){
