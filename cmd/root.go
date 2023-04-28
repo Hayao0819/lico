@@ -56,6 +56,19 @@ func rootCmd(stdin io.Reader, stdout io.Writer, args ...string) *cobra.Command {
 	cmd.Flags().BoolVarP(&licoOpt, "lico", "", licoOpt, "")
 	cmd.Flags().MarkHidden("lico")
 
+	// help command
+	cmd.SetHelpCommand(&cobra.Command{
+		Use:   "help",
+		Short: "ヘルプを表示します",
+		//Long: ``,
+		Args: cobra.NoArgs,
+		RunE: func(childcmd *cobra.Command, args []string) error {
+			return cmd.Help()
+		},
+	})
+
+	
+
 	return cmd
 }
 
