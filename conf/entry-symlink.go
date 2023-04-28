@@ -3,6 +3,7 @@ package conf
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
@@ -80,10 +81,16 @@ func (entry *Entry) MakeSymLink() error {
 		return vars.ErrNotExist
 	}
 
-	if link.Exists(){
+	if link.Exists() && link.IsSymlink(){
 		return nil
 	}
 
+	// ディレクトリを作成
+	if err := os.MkdirAll(filepath.Dir(link.String()), 0755); err != nil {
+		return err
+	}
+
+	// シンボリックリンクを作成
 	if err := os.Symlink(orig.String(), link.String()); err == nil {
 		if err := addEntryToCreatedList(link); err != nil {
 			os.Remove(link.String())

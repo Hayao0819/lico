@@ -37,3 +37,7 @@ func (path *Path) String() string {
 func (path *Path) Exists() bool {
 	return utils.Exists(path.String())
 }
+
+func (path *Path) IsSymlink() bool {
+	return utils.IsSymlink(path.String())
+}

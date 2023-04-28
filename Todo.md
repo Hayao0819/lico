@@ -2,6 +2,14 @@
 
 - [ ] Gitの操作を[go-git](https://github.com/go-git/go-git)で書き直す
 - [ ] テストを書く
+  - [ ] cmd
+  - [ ] conf
+  - [ ] osenv
+  - [ ] paths
+  - [ ] pkglist
+  - [ ] utils
+  - [ ] vars
+  - [ ] tools
 - [ ] ドキュメントを書く
 - [ ] 除外リストを設定できるようにする
   - [ ] ファイルの内容で除外する
@@ -15,3 +23,4 @@
 - [ ] ConfiguredLinkを同期させ、存在しないリンクを削除するコマンドを追加する
 - [ ] Entryで使えそうなオプションを考える
 - [ ] Rootへの昇格を実装する
+- [ ] `set --dry`を追加する
