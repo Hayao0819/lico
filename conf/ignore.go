@@ -9,7 +9,7 @@ type IgnoreList gi.GitIgnore
 
 // lico.ignoreを読み込んでIgnoreListを生成する
 func ReadIgnoreList()(*IgnoreList, error){
-	lines, err := FormatTemplate(vars.IgnoreListFile)
+	lines, err := FormatTemplate(vars.GetIgnore())
 	if err !=nil{
 		return nil, err
 	}

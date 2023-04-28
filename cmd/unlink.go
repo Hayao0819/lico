@@ -29,8 +29,9 @@ func unlinkCmd() *cobra.Command {
 				return err
 			}
 
-			targetPath := p.NewAbs(args[0])
+			listpath := vars.GetList()
 
+			targetPath := p.NewAbs(args[0])
 			targetItem, err := list.GetItemFromPath(targetPath)
 			if err != nil {
 				return err
@@ -38,12 +39,12 @@ func unlinkCmd() *cobra.Command {
 
 			if !noEditListMode {
 				if delLineMode {
-					if err = utils.RemoveLine(vars.BaseListFile, targetItem.Index); err !=nil{
+					if err = utils.RemoveLine(listpath, targetItem.Index); err !=nil{
 						return err
 					}
 				}else{
 					// コメントアウトを実行
-					if err = utils.CommentOut(vars.BaseListFile, targetItem.Index); err != nil {
+					if err = utils.CommentOut(listpath, targetItem.Index); err != nil {
 						return err
 					}
 				}

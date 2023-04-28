@@ -37,6 +37,9 @@ func linkcmd() *cobra.Command{
 		Short: "リストと設定されているリンクを同期",
 		Long: "ファイルリストとシステムに設定されているリンクを確認し、古いリンクや壊れているリンクを修正します",
 		RunE: func (cmd *cobra.Command, args []string) error {
+
+			created := vars.GetCreated()
+
 			list , err := conf.ReadConf()
 			if err !=nil{
 				return err
@@ -63,7 +66,7 @@ func linkcmd() *cobra.Command{
 
 				if ! utils.IsSymlink(home.String()){
 					fmt.Fprintf(os.Stderr, "リンクではない: %s\n", home)
-					if utils.RemoveLine(vars.CreatedListFile, e.Index) != nil{
+					if utils.RemoveLine(created, e.Index) != nil{
 						return err
 					}
 					continue
@@ -82,7 +85,7 @@ func linkcmd() *cobra.Command{
 					if e.RemoveSymLink() != nil {
 						return err
 					}
-					if utils.RemoveLine(vars.CreatedListFile, e.Index) != nil{
+					if utils.RemoveLine(created, e.Index) != nil{
 						return err
 					}
 					continue

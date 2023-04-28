@@ -24,7 +24,7 @@ func Get() (E, error) {
 		"OSVer":    d.Version().ID(),
 		"UserName": user.Username,
 		"Repo":     vars.RepoDir,
-		"List":     vars.BaseListFile,
+		"List":     vars.GetList(),
 	}
 
 	for index, value := range getVars() {

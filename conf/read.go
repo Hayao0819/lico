@@ -13,7 +13,7 @@ import (
 
 
 func ReadCreatedList() (*List, error) {
-	path := vars.CreatedListFile
+	path := vars.GetCreated()
 
 	lines, err := utils.ReadLines(path)
 	if err != nil {
@@ -31,7 +31,7 @@ func ReadCreatedList() (*List, error) {
 
 // 設定ファイルを読み込みます
 func ReadConf() (*List, error) {
-	path := vars.BaseListFile
+	path := vars.GetList()
 
 	// parse config
 	lines, err := FormatTemplate(path)

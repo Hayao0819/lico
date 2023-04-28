@@ -15,7 +15,7 @@ type List map[string]OSList
 
 
 func ReadList()(*List, error){
-	file, err := os.ReadFile(vars.PkgListFile)
+	file, err := os.ReadFile(vars.GetPkgList())
 	if err != nil{
 		return nil, err
 	}

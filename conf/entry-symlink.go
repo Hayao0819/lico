@@ -135,7 +135,7 @@ func (entry *Entry) RemoveSymLink() error {
 	}
 
 	// createdlistから該当行を削除
-	if utils.RemoveLine(vars.CreatedListFile, creatd_entry.Index) !=nil{
+	if utils.RemoveLine(vars.GetCreated(), creatd_entry.Index) !=nil{
 		return err
 	}
 	return nil

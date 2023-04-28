@@ -80,7 +80,7 @@ func addEntryToCreatedList(path p.Path) error {
 	if !filepath.IsAbs(path.String()) {
 		return errors.New("it should be absolute path")
 	}
-	return utils.AppendLine(path.String(), vars.CreatedListFile)
+	return utils.AppendLine(path.String(), vars.GetCreated())
 }
 
 

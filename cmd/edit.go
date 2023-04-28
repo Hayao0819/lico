@@ -16,7 +16,7 @@ var editorBin string
 func editCmd() *cobra.Command {
 	cmd := cobra.Command{
 		Use:   "edit",
-		Short: fmt.Sprintf("%vを手動で編集", vars.BaseListFile),
+		Short: fmt.Sprintf("%vを手動で編集", vars.GetList()),
 		Long: `リストファイルを手動で編集します。
 
 エディタはオプションもしくは環境変数"EDITOR"で指定されたものが起動されます。
@@ -26,7 +26,7 @@ func editCmd() *cobra.Command {
 				return errors.New("cannot find an editor")
 			}
 
-			editorRun := exec.Command("sh", "-c", "--", fmt.Sprintf("%v %v", editorBin, vars.BaseListFile))
+			editorRun := exec.Command("sh", "-c", "--", fmt.Sprintf("%v %v", editorBin, vars.GetList()))
 			editorRun.Stdout = os.Stdout
 			editorRun.Stdin = os.Stdin
 			editorRun.Stderr = os.Stderr

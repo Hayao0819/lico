@@ -36,10 +36,10 @@ func rootCmd() *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&vars.BaseListFile, "list", "l", vars.BaseListFile, "ファイルリストを指定します")
+	cmd.PersistentFlags().StringVarP(&vars.List, "list", "l", vars.GetList(), "ファイルリストを指定します")
 	cmd.PersistentFlags().StringVarP(&vars.RepoDir, "repo", "r", vars.RepoDir, "リポジトリディレクトリを指定します")
 	cmd.PersistentFlags().BoolVarP(&showVersion, "version", "", false, "バージョン情報を表示します")
-	cmd.PersistentFlags().StringVarP(&vars.CreatedListFile, "created-list", "", vars.CreatedListFile, "作成されたリンクを保存するファイルを指定します")
+	cmd.PersistentFlags().StringVarP(&vars.Created, "created-list", "", vars.GetCreated(), "作成されたリンクを保存するファイルを指定します")
 	cmd.Flags().MarkHidden("created-list")
 	cmd.Flags().BoolVarP(&licoOpt, "lico", "", licoOpt, "")
 	cmd.Flags().MarkHidden("lico")

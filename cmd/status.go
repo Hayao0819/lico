@@ -44,7 +44,7 @@ func loadStatus() []status {
 
 	// リストファイル
 	//r = append(r, status{key: "ListFile", value: *listFile})
-	r = append(r, newStatus("ListFile", vars.BaseListFile, "リストファイルのパス"))
+	r = append(r, newStatus("ListFile", vars.GetList(), "リストファイルのパス"))
 
 	// リポジトリ
 	if repoList, err := getRepoUrl(); err == nil {

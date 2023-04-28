@@ -49,7 +49,7 @@ func addCmd() *cobra.Command {
 			}
 
 			// ファイル一覧に追記
-			lf, err := os.OpenFile(vars.BaseListFile, os.O_APPEND|os.O_WRONLY, 0600)
+			lf, err := os.OpenFile(vars.GetList(), os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
 				return err
 			}
