@@ -13,11 +13,13 @@ mode="${1-""}"
     echo "Usage: $0 [mode] [lico-args]"
     echo
     echo "Mode:"
-    echo "  build        make executable file"
-    echo "  run          run lico"
-    echo "  drun         run lico with '-l $script_path/lico.list'"
-    echo "  fmt          run gofmt"
-    echo "  newcmd NAME  make new command from template"
+    echo "  build             make executable file"
+    echo "  install           install lico to /usr/local/bin/ or ~/.bin/"
+    echo "  run               run lico"
+    echo "  drun | example    run lico with example config"
+    echo "  fmt               run gofmt"
+    echo "  newcmd NAME       make new command from template"
+    echo "  release           make release"
     exit 1
 }
 
