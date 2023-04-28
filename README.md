@@ -18,7 +18,7 @@
 
 licoを使ったリポジトリがあれば教えて下さい。追加します。
 
-- [Hayao0819/dotfiles]
+- [Hayao0819/dotfiles](https://github.com/Hayao0819/dotfiles)
 
 ## Special Thanks
 
