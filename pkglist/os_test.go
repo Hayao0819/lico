@@ -5,11 +5,11 @@ import (
 	"testing"
 
 	"github.com/Hayao0819/lico/pkglist"
-	"github.com/Hayao0819/lico/vars"
+	"github.com/Hayao0819/lico/tester"
 )
 
-func init(){
-	vars.EnableTestMode("../example")
+func TestMain(m *testing.M){
+	tester.CommonTestMain("../example")(m)
 }
 
 func TestReadList(t *testing.T) {

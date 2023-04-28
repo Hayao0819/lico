@@ -1,6 +1,9 @@
 package vars
 
-import "os"
+import (
+	"os"
+	"strings"
+)
 
 type verInfo struct {
 	Name   string
@@ -20,7 +23,9 @@ var Version = verInfo{
 
 func init(){
 	if version == "Unknown" && commit == "Unknown" && date == "Unknown" {
-		println("Please compile with goreleaser.")
-		os.Exit(1)
+		if ! strings.Contains(strings.Join(os.Args, " "), "-test.") {
+			println("Please compile with goreleaser.")
+			os.Exit(1)
+		}
 	}
 }
