@@ -5,6 +5,9 @@ import (
 	"strings"
 )
 
+// 現在準備中
+
+
 type EntryOption struct{
 	//WithRoot bool
 }
