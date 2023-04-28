@@ -32,7 +32,7 @@ run_build(){
         echo "Please run this: go install github.com/goreleaser/goreleaser@latest"
         return 1
     }
-    goreleaser build --debug --snapshot --clean --single-target >&2
+    goreleaser build --snapshot --clean --single-target >&2
 }
 
 get_built_binary(){
