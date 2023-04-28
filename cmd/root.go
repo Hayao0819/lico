@@ -56,6 +56,9 @@ func rootCmd(stdin io.Reader, stdout io.Writer, args ...string) *cobra.Command {
 	cmd.Flags().BoolVarP(&licoOpt, "lico", "", licoOpt, "")
 	cmd.Flags().MarkHidden("lico")
 
+	// Add args
+	cmd.SetArgs(args)
+
 	// help command
 	cmd.SetHelpCommand(&cobra.Command{
 		Use:   "help",
@@ -73,7 +76,7 @@ func rootCmd(stdin io.Reader, stdout io.Writer, args ...string) *cobra.Command {
 }
 
 func Execute(stdin io.Reader, stdout io.Writer, args ...string) error {
-	err := rootCmd(stdin, stdout, args...).Execute()
+	err := rootCmd(stdin, stdout, args[1:]...).Execute()
 	if err != nil {
 		return err
 	}

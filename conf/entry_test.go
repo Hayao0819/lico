@@ -60,6 +60,7 @@ func TestNewEntry(t *testing.T){
 }
 
 func TestNewEntryWithIndex(t *testing.T){
+	//tester.MakeSymLinkInExample()
 	for _, arg := range args {
 		entry := conf.NewEntryWithIndex(arg.repo, arg.home, arg.index)
 		if entry != arg.expect {
