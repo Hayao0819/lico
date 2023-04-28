@@ -1,0 +1,12 @@
+{
+    "ArchLinux":{
+        "rolling":[
+            "base",
+            "base-devel"
+        ]
+    },
+    "Debian":{
+        "sid": [],
+        "bullseye": []
+    }
+}

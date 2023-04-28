@@ -58,10 +58,19 @@ func GetPkgList()string{
 		return PkgList
 		
 	}
-	return path.Join(RepoDir + "/lico-pkgs-2.json")
+	return path.Join(RepoDir + "/lico-pkgs.json")
 }
 
 func init(){
 	HomeDir,_ = os.UserHomeDir()
 }
 
+// テストモードを有効にする
+func EnableTestMode(relToExample string)error{
+	current_dir , err := os.Getwd()
+	if err !=nil{
+		return err
+	}
+	RepoDir = path.Join(current_dir , relToExample)
+	return nil
+}

@@ -1,0 +1,41 @@
+package pkglist_test
+
+import (
+	"log"
+	"testing"
+
+	"github.com/Hayao0819/lico/pkglist"
+	"github.com/Hayao0819/lico/vars"
+)
+
+func init(){
+	vars.EnableTestMode("../example")
+}
+
+func TestReadList(t *testing.T) {
+	list, err := pkglist.ReadList()
+	if err != nil {
+		t.Errorf("pkglist.ReadList() error: %v", err)
+	}else{
+		log.Printf("List: %v\n", list)
+	}
+}
+
+func TestOSList(t *testing.T){
+	list, err := pkglist.ReadList()
+	if err != nil {
+		t.Errorf("pkglist.ReadList() error: %v", err)
+	}
+
+	oslist := list.OSList()
+	if len(oslist) == 0{
+		t.Errorf("pkglist.OSList() error: %v", err)
+	}else{
+		log.Printf("OSList: %v\n", oslist)
+	}
+	
+}
+
+
+
+
