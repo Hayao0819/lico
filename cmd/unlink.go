@@ -9,7 +9,6 @@ import (
 )
 
 func unlinkCmd() *cobra.Command {
-
 	var delLineMode bool = false
 	var noEditListMode bool = false
 
@@ -66,6 +65,6 @@ func unlinkCmd() *cobra.Command {
 }
 
 func init() {
-	cmd := unlinkCmd()
-	root.AddCommand(cmd)
+	cmd := CmdFunc(unlinkCmd)
+	AddCommand(&cmd)
 }

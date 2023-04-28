@@ -1,4 +1,4 @@
-package cmd
+package common
 
 import (
 	"encoding/base64"
@@ -14,7 +14,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func hasCorrectRepoDir() bool {
+func HasCorrectRepoDir() bool {
 	isDir := utils.IsDir(vars.RepoDir)
 	hasGitDir := utils.Exists(fmt.Sprint(path.Join(vars.RepoDir, ".git")))
 	//fmt.Println(isDir)
@@ -22,7 +22,7 @@ func hasCorrectRepoDir() bool {
 	return isDir || hasGitDir
 }
 
-func runCmd(f func() *cobra.Command, args ...string) error {
+func RunCmd(f func() *cobra.Command, args ...string) error {
 	//return f().RunE(f(), args)
 	cmd := f()
 	cmd.SilenceUsage=true
@@ -54,7 +54,7 @@ func formatRepoPath(path *p.Path) (*p.Path, error) {
 }
 */
 
-func lico() string {
+func Lico() string {
 	list := []string{
 		"44KI44GP6KaL44Gf44KJ44GT44Gu5a2Q44Gq44KT44GL5aSJ44Gq44KT55Sf44GI44Go44KL77yB77yBCg==",
 		"5LmF44CF44Gr44GE44GN44Gj44Gf5ber5aWz44Gv44KT44KS44GT44GI44Gg44KB44Gr6JC944Go44Gb44KL44KP44GBCg==",
@@ -71,8 +71,8 @@ func lico() string {
 	return string(dec)
 }
 
-func getRepoUrl() ([]string, error) {
-	if !hasCorrectRepoDir() {
+func GetRepoUrl() ([]string, error) {
+	if !HasCorrectRepoDir() {
 		return []string{}, vars.ErrNoRepoDir
 	}
 

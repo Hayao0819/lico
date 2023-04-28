@@ -61,5 +61,6 @@ func rmrepoCmd() *cobra.Command {
 }
 
 func init() {
-	root.AddCommand(rmrepoCmd())
+	cmd := CmdFunc(rmrepoCmd)
+	AddCommand(&cmd)
 }

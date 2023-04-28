@@ -25,13 +25,13 @@ func fixCmd() *cobra.Command {
 		*/
 	}
 
-	cmd.AddCommand(linkcmd())
+	cmd.AddCommand(oldlinkcmd())
 
 	return &cmd
 }
 
 
-func linkcmd() *cobra.Command{
+func oldlinkcmd() *cobra.Command{
 	cmd := cobra.Command{
 		Use: "oldlink",
 		Short: "リストと設定されているリンクを同期",
@@ -99,5 +99,6 @@ func linkcmd() *cobra.Command{
 }
 
 func init() {
-	root.AddCommand(fixCmd())
+	cmd := CmdFunc(fixCmd)
+	AddCommand(&cmd)
 }

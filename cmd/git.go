@@ -3,6 +3,7 @@ package cmd
 import (
 	//"fmt"
 
+	"github.com/Hayao0819/lico/cmd/common"
 	"github.com/Hayao0819/lico/utils"
 	"github.com/spf13/cobra"
 
@@ -17,7 +18,7 @@ func gitCmd() *cobra.Command {
 		Long:  `設定ファイルリポジトリ内でGitコマンドを実行します`,
 		Args:  cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if !hasCorrectRepoDir() {
+			if ! common.HasCorrectRepoDir() {
 				return vars.ErrNoRepoDir
 			}
 
@@ -29,5 +30,6 @@ func gitCmd() *cobra.Command {
 }
 
 func init() {
-	root.AddCommand(gitCmd())
+	cmd := CmdFunc(gitCmd)
+	AddCommand(&cmd)
 }

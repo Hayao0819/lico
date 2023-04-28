@@ -7,6 +7,7 @@ import (
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
+	"github.com/Hayao0819/lico/cmd/common"
 )
 
 func pullCmd() *cobra.Command {
@@ -17,7 +18,7 @@ func pullCmd() *cobra.Command {
 		Args:    cobra.NoArgs,
 		Aliases: []string{"init"},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if !hasCorrectRepoDir() {
+			if !common.HasCorrectRepoDir() {
 				fmt.Fprintln(os.Stderr, "リポジトリがありません。cloneコマンドを用いて初期化してください。")
 			} else {
 				if err := utils.RunCmd("git", "-C", vars.RepoDir, "pull"); err != nil {
@@ -33,5 +34,6 @@ func pullCmd() *cobra.Command {
 }
 
 func init() {
-	root.AddCommand(pullCmd())
+	cmd := CmdFunc(pullCmd)
+	AddCommand(&cmd)
 }

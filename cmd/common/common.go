@@ -1,11 +1,11 @@
-package cmd
+package common
 
 import (
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
 )
 
-func common() error {
+func Normalize() error {
 	// 重要なパスを正規化
 	err := error(nil)
 

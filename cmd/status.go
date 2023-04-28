@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Hayao0819/lico/cmd/common"
 	"github.com/Hayao0819/lico/conf"
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
@@ -32,7 +33,7 @@ func loadStatus() []status {
 
 	// ディレクトリ
 	//r = append(r, status{key: "ConfigCloned", value: hasCorrectRepoDir()})
-	r = append(r, newStatus("ConfigCloned", hasCorrectRepoDir(), "Dotfilesリポジトリが配置済みかどうか"))
+	r = append(r, newStatus("ConfigCloned", common.HasCorrectRepoDir(), "Dotfilesリポジトリが配置済みかどうか"))
 
 	// リポジトリパス
 	//r = append(r, status{key: "RepoDir", value: *repoDir})
@@ -47,7 +48,7 @@ func loadStatus() []status {
 	r = append(r, newStatus("ListFile", vars.GetList(), "リストファイルのパス"))
 
 	// リポジトリ
-	if repoList, err := getRepoUrl(); err == nil {
+	if repoList, err := common.GetRepoUrl(); err == nil {
 		//r = append(r, status{key: "RemoteList", value: repoList})
 		r = append(r, newStatus("RemoteList", repoList, "Dotfilesを管理しているリモートリポジトリ"))
 	} else {
@@ -191,5 +192,6 @@ func statusCmd() *cobra.Command {
 }
 
 func init() {
-	root.AddCommand(statusCmd())
+	cmd := CmdFunc(statusCmd)
+	AddCommand(&cmd)
 }

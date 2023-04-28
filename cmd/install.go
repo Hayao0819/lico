@@ -31,5 +31,6 @@ func installCmd() *cobra.Command {
 }
 
 func init() {
-	root.AddCommand(installCmd())
+	cmd := CmdFunc(installCmd)
+	AddCommand(&cmd)
 }

@@ -44,6 +44,7 @@ func openCmd()(*cobra.Command){
 	return &cmd
 }
 
-func init(){
-	root.AddCommand(openCmd())
+func init() {
+	cmd := CmdFunc(openCmd)
+	AddCommand(&cmd)
 }

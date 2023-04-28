@@ -5,6 +5,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/Hayao0819/lico/cmd/common"
 	"github.com/Hayao0819/lico/conf"
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/spf13/cobra"
@@ -48,7 +49,8 @@ func rmFileCmd() *cobra.Command {
 			}
 
 			// あとでちゃんと実装する
-			rmLinkCmd().RunE(rmFileCmd(), args)
+			//rmLinkCmd().RunE(rmFileCmd(), args)
+			common.RunCmd(rmLinkCmd, args...)
 
 			// 最終処理
 			if len(errList) == 0 {
@@ -70,5 +72,6 @@ func rmFileCmd() *cobra.Command {
 }
 
 func init() {
-	root.AddCommand(rmFileCmd())
+	cmd := CmdFunc(rmFileCmd)
+	AddCommand(&cmd)
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
+	"github.com/Hayao0819/lico/cmd/common"
 	//"github.com/Hayao0819/lico/conf"
 	//"github.com/Hayao0819/lico/vars"
 )
@@ -19,7 +20,7 @@ func commitCmd() *cobra.Command {
 		Long:  `設定ファイルの変更をコミットします`,
 		Args:  cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if !hasCorrectRepoDir() {
+			if !common.HasCorrectRepoDir() {
 				fmt.Fprintln(os.Stderr, "リポジトリがありません。cloneコマンドを用いて初期化してください。")
 			}
 
@@ -48,5 +49,6 @@ func commitCmd() *cobra.Command {
 }
 
 func init() {
-	root.AddCommand(commitCmd())
+	cmd := CmdFunc(commitCmd)
+	AddCommand(&cmd)
 }
