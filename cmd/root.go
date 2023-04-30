@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+
 	"github.com/Hayao0819/lico/cmd/common"
 	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
@@ -26,7 +27,8 @@ func rootCmd(stdin io.Reader, stdout io.Writer, args ...string) *cobra.Command {
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if showVersion {
-				return common.RunCmd(*GetCommand("version"))
+				//return common.RunCmd(*GetSubCmd("version"))
+				return RunSubCmdFromCmd("version", cmd)
 			}
 
 			if licoOpt {
@@ -69,8 +71,6 @@ func rootCmd(stdin io.Reader, stdout io.Writer, args ...string) *cobra.Command {
 			return cmd.Help()
 		},
 	})
-
-	
 
 	return cmd
 }

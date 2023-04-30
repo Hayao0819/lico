@@ -26,5 +26,5 @@ func versionCmd() *cobra.Command {
 
 func init() {
 	cmd := CmdFunc(versionCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }

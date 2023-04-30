@@ -132,5 +132,5 @@ func listCmd() *cobra.Command {
 
 func init() {
 	cmd := CmdFunc(listCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }

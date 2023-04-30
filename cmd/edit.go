@@ -55,5 +55,5 @@ func editCmd() *cobra.Command {
 
 func init() {
 	cmd := CmdFunc(editCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }

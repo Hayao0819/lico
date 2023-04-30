@@ -22,11 +22,11 @@ func setCmd() *cobra.Command {
 `,
 		RunE: func(cmd *cobra.Command, ars []string) error {
 			/*
-			run_by_admin := false
-			// Check root
-			if os.Getegid() == 0{
-				run_by_admin = true
-			}
+				run_by_admin := false
+				// Check root
+				if os.Getegid() == 0{
+					run_by_admin = true
+				}
 			*/
 
 			// get conf
@@ -66,5 +66,5 @@ func setCmd() *cobra.Command {
 
 func init() {
 	cmd := CmdFunc(setCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }

@@ -11,7 +11,7 @@ import (
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
 	random "github.com/mazen160/go-random"
-	"github.com/spf13/cobra"
+	//"github.com/spf13/cobra"
 )
 
 func HasCorrectRepoDir() bool {
@@ -22,6 +22,7 @@ func HasCorrectRepoDir() bool {
 	return isDir || hasGitDir
 }
 
+/*
 func RunCmd(f func() *cobra.Command, args ...string) error {
 	//return f().RunE(f(), args)
 	cmd := f()
@@ -30,12 +31,9 @@ func RunCmd(f func() *cobra.Command, args ...string) error {
 	cmd.SetArgs(args)
 	return cmd.Execute()
 }
-
-/*
-func runCmdVar(c *cobra.Command, args ...string) error {
-	return c.RunE(c, args)
-}
 */
+
+
 /*
 func formatHomePath(path *p.Path) (*p.Path, error) {
 	rtn, err := path.Abs(*homePathBase)

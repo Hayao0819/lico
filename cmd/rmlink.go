@@ -86,5 +86,5 @@ func rmLinkCmd() *cobra.Command {
 
 func init() {
 	cmd := CmdFunc(rmLinkCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }

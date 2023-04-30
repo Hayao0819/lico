@@ -41,10 +41,10 @@ func addCmd() *cobra.Command {
 
 			// Ignoreに含まれているか確認
 			ignoreList, err := conf.ReadIgnoreList()
-			if err !=nil{
+			if err != nil {
 				return err
 			}
-			if status, reg := ignoreList.MatchEntry(entry); status{
+			if status, reg := ignoreList.MatchEntry(entry); status {
 				return fmt.Errorf("this path is ignored in \"%s\"", reg)
 			}
 
@@ -72,5 +72,5 @@ func addCmd() *cobra.Command {
 
 func init() {
 	cmd := CmdFunc(addCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }

@@ -72,7 +72,7 @@ func loadStatus() []status {
 				missingLink++
 			}
 		}
-	}else{
+	} else {
 		list = &conf.List{}
 	}
 
@@ -193,5 +193,5 @@ func statusCmd() *cobra.Command {
 
 func init() {
 	cmd := CmdFunc(statusCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }

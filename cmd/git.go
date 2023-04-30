@@ -18,7 +18,7 @@ func gitCmd() *cobra.Command {
 		Long:  `設定ファイルリポジトリ内でGitコマンドを実行します`,
 		Args:  cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if ! common.HasCorrectRepoDir() {
+			if !common.HasCorrectRepoDir() {
 				return vars.ErrNoRepoDir
 			}
 
@@ -31,5 +31,5 @@ func gitCmd() *cobra.Command {
 
 func init() {
 	cmd := CmdFunc(gitCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }

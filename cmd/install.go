@@ -14,15 +14,14 @@ func installCmd() *cobra.Command {
 	cmd := cobra.Command{
 		Use:   "install",
 		Short: "パッケージをインストール",
-		Long: `lico-pkgs.jsonに定義されているパッケージをインストールします`,
-		Args: cobra.NoArgs,
+		Long:  `lico-pkgs.jsonに定義されているパッケージをインストールします`,
+		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			_, err := pkg.ReadList()
-			if err !=nil{
+			if err != nil {
 				return err
 			}
 
-			
 			return nil
 		},
 	}
@@ -32,5 +31,5 @@ func installCmd() *cobra.Command {
 
 func init() {
 	cmd := CmdFunc(installCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }

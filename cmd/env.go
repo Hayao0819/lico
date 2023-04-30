@@ -36,7 +36,7 @@ func envCmd() *cobra.Command {
 				for _, key := range keys {
 					if strings.Contains(env[key], " ") || strings.Contains(env[key], "　") {
 						fmt.Printf("%v = \"%v\"\n", key, env[key])
-					}else{
+					} else {
 						fmt.Printf("%v = %v\n", key, env[key])
 					}
 				}
@@ -59,5 +59,5 @@ func envCmd() *cobra.Command {
 
 func init() {
 	cmd := CmdFunc(envCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }

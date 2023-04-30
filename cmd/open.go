@@ -9,31 +9,31 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func openCmd()(*cobra.Command){
+func openCmd() *cobra.Command {
 	cmd := cobra.Command{
-		Use: "open COMMAND",
+		Use:   "open COMMAND",
 		Short: "設定ディレクトリを開きます",
-		Long: "設定ディレクトリをOSのデフォルトのアプリケーションで開きます",
-		Args: cobra.ArbitraryArgs,
+		Long:  "設定ディレクトリをOSのデフォルトのアプリケーションで開きます",
+		Args:  cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// コマンド指定なし
-			if len(args) ==0{
+			if len(args) == 0 {
 				return open.Run(vars.RepoDir)
 			}
 
 			runcmd := []string{}
 			replaced := false
-			for _, a := range args{
-				if strings.Contains(a, "%s"){
-					replaced=true
+			for _, a := range args {
+				if strings.Contains(a, "%s") {
+					replaced = true
 					runcmd = append(runcmd, strings.ReplaceAll(a, "%s", vars.RepoDir))
-				}else{
+				} else {
 					runcmd = append(runcmd, a)
 				}
 			}
 
 			// %sがない場合は末尾に追加する
-			if ! replaced{
+			if !replaced {
 				runcmd = append(runcmd, vars.RepoDir)
 			}
 
@@ -46,5 +46,5 @@ func openCmd()(*cobra.Command){
 
 func init() {
 	cmd := CmdFunc(openCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }

@@ -38,10 +38,10 @@ func unlinkCmd() *cobra.Command {
 
 			if !noEditListMode {
 				if delLineMode {
-					if err = utils.RemoveLine(listpath, targetItem.Index); err !=nil{
+					if err = utils.RemoveLine(listpath, targetItem.Index); err != nil {
 						return err
 					}
-				}else{
+				} else {
 					// コメントアウトを実行
 					if err = utils.CommentOut(listpath, targetItem.Index); err != nil {
 						return err
@@ -50,9 +50,9 @@ func unlinkCmd() *cobra.Command {
 			}
 
 			/*
-			if err = runCmd(rmLinkCmd, targetPath.String()); err != nil {
-				return err
-			}
+				if err = runCmd(rmLinkCmd, targetPath.String()); err != nil {
+					return err
+				}
 			*/
 			return nil
 		},
@@ -66,5 +66,5 @@ func unlinkCmd() *cobra.Command {
 
 func init() {
 	cmd := CmdFunc(unlinkCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }

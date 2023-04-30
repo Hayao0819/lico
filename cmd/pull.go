@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Hayao0819/lico/cmd/common"
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
-	"github.com/Hayao0819/lico/cmd/common"
 )
 
 func pullCmd() *cobra.Command {
@@ -35,5 +35,5 @@ func pullCmd() *cobra.Command {
 
 func init() {
 	cmd := CmdFunc(pullCmd)
-	AddCommand(&cmd)
+	addCommand(&cmd)
 }
