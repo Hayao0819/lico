@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"errors"
-	"fmt"
 	"io"
 
 	"github.com/Hayao0819/lico/cmd/common"
@@ -32,7 +31,7 @@ func rootCmd(stdin io.Reader, stdout io.Writer, args ...string) *cobra.Command {
 			}
 
 			if licoOpt {
-				fmt.Print(common.Lico())
+				cmd.Print(common.Lico())
 			} else {
 				return errors.New("コマンドを指定してください。詳細はlico helpを参照してください。")
 			}

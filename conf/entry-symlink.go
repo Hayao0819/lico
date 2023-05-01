@@ -1,7 +1,6 @@
 package conf
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -10,18 +9,17 @@ import (
 	"github.com/Hayao0819/lico/vars"
 )
 
-
 // リンクが正常に設定されているかチェックする
 func (entry *Entry) CheckSymLink() error {
 	// 前処理
 	link_path, err := entry.FormatHome()
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 	link := link_path.String()
 
-	repo_path , err := entry.FormatRepo()
-	if err !=nil{
+	repo_path, err := entry.FormatRepo()
+	if err != nil {
 		return err
 	}
 	//repo := repo_path.String()
@@ -81,7 +79,7 @@ func (entry *Entry) MakeSymLink() error {
 		return vars.ErrNotExist
 	}
 
-	if link.Exists() && link.IsSymlink(){
+	if link.Exists() && link.IsSymlink() {
 		return nil
 	}
 
@@ -96,7 +94,7 @@ func (entry *Entry) MakeSymLink() error {
 			os.Remove(link.String())
 			return err
 		}
-		fmt.Printf("%v ==> %v\n", orig.String(), link.String())
+		//cmd.Printf("%v ==> %v\n", orig.String(), link.String())
 		return nil
 	} else {
 		return err
@@ -131,20 +129,19 @@ func (entry *Entry) RemoveSymLink() error {
 		return vars.ErrNotManaged
 	}
 
-	if  os.Remove(link.String()) != nil{
+	if os.Remove(link.String()) != nil {
 		// 削除に失敗
 		return err
 	}
 
 	creatd_entry, err := created.GetItemFromPath(link)
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 
 	// createdlistから該当行を削除
-	if utils.RemoveLine(vars.GetCreated(), creatd_entry.Index) !=nil{
+	if utils.RemoveLine(vars.GetCreated(), creatd_entry.Index) != nil {
 		return err
 	}
 	return nil
 }
-

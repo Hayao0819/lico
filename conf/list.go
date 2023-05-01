@@ -12,7 +12,7 @@ type List []Entry
 func (list *List) GetItemFromPath(path p.Path) (*Entry, error) {
 	// Todo
 	for _, item := range *list {
-		//fmt.Printf("%v and %v, %v and %v\n", item.HomePath, path, item.RepoPath, path)
+		//cmd.Printf("%v and %v, %v and %v\n", item.HomePath, path, item.RepoPath, path)
 		if item.HomePath == path || item.RepoPath == path {
 			return &item, nil
 		} else {
@@ -59,6 +59,3 @@ func (entries *List) HasHomeFile(path p.Path) (bool, error) {
 	}
 	return false, nil
 }
-
-
-

@@ -40,6 +40,8 @@ func setCmd() *cobra.Command {
 				err := entry.MakeSymLink()
 				if err != nil {
 					errlist = append(errlist, err)
+				}else{
+					cmd.Printf("%v ==> %v\n", entry.RepoPath.String(), entry.HomePath.String())
 				}
 			}
 

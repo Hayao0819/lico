@@ -79,7 +79,7 @@ func listCmd() *cobra.Command {
 				}
 
 				if absPathMode {
-					//fmt.Printf("%v%s%v\n", parsedRepoPath, listSeparator, parsedHomePath)
+					//cmd.Printf("%v%s%v\n", parsedRepoPath, listSeparator, parsedHomePath)
 					textToPrint = parsedRepoPath.String() + listSeparator + parsedHomePath.String()
 					//continue
 				} else if relPathMode {
@@ -94,7 +94,7 @@ func listCmd() *cobra.Command {
 					}
 
 					textToPrint = parsedRelRepoPath.String() + listSeparator + parsedRelHomePath.String()
-					//fmt.Printf("%v%s%v\n", parsedRelRepoPath, listSeparator, parsedRelHomePath)
+					//cmd.Printf("%v%s%v\n", parsedRelRepoPath, listSeparator, parsedRelHomePath)
 					//continue
 				}
 
@@ -107,7 +107,7 @@ func listCmd() *cobra.Command {
 					textToPrint = fmt.Sprintf("%v: %v", entry.Index+1, textToPrint) //entry.Indexは0からスタートします
 				}
 
-				fmt.Println(textToPrint)
+				cmd.Println(textToPrint)
 			}
 			return nil
 		},

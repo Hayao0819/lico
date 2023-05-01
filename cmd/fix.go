@@ -50,6 +50,7 @@ func oldlinkcmd() *cobra.Command {
 				return err
 			}
 
+			/*
 			for _, e := range *list {
 				// リンクを作成
 				if e.CheckSymLink() != nil {
@@ -58,6 +59,7 @@ func oldlinkcmd() *cobra.Command {
 					}
 				}
 			}
+			*/
 
 			//remove_path := []*p.Path{}
 			for _, e := range *creatd {

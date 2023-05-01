@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/Hayao0819/lico/osenv"
@@ -30,20 +29,20 @@ func envCmd() *cobra.Command {
 
 			if showOnlyKey {
 				for _, key := range keys {
-					fmt.Println(key)
+					cmd.Println(key)
 				}
 			} else if len(args) == 0 {
 				for _, key := range keys {
 					if strings.Contains(env[key], " ") || strings.Contains(env[key], "　") {
-						fmt.Printf("%v = \"%v\"\n", key, env[key])
+						cmd.Printf("%v = \"%v\"\n", key, env[key])
 					} else {
-						fmt.Printf("%v = %v\n", key, env[key])
+						cmd.Printf("%v = %v\n", key, env[key])
 					}
 				}
 			} else if len(args) == 1 {
 				for index, value := range env {
 					if index == args[0] {
-						fmt.Printf("%v\n", value)
+						cmd.Printf("%v\n", value)
 					}
 				}
 			}

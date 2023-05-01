@@ -31,7 +31,6 @@ func replaceToTemplate(path string) (p.Path, error) {
 	return parsed, nil
 }
 
-
 // テンプレートを解析してPathを生成します
 func FormatTemplate(path string) ([]string, error) {
 	parsed := []string{}
@@ -50,51 +49,49 @@ func FormatTemplate(path string) ([]string, error) {
 		},
 		"isset": func(v string) bool {
 			//return !utils.IsEmpty(os.Getenv(key))
-			_ , s := os.LookupEnv(v)
+			_, s := os.LookupEnv(v)
 			return s
 		},
-		"is_installed": func (c string)bool{
+		"is_installed": func(c string) bool {
 			_, err := exec.LookPath(c)
-			if err == nil{
+			if err == nil {
 				return true
-			}else{
+			} else {
 				return false
 			}
 		},
-		"isunix": func()bool{
+		"isunix": func() bool {
 			return goos.IsUnix()
 		},
-		"readdir": func (p string)[]string{
+		"readdir": func(p string) []string {
 			direntry, err := os.ReadDir(p)
-			if err != nil{
+			if err != nil {
 				return []string{}
 			}
 			files := []string{}
-			for _, entry := range direntry{
+			for _, entry := range direntry {
 				files = append(files, entry.Name())
 			}
-			fmt.Println(files)
 			return files
 		},
-		"readdir_files": func (p string)[]string{
+		"readdir_files": func(p string) []string {
 			direntry, err := os.ReadDir(p)
-			if err != nil{
+			if err != nil {
 				return []string{}
 			}
 			files := []string{}
-			for _, entry := range direntry{
-				if entry.IsDir(){
+			for _, entry := range direntry {
+				if entry.IsDir() {
 					continue
 				}
 				files = append(files, entry.Name())
 			}
 			return files
 		},
-		"joinpath": func (p ...string)string{
+		"joinpath": func(p ...string) string {
 			return filepath.Join(p...)
 		},
 	}
-	
 
 	tpl, err := template.New(filepath.Base(path)).Funcs(funcMap).ParseFiles(path)
 	if err != nil {

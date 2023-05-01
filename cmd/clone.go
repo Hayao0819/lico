@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"errors"
-	"fmt"
 	"os"
 
 	"github.com/Hayao0819/lico/cmd/common"
@@ -22,13 +21,11 @@ func cloneCmd() *cobra.Command {
 		Args:    cobra.ExactArgs(1),
 		Aliases: []string{"init"},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			
+
 			if common.HasCorrectRepoDir() {
 				//return common.RunCmd(pullCmd)
 				return RunSubCmdFromCmd("pull", cmd)
 			}
-			
-
 
 			cloneFrom := args[0]
 
@@ -45,7 +42,7 @@ func cloneCmd() *cobra.Command {
 			}
 
 			if common.HasCorrectRepoDir() {
-				fmt.Println("リポジトリを取得しました。\nsetコマンドを用いて同期を開始してください。")
+				cmd.Println("リポジトリを取得しました。\nsetコマンドを用いて同期を開始してください。")
 			} else {
 				return errors.New("何らかの理由でリポジトリを初期化できませんでした")
 			}

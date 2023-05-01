@@ -17,8 +17,8 @@ import (
 func HasCorrectRepoDir() bool {
 	isDir := utils.IsDir(vars.RepoDir)
 	hasGitDir := utils.Exists(fmt.Sprint(path.Join(vars.RepoDir, ".git")))
-	//fmt.Println(isDir)
-	//fmt.Println(hasGitDir)
+	//cmd.Println(isDir)
+	//cmd.Println(hasGitDir)
 	return isDir || hasGitDir
 }
 
@@ -32,7 +32,6 @@ func RunCmd(f func() *cobra.Command, args ...string) error {
 	return cmd.Execute()
 }
 */
-
 
 /*
 func formatHomePath(path *p.Path) (*p.Path, error) {

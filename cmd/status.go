@@ -108,15 +108,15 @@ func (s *status) string() string {
 	return fmt.Sprintf("%v=%v\n", s.key, s.value)
 }
 
-func showTextStatus() error {
+func showTextStatus(cmd *cobra.Command) error {
 	slist := loadStatus()
 	for _, s := range slist {
-		fmt.Print(s.string())
+		cmd.Print(s.string())
 	}
 	return nil
 }
 
-func showTableStatus() error {
+func showTableStatus(cmd *cobra.Command) error {
 	/*
 		+--------------+-----------------------------------------------------------------------+
 		| ConfigCloned | true                                                                  |
@@ -140,17 +140,17 @@ func showTableStatus() error {
 		{Name: "Value", AlignHeader: text.AlignCenter},
 	})
 
-	fmt.Println(t.Render())
+	cmd.Println(t.Render())
 
 	return nil
 }
 
-func showValue(key string) error {
+func showValue(key string, cmd *cobra.Command) error {
 	slist := loadStatus()
 
 	for _, s := range slist {
 		if s.key == key {
-			fmt.Println(s.value)
+			cmd.Println(s.value)
 		}
 	}
 
@@ -174,14 +174,14 @@ func statusCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 
 			if len(args) > 0 {
-				return showValue(args[0])
+				return showValue(args[0], cmd)
 			}
 
 			if textMode {
-				return showTextStatus()
+				return showTextStatus(cmd)
 			} else {
 
-				return showTableStatus()
+				return showTableStatus(cmd)
 			}
 		},
 	}
