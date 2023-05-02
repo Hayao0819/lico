@@ -10,6 +10,11 @@ type List []Entry
 
 // 指定されたパスを持つEntryを返します
 func (list *List) GetItemFromPath(path p.Path) (*Entry, error) {
+	path, err := path.Abs("")
+	if err != nil{
+		return nil, err
+	}
+
 	// Todo
 	for _, item := range *list {
 		//cmd.Printf("%v and %v, %v and %v\n", item.HomePath, path, item.RepoPath, path)
