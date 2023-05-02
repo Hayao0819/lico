@@ -9,18 +9,18 @@ import (
 
 
 var RepoDir string = "~/.lico/repo"
+var Created string = "~/.lico/created.list"
 
 /*
 var BaseListFile string = "~/.lico/repo/lico.list"
 var IgnoreListFile string = "~/.lico/repo/lico.ignore"
-var CreatedListFile string = "~/.lico/created.list"
+
 var PkgListFile string = "~/.lico/repo/lico-pkgs-2.json"
 */
 
 var (
 	List string = ""
 	Ignore string = ""
-	Created string = ""
 	PkgList string = ""
 	HomeDir string = ""
 )
@@ -51,11 +51,15 @@ func GetIgnore()string{
 }
 
 func GetCreated()string{
+	/*
 	if ! utils.IsEmpty(Created){
 		return Created
 		
 	}
 	return path.Join(RepoDir + "/created.list")
+	*/
+	println(Created)
+	return Created
 }
 
 func GetPkgList()string{
