@@ -71,7 +71,7 @@ case "${mode}" in
         mv "$(get_built_binary)" "${script_path}/lico"
         ;;
     "install")
-        if [ -n "$1" ]; then
+        if [ -n "${1-""}" ]; then
             if [ ! -d "$1" ]; then
                 echo "Please specify directory"
                 exit 1
