@@ -37,15 +37,13 @@ func oldlinkcmd() *cobra.Command {
 		Short: "リストと設定されているリンクを同期",
 		Long:  "ファイルリストとシステムに設定されているリンクを確認し、古いリンクや壊れているリンクを修正します",
 		RunE: func(cmd *cobra.Command, args []string) error {
-
 			created := vars.GetCreated()
-
 			list, err := conf.ReadConf()
 			if err != nil {
 				return err
 			}
 
-			creatd, err := conf.ReadCreatedList()
+			created_list, err := conf.ReadCreatedList()
 			if err != nil {
 				return err
 			}
@@ -62,10 +60,12 @@ func oldlinkcmd() *cobra.Command {
 			*/
 
 			//remove_path := []*p.Path{}
-			for _, e := range *creatd {
+			for _, e := range *created_list {
+				// Prepare 
 				home := e.HomePath
-				realpathstr, err := os.Readlink(home.String())
+				println("Checking: " + e.HomePath.String())
 
+				// Check if the link is symlink
 				if !utils.IsSymlink(home.String()) {
 					fmt.Fprintf(os.Stderr, "リンクではない: %s\n", home)
 					if utils.RemoveLine(created, e.Index) != nil {
@@ -74,6 +74,8 @@ func oldlinkcmd() *cobra.Command {
 					continue
 				}
 
+				// Check if the link is broken
+				realpathstr, err := os.Readlink(home.String())
 				if err != nil || utils.IsEmpty(realpathstr) {
 					// 破損したリンク
 					fmt.Fprintf(os.Stderr, "破損したリンク: %v\n", home)
@@ -81,15 +83,18 @@ func oldlinkcmd() *cobra.Command {
 					continue
 				}
 
+				// Check if the link is registered
 				if _, err = list.GetItemFromPath(home); err != nil {
 					// すでに登録解除されたリンク
 					fmt.Fprintf(os.Stderr, "リストにないリンク: %v\n", home)
+					/*
 					if e.RemoveSymLink() != nil {
 						return err
 					}
 					if utils.RemoveLine(created, e.Index) != nil {
 						return err
 					}
+					*/
 					continue
 				}
 			}
