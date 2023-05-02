@@ -22,10 +22,12 @@ var Version = verInfo{
 }
 
 func init(){
+	/*
 	if version == "Unknown" && commit == "Unknown" && date == "Unknown" {
 		if ! strings.Contains(strings.Join(os.Args, " "), "-test.") {
 			println("Please compile with goreleaser.")
 			os.Exit(1)
 		}
 	}
+	*/
 }
