@@ -30,11 +30,19 @@ call_myself(){
 }
 
 run_build(){
+    logfile="$(mktemp)"
     check_cmd "goreleaser"  || {
         echo "Please run this: go install github.com/goreleaser/goreleaser@latest"
         return 1
     }
-    goreleaser build --snapshot --clean --single-target >&2
+    # 色付きでログを出力するにはもう少し工夫が必要
+    # teeを使えばできるかもしれないが、pipefailをPOSIX Shellでは使えない
+    goreleaser build --snapshot --clean --single-target 1> "$logfile" 2>&1 || {
+        cat "$logfile"
+        exit 1
+    }
+    rm -f "$logfile"
+
 }
 
 get_built_binary(){
