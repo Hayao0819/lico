@@ -68,7 +68,7 @@ func listCmd() *cobra.Command {
 					return err
 				}
 				for _, entry := range *createdList {
-					parsed, err := entry.FormatRepo()
+					parsed, err := entry.FormatHome()
 					if err != nil {
 						return nil
 					}
