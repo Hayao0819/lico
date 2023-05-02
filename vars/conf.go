@@ -58,7 +58,6 @@ func GetCreated()string{
 	}
 	return path.Join(RepoDir + "/created.list")
 	*/
-	println(Created)
 	return Created
 }
 
