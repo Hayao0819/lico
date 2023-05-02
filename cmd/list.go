@@ -20,19 +20,25 @@ import (
 
 // listCmd represents the list command
 func listCmd() *cobra.Command {
+	// abs or rel
 	absPathMode := false
 	relPathMode := false
 
+	// show index number
 	showIndexNo := false
 
+	// separator
 	listSeparator := " ==> "
 	nullSeparator := false
+
+	// show created list
+	showCreatedList := false
 
 	cmd := cobra.Command{
 		Use:   "list",
 		Short: "ドットファイルの一覧を表示",
 		Long:  ``,
-		RunE: func(cmd *cobra.Command, args []string) error {
+		PreRunE: func(cmd *cobra.Command, args []string) error {
 			// 引数チェック
 			trueN := func(b ...bool) int {
 				c := 0
@@ -53,66 +59,87 @@ func listCmd() *cobra.Command {
 			if nullSeparator {
 				listSeparator = string([]byte{0})
 			}
-
-			// 設定ファイルを読み込み
-			list, err := conf.ReadConf()
-			if err != nil {
-				//fmt.Fprintln(os.Stderr, err)
-				return err
-			}
-
-			//listSeparator=strings.ReplaceAll(listSeparator, `\n`, "\n")
-
-			for _, entry := range *list {
-
-				textToPrint := ""
-
-				//parsedRepoPath, err := formatRepoPath(&entry.RepoPath)
-				parsedRepoPath, err := entry.FormatRepo()
+			return nil
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if showCreatedList{
+				createdList, err := conf.ReadCreatedList()
 				if err != nil {
 					return err
 				}
-				//parsedHomePath, err := formatHomePath(&entry.HomePath)
-				parsedHomePath, err := entry.FormatHome()
+				for _, entry := range *createdList {
+					parsed, err := entry.FormatRepo()
+					if err != nil {
+						return nil
+					}
+					if absPathMode {
+						fmt.Println(parsed.String())
+						continue
+					}else{
+						rel, err := parsed.Rel(*vars.HomePathBase)
+						if err !=nil{
+							return err
+						}
+						fmt.Println(rel.String())
+					}
+				}
+				return nil
+			}else{
+				list, err := conf.ReadConf()
 				if err != nil {
 					return err
 				}
+				for _, entry := range *list {
+					textToPrint := ""
 
-				if absPathMode {
-					//cmd.Printf("%v%s%v\n", parsedRepoPath, listSeparator, parsedHomePath)
-					textToPrint = parsedRepoPath.String() + listSeparator + parsedHomePath.String()
-					//continue
-				} else if relPathMode {
-					parsedRelRepoPath, err := parsedRepoPath.Rel(*vars.RepoPathBase)
+					//parsedRepoPath, err := formatRepoPath(&entry.RepoPath)
+					parsedRepoPath, err := entry.FormatRepo()
+					if err != nil {
+						return err
+					}
+					//parsedHomePath, err := formatHomePath(&entry.HomePath)
+					parsedHomePath, err := entry.FormatHome()
 					if err != nil {
 						return err
 					}
 
-					parsedRelHomePath, err := parsedHomePath.Rel(*vars.HomePathBase)
-					if err != nil {
-						return err
+					if absPathMode {
+						//cmd.Printf("%v%s%v\n", parsedRepoPath, listSeparator, parsedHomePath)
+						textToPrint = parsedRepoPath.String() + listSeparator + parsedHomePath.String()
+						//continue
+					} else if relPathMode {
+						parsedRelRepoPath, err := parsedRepoPath.Rel(*vars.RepoPathBase)
+						if err != nil {
+							return err
+						}
+
+						parsedRelHomePath, err := parsedHomePath.Rel(*vars.HomePathBase)
+						if err != nil {
+							return err
+						}
+
+						textToPrint = parsedRelRepoPath.String() + listSeparator + parsedRelHomePath.String()
+						//cmd.Printf("%v%s%v\n", parsedRelRepoPath, listSeparator, parsedRelHomePath)
+						//continue
 					}
 
-					textToPrint = parsedRelRepoPath.String() + listSeparator + parsedRelHomePath.String()
-					//cmd.Printf("%v%s%v\n", parsedRelRepoPath, listSeparator, parsedRelHomePath)
-					//continue
-				}
+					if utils.IsEmpty(textToPrint) {
+						fmt.Fprintln(os.Stderr, "このメッセージが出力されることはありえないはずです。バグを作者に報告してください。")
+						return errors.New("no mode specified")
+					}
 
-				if utils.IsEmpty(textToPrint) {
-					fmt.Fprintln(os.Stderr, "このメッセージが出力されることはありえないはずです。バグを作者に報告してください。")
-					return errors.New("no mode specified")
-				}
+					if showIndexNo {
+						textToPrint = fmt.Sprintf("%v: %v", entry.Index+1, textToPrint) //entry.Indexは0からスタートします
+					}
 
-				if showIndexNo {
-					textToPrint = fmt.Sprintf("%v: %v", entry.Index+1, textToPrint) //entry.Indexは0からスタートします
+					cmd.Println(textToPrint)
 				}
-
-				cmd.Println(textToPrint)
 			}
 			return nil
 		},
 	}
 
+	cmd.Flags().BoolVarP(&showCreatedList, "created", "c", showCreatedList, "作成されたリンクの一覧を表示")
 	cmd.Flags().BoolVarP(&absPathMode, "abs", "a", absPathMode, "テンプレートを解釈してフルパスで表示")
 	cmd.Flags().BoolVarP(&relPathMode, "rel", "s", relPathMode, "テンプレートを解釈して相対パスで表示(デフォルト)")
 	cmd.Flags().StringVarP(&listSeparator, "sep", "", listSeparator, "リストの区切り文字を指定")
