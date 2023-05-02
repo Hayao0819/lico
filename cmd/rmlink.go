@@ -13,6 +13,7 @@ import (
 
 func rmLinkCmd() *cobra.Command {
 	rmAll := false
+	dryRun := false
 
 	cmd := cobra.Command{
 		Use:   "rmlink [ファイル]",
@@ -37,7 +38,7 @@ func rmLinkCmd() *cobra.Command {
 			var err error
 			var rmList []string
 			var errList []error
-			if list, err = conf.ReadConf(); err != nil {
+			if list, err = conf.ReadCreatedList(); err != nil {
 				return err
 			}
 
@@ -53,11 +54,13 @@ func rmLinkCmd() *cobra.Command {
 			for _, arg := range rmList {
 				targetPath := p.New(arg)
 				targetEntry, err := list.GetItemFromPath(targetPath)
-				//cmd.Println(targetEntry.HomePath)
 				if err != nil {
 					errList = append(errList, err)
 				} else {
-					if err := targetEntry.RemoveSymLink(); err != nil {
+					if dryRun {
+						cmd.Println(targetPath.String())
+						continue
+					}else if err := targetEntry.RemoveSymLink(); err != nil {
 						errList = append(errList, err)
 					}
 				}
@@ -80,6 +83,7 @@ func rmLinkCmd() *cobra.Command {
 	}
 
 	cmd.Flags().BoolVarP(&rmAll, "all", "", rmAll, "全てのリンクを削除します")
+	cmd.Flags().BoolVarP(&dryRun, "dry-run", "", dryRun, "実行せずに結果を表示します")
 
 	return &cmd
 }
