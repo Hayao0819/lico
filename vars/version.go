@@ -1,8 +1,10 @@
 package vars
 
 import (
+	/*
 	"os"
 	"strings"
+	*/
 )
 
 type verInfo struct {
