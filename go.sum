@@ -1,5 +1,7 @@
 github.com/Hayao0819/go-distro v0.0.0-20230427112622-3498babe0cbd h1:uY1TJ4SZ/Eq4IrJnlXyiuzLc7Mz76EgzumsXTFYwpq4=
 github.com/Hayao0819/go-distro v0.0.0-20230427112622-3498babe0cbd/go.mod h1:C7RUU7FdBZWMNpHLW23ZoaRZnFraq9CEyEPgA6KIuwY=
+github.com/Hayao0819/go-distro v0.0.0-20230502003830-acde0df61201 h1:X3fnKVnb4vG1Srgh6aGucImTkEvmnG7MU7NEFKr6CUQ=
+github.com/Hayao0819/go-distro v0.0.0-20230502003830-acde0df61201/go.mod h1:C7RUU7FdBZWMNpHLW23ZoaRZnFraq9CEyEPgA6KIuwY=
 github.com/ashcrow/osrelease v0.0.0-20180626175927-9b292693c55c h1:icme0QhxrgZOxTBnT6K8dfGLwbKWSOVwPB95XTbo8Ws=
 github.com/ashcrow/osrelease v0.0.0-20180626175927-9b292693c55c/go.mod h1:BRljTyotlu+6N+Qlu5MhjxpdmccCnp9lDvZjNNV8qr4=
 github.com/chzyer/logex v1.1.10 h1:Swpa1K6QvQznwJRcfTfQJmTE72DqScAa40E+fbHEXEE=
