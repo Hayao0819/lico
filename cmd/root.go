@@ -52,7 +52,7 @@ func rootCmd(stdin io.Reader, stdout io.Writer, args ...string) *cobra.Command {
 	cmd.PersistentFlags().StringVarP(&vars.List, "list", "l", "", "ファイルリストを指定します")
 	cmd.PersistentFlags().StringVarP(&vars.RepoDir, "repo", "r", vars.RepoDir, "リポジトリディレクトリを指定します")
 	cmd.PersistentFlags().BoolVarP(&showVersion, "version", "", false, "バージョン情報を表示します")
-	cmd.PersistentFlags().StringVarP(&vars.Created, "created-list", "", "", "作成されたリンクを保存するファイルを指定します")
+	cmd.PersistentFlags().StringVarP(&vars.Created, "created-list", "", vars.Created, "作成されたリンクを保存するファイルを指定します")
 	cmd.Flags().MarkHidden("created-list")
 	cmd.Flags().BoolVarP(&licoOpt, "lico", "", licoOpt, "")
 	cmd.Flags().MarkHidden("lico")
