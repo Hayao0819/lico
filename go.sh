@@ -14,7 +14,7 @@ mode="${1-""}"
     echo
     echo "Mode:"
     echo "  build             make executable file"
-    echo "  install           install lico to /usr/local/bin/ or ~/.bin/"
+    echo "  install [Dir]     install lico to /usr/local/bin/ or ~/.bin/"
     echo "  run               run lico"
     echo "  drun | example    run lico with example config"
     echo "  fmt               run gofmt"
@@ -54,6 +54,15 @@ check_cmd(){
     return 0
 }
 
+install_to(){
+    mkdir -p "$1"
+    run_build
+    if ! echo "${PATH-""}" | tr ":" "\n" | grep -q "$(cd "$1"; pwd)"; then
+        echo "Please add path to $1" >&2
+    fi
+    cp "$(get_built_binary)" "$1"
+}
+
 check_cmd go
 
 case "${mode}" in
@@ -62,11 +71,17 @@ case "${mode}" in
         mv "$(get_built_binary)" "${script_path}/lico"
         ;;
     "install")
-        call_myself "build"
-        if [ "$(id -u)" = 0 ]; then
-            cp "$script_path/lico" /usr/local/bin/
+        if [ -n "$1" ]; then
+            if [ ! -d "$1" ]; then
+                echo "Please specify directory"
+                exit 1
+            else
+                install_to "$1"
+            fi
+        elif [ "$(id -u)" = 0 ]; then
+            install_to /usr/local/bin/
         elif [ -e "$HOME/.bin" ]; then
-            cp "$script_path/lico" "$HOME/.bin"
+            install_to "$HOME/.bin"
         else
             echo "You should run this script as root to install lico" >&2
             exit 1
