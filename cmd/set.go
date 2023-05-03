@@ -13,6 +13,7 @@ import (
 )
 
 func setCmd() *cobra.Command {
+	dry_run := false
 
 	cmd := cobra.Command{
 		Use:   "set",
@@ -21,13 +22,7 @@ func setCmd() *cobra.Command {
 もし不正なファイルが設定されていた場合、そのファイルは無視して続行されます。
 `,
 		RunE: func(cmd *cobra.Command, ars []string) error {
-			/*
-				run_by_admin := false
-				// Check root
-				if os.Getegid() == 0{
-					run_by_admin = true
-				}
-			*/
+			
 
 			// get conf
 			list, err := conf.ReadConf()
@@ -37,10 +32,23 @@ func setCmd() *cobra.Command {
 			}
 
 			for _, entry := range *list {
-				err := entry.MakeSymLink()
-				if err != nil {
-					errlist = append(errlist, err)
-				}else{
+				// dry-runが有効な場合は、実際にリンクを作成せずに、作成する予定のリンクを表示する
+				show_msg := dry_run
+
+				if err := entry.CheckSymLink(); err == nil {
+					continue
+				}
+
+				if ! dry_run {
+					err := entry.MakeSymLink()
+					if err != nil {
+						errlist = append(errlist, err)
+					}else{
+						show_msg = true
+					}
+				}
+				
+				if show_msg {
 					cmd.Printf("%v ==> %v\n", entry.RepoPath.String(), entry.HomePath.String())
 				}
 			}
@@ -62,6 +70,8 @@ func setCmd() *cobra.Command {
 
 		},
 	}
+
+	cmd.Flags().BoolVarP(&dry_run, "dry-run", "d", false, "dry run")
 
 	return &cmd
 }
