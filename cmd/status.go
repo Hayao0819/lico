@@ -5,6 +5,7 @@ import (
 
 	"fmt"
 	"os"
+	"errors"
 
 	"github.com/Hayao0819/lico/cmd/common"
 	"github.com/Hayao0819/lico/conf"
@@ -159,7 +160,9 @@ func showValue(key string, cmd *cobra.Command) error {
 
 func statusCmd() *cobra.Command {
 
-	var textMode = false
+	textMode := false
+	tableMode := false
+
 
 	cmd := cobra.Command{
 		Use:   "status",
@@ -171,6 +174,12 @@ func statusCmd() *cobra.Command {
 ・同期されておらず、システムに別のものが存在するファイル
 ・現在の環境変数`,
 		Args: cobra.MaximumNArgs(1),
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			if textMode && tableMode {
+				return errors.New("textモードとtableモードは同時に指定できません")
+			}
+			return nil
+		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 
 			if len(args) > 0 {
@@ -179,14 +188,16 @@ func statusCmd() *cobra.Command {
 
 			if textMode {
 				return showTextStatus(cmd)
-			} else {
-
+			} else if tableMode{
 				return showTableStatus(cmd)
+			}else{
+				return showTextStatus(cmd)
 			}
 		},
 	}
 
 	cmd.Flags().BoolVarP(&textMode, "text", "t", textMode, "テキストモード")
+	cmd.Flags().BoolVarP(&tableMode, "table", "T", tableMode, "テーブルモード")
 
 	return &cmd
 }
