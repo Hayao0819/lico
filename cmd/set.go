@@ -3,12 +3,8 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"strings"
-
 	"github.com/Hayao0819/lico/conf"
-	//"github.com/Hayao0819/lico/utils"
 	"errors"
-
 	"github.com/spf13/cobra"
 )
 
@@ -59,13 +55,7 @@ func setCmd() *cobra.Command {
 				for _, err := range errlist {
 					fmt.Fprintln(os.Stderr, err)
 				}
-				return errors.New(strings.Join(func(errlist []error) []string {
-					var rtn []string
-					for _, err := range errlist {
-						rtn = append(rtn, err.Error())
-					}
-					return rtn
-				}(errlist), "\n"))
+				return errors.New("some error occured")
 			}
 
 		},
