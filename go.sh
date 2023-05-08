@@ -46,11 +46,14 @@ run_build(){
 }
 
 get_built_binary(){
+    
     if [ ! -e "${script_path}/dist/artifacts.json" ]; then
         echo "Run 'run_build' before calling 'get_built_binary'" >&2
         return 1
     fi
-    "${script_path}/getpath.py"
+    #"${script_path}/getpath.py"
+
+    go run -- "${script_path}/tools/main.go" artifact "${script_path}/dist/artifacts.json"
 }
 
 check_cmd(){
@@ -72,6 +75,10 @@ install_to(){
 }
 
 check_cmd go
+
+get_built_binary
+
+exit 0
 
 case "${mode}" in
     "build")

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"os"
 	"text/template"
 
@@ -18,10 +20,6 @@ func rootCmd() *cobra.Command {
 	return &cmd
 }
 
-type cmdVars struct {
-	Name string
-}
-
 func newcmdCmd() *cobra.Command {
 	cmd := cobra.Command{
 		Use:   "newcmd BaseFile OutFile Name",
@@ -30,8 +28,9 @@ func newcmdCmd() *cobra.Command {
 		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			basefile := args[0]
-			vars := cmdVars{
-				Name: args[2],
+
+			vars := map[string]string{
+				"Name": args[2],
 			}
 
 			t, err := template.ParseFiles(basefile)
@@ -56,9 +55,38 @@ func newcmdCmd() *cobra.Command {
 	return &cmd
 }
 
+func artifactCmd()*cobra.Command{
+	cmd := cobra.Command{
+		Use:   "artifact PATH",
+		Short: "goreleaserのjsonを解析してパスを返します",
+		Long:  "goreleaserのjsonを解析してパスを返します",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			jsonpath := args[0]
+
+			// read json
+			jsondata, err := os.ReadFile(jsonpath)
+			if err != nil {
+				return err
+			}
+
+			// parse json
+			var artifacts []map[string]interface{}
+			json.Unmarshal(jsondata, &artifacts)
+
+			// get path
+			fmt.Println(artifacts[0]["path"])
+
+			return nil
+		},
+	}
+	return &cmd
+}
+
 func main() {
 	root := rootCmd()
 	root.AddCommand(newcmdCmd())
+	root.AddCommand(artifactCmd())
 
 	if err := root.Execute(); err != nil {
 		os.Exit(1)
