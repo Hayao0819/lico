@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"io"
 
 	"github.com/spf13/cobra"
@@ -24,7 +25,7 @@ func GetSubCmd(name string) *CmdFunc {
 func RunSubCmdFromCmd(name string, cmd *cobra.Command, args ...string) error {
 	subcmdfunc := GetSubCmd(name)
 	if subcmdfunc == nil {
-		return nil
+		return fmt.Errorf("subcommand %s not found", name)
 	}
 	subcmd := (*subcmdfunc)()
 	subcmd.SetArgs(args)
@@ -36,7 +37,7 @@ func RunSubCmdFromCmd(name string, cmd *cobra.Command, args ...string) error {
 func RunSubCmdWithIO(name string, stdout, stderr io.Writer, args ...string) error {
 	cmdfunc := GetSubCmd(name)
 	if cmdfunc == nil {
-		return nil
+		return fmt.Errorf("subcommand %s not found", name)
 	}
 	cmd := (*cmdfunc)()
 
