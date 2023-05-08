@@ -28,7 +28,11 @@ func RunSubCmdFromCmd(name string, cmd *cobra.Command, args ...string) error {
 		return fmt.Errorf("subcommand %s not found", name)
 	}
 	subcmd := (*subcmdfunc)()
-	subcmd.SetArgs(args)
+	if len(args) > 0 {
+		subcmd.SetArgs(args)
+	}else{
+		subcmd.SetArgs([]string{"--"})
+	}
 	subcmd.SetOut(cmd.OutOrStdout())
 	return subcmd.Execute()
 }
@@ -42,7 +46,11 @@ func RunSubCmdWithIO(name string, stdout, stderr io.Writer, args ...string) erro
 	cmd := (*cmdfunc)()
 
 	// argsのフラグをcmdに渡す
-	cmd.SetArgs(args)
+	if len(args) > 0 {
+		cmd.SetArgs(args)
+	}else{
+		cmd.SetArgs([]string{"--"})
+	}
 
 	// 出力を指定
 	cmd.SetOut(stdout)
