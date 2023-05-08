@@ -30,6 +30,7 @@ func oldlinkcmd() *cobra.Command {
 	rm_nolink := false
 	rm_broken := false
 	rm_unregistered := false
+	verbose_msg := false
 
 	cmd := cobra.Command{
 		Use:   "oldlink",
@@ -58,7 +59,9 @@ func oldlinkcmd() *cobra.Command {
 			for _, e := range *created_list {
 				// Prepare 
 				home := e.HomePath
-				println("Checking: " + e.HomePath.String())
+				if verbose_msg {
+					println("Checking: " + e.HomePath.String())
+				}
 
 				// Check if the link is symlink
 				if !utils.IsSymlink(home.String()) {
@@ -108,6 +111,7 @@ func oldlinkcmd() *cobra.Command {
 	cmd.Flags().BoolVarP(&rm_nolink, "nolink", "n", false, "リンクではないファイルをリストから除外します")
 	cmd.Flags().BoolVarP(&rm_broken, "broken", "b", false, "壊れたリンクを削除します")
 	cmd.Flags().BoolVarP(&rm_unregistered, "unregistered", "u", false, "リストにないリンクを削除します")
+	cmd.Flags().BoolVarP(&verbose_msg, "verbose", "v", false, "詳細なメッセージを表示します")
 
 	return &cmd
 }
