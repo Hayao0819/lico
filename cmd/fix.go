@@ -20,12 +20,53 @@ func fixCmd() *cobra.Command {
 		Args:  cobra.NoArgs,
 	}
 
-	cmd.AddCommand(oldlinkcmd())
+	cmd.AddCommand(oldlinkCmd())
+	cmd.AddCommand(allCmd())
 
 	return &cmd
 }
 
-func oldlinkcmd() *cobra.Command {
+func allCmd()*cobra.Command{
+	rm_all := false
+	verbose_msg := false
+
+	cmd  := cobra.Command{
+		Use: "all",
+		Short: "全ての問題を修正",
+		Long: `全ての問題を自動で修正します。`,
+		Args: cobra.ArbitraryArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			oldlink_args:=[]string{}
+			
+
+			if rm_all {
+				oldlink_args = append(oldlink_args, "--all")
+			}
+
+			if verbose_msg {
+				oldlink_args = append(oldlink_args, "--verbose")
+			}
+
+			// oldlink
+			oldlink_cmd := oldlinkCmd()
+			oldlink_cmd.SetArgs(oldlink_args)
+			err := oldlink_cmd.Execute()
+			if err != nil {
+				return err
+			}
+			
+			return nil
+		},
+
+	}
+
+	cmd.Flags().BoolVarP(&rm_all, "all", "a", false, "全ての問題を修正します(ファイルを削除します)")
+	cmd.Flags().BoolVarP(&verbose_msg, "verbose", "v", false, "詳細なメッセージを表示します")
+
+	return &cmd
+}
+
+func oldlinkCmd() *cobra.Command {
 	rm_all := false
 	rm_nolink := false
 	rm_broken := false
