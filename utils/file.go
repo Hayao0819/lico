@@ -25,7 +25,7 @@ func Abs(base, path string) (string, error) {
 	}
 
 	// 変換
-	path = strings.Replace(path, "~", GetHomeDir(), 1)
+	path = ReplaceTilde(path)
 	path, err = filepath.Abs(path)
 	if err != nil {
 		return path, err
@@ -37,6 +37,11 @@ func Abs(base, path string) (string, error) {
 		return path, err
 	}
 	return path, nil
+}
+
+// ~/を置き換え
+func ReplaceTilde(path string) string {
+	return strings.Replace(path, "~", GetHomeDir(), 1)
 }
 
 // ファイルの内容を読みとって文字列配列を返します
