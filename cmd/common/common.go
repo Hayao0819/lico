@@ -22,7 +22,7 @@ func Normalize() error {
 
 		*v, err = utils.Abs(vars.RepoDir, *v)
 		if err != nil {
-			return err
+			*v = utils.ReplaceTilde(*v)
 		}
 	}
 	return nil
