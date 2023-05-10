@@ -19,7 +19,7 @@ func HasCorrectRepoDir() bool {
 	hasGitDir := utils.Exists(fmt.Sprint(path.Join(vars.RepoDir, ".git")))
 	//cmd.Println(isDir)
 	//cmd.Println(hasGitDir)
-	return isDir || hasGitDir
+	return isDir && hasGitDir
 }
 
 /*
