@@ -102,6 +102,10 @@ case "${mode}" in
         run_build
         "$(get_built_binary)" "$@"
         ;;
+    "grun")
+        run_build
+        sudo "$(get_built_binary)" -g "$@"
+        ;;
     "drun" | "example")
         call_myself "run" -l "${script_path}/example/lico.list" -r "${script_path}/example" --created-list "$script_path/example/created.list" "$@"
         ;;
