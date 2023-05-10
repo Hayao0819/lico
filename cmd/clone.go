@@ -3,6 +3,7 @@ package cmd
 import (
 	"errors"
 	"os"
+	"path/filepath"
 
 	"github.com/Hayao0819/lico/cmd/common"
 	"github.com/Hayao0819/lico/utils"
@@ -28,6 +29,10 @@ func cloneCmd() *cobra.Command {
 			}
 
 			cloneFrom := args[0]
+
+			if err := os.MkdirAll(filepath.Dir(vars.RepoDir), 0755); err != nil{
+				return err
+			}
 
 			if localPathMode {
 				//return fmt.Errorf("(まだ実装して)ないです。")
