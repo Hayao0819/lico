@@ -76,10 +76,6 @@ install_to(){
 
 check_cmd go
 
-get_built_binary
-
-exit 0
-
 case "${mode}" in
     "build")
         run_build
