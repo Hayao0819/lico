@@ -12,6 +12,7 @@ import (
 func rootCmd(stdin io.Reader, stdout io.Writer, args ...string) *cobra.Command {
 	licoOpt := false
 	showVersion := false
+	globalMode := false
 
 	cmd := &cobra.Command{
 		Use:   "lico",
@@ -22,6 +23,13 @@ func rootCmd(stdin io.Reader, stdout io.Writer, args ...string) *cobra.Command {
 テンプレート記法を用いて柔軟な設定が可能です。`,
 		SilenceUsage: true, //コマンド失敗時に使い方を表示しない
 		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			// global modeの処理
+			if globalMode {
+				if err := common.GlobalMode(); err != nil {
+					return err
+				}
+			}
+
 			return common.Normalize()
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -53,6 +61,7 @@ func rootCmd(stdin io.Reader, stdout io.Writer, args ...string) *cobra.Command {
 	cmd.PersistentFlags().StringVarP(&vars.RepoDir, "repo", "r", vars.RepoDir, "リポジトリディレクトリを指定します")
 	cmd.PersistentFlags().BoolVarP(&showVersion, "version", "", false, "バージョン情報を表示します")
 	cmd.PersistentFlags().StringVarP(&vars.Created, "created-list", "", vars.Created, "作成されたリンクを保存するファイルを指定します")
+	cmd.PersistentFlags().BoolVarP(&globalMode, "global", "", false, "グローバルモードで実行します")
 	cmd.Flags().MarkHidden("created-list")
 	cmd.Flags().BoolVarP(&licoOpt, "lico", "", licoOpt, "")
 	cmd.Flags().MarkHidden("lico")

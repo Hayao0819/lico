@@ -10,6 +10,7 @@ import (
 
 var RepoDir string = "~/.lico/repo"
 var Created string = "~/.lico/created.list"
+var GlobalMode bool = false
 
 /*
 var BaseListFile string = "~/.lico/repo/lico.list"

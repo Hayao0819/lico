@@ -14,6 +14,7 @@ import (
 	"github.com/Hayao0819/lico/osenv"
 	p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
+	"github.com/Hayao0819/lico/vars"
 )
 
 func replaceToTemplate(path string) (p.Path, error) {
@@ -90,6 +91,9 @@ func FormatTemplate(path string) ([]string, error) {
 		},
 		"joinpath": func(p ...string) string {
 			return filepath.Join(p...)
+		},
+		"isglobal": func() bool {
+			return vars.GlobalMode
 		},
 	}
 
