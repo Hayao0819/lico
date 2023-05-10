@@ -3,6 +3,7 @@ package osenv
 import (
 	"os"
 	"os/user"
+	"runtime"
 	"sort"
 	"strings"
 
@@ -20,6 +21,7 @@ func Get() (E, error) {
 	d := distro.Get()
 	env := map[string]string{
 		"Home":     utils.GetHomeDir(),
+		"GOOS":     runtime.GOOS,
 		"OS":       d.Name(),
 		"OSVer":    d.Version().ID(),
 		"UserName": user.Username,
