@@ -22,6 +22,7 @@ func fixCmd() *cobra.Command {
 
 	cmd.AddCommand(oldlinkCmd())
 	cmd.AddCommand(allCmd())
+	cmd.AddCommand(ignoreCmd())
 
 	return &cmd
 }
@@ -157,7 +158,40 @@ func oldlinkCmd() *cobra.Command {
 	return &cmd
 }
 
+
+func ignoreCmd() *cobra.Command {
+	cmd := cobra.Command{
+		Use: "ignore",
+		Short: "本来無視されるべきファイルを確認",
+		Long: `リストに登録されているが本来無視されるべきファイルを表示・除外します。`,
+		Args: cobra.NoArgs,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			list, err := conf.ReadConf()
+			if err != nil {
+				return err
+			}
+
+			ignore, err := conf.ReadIgnoreList()
+			if err != nil {
+				return err
+			}
+
+			for _, e := range *list {
+				if r, _ := ignore.MatchEntry(e); r{
+					cmd.Println(e.HomePath.String())
+				}
+			}
+			return nil
+		},
+
+	}
+
+	return &cmd
+}
+
 func init() {
 	cmd := CmdFunc(fixCmd)
 	addCommand(&cmd)
 }
+
+
