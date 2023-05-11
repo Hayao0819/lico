@@ -30,7 +30,7 @@ func ParseEntryOption(opt string)(*EntryOption, error){
 				o.WithRoot=false
 			*/
 			default:
-				return nil, fmt.Errorf("unknown option: %s\n", s)
+				return nil, fmt.Errorf("unknown option: %s", s)
 		}
 	}
 	return o, nil
