@@ -41,6 +41,8 @@ func getVars() map[string]string {
 	rtn := map[string]string{}
 	for _, envS := range os.Environ() {
 		env := strings.Split(envS, "=")
+
+		// LICO_で始まる環境変数のみ取得
 		if strings.HasPrefix(env[0], "LICO_") {
 			index := strings.TrimPrefix(env[0], "LICO_")
 			rtn[index] = env[1]

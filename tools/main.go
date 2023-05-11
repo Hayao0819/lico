@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"text/template"
 
@@ -75,7 +74,7 @@ func artifactCmd()*cobra.Command{
 			json.Unmarshal(jsondata, &artifacts)
 
 			// get path
-			fmt.Println(artifacts[0]["path"])
+			cmd.Println(artifacts[0]["path"])
 
 			return nil
 		},
