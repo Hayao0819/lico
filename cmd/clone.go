@@ -6,9 +6,10 @@ import (
 	"path/filepath"
 
 	"github.com/Hayao0819/lico/cmd/common"
-	"github.com/Hayao0819/lico/utils"
+	//"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
+	"github.com/go-git/go-git/v5"
 )
 
 func cloneCmd() *cobra.Command {
@@ -42,8 +43,19 @@ func cloneCmd() *cobra.Command {
 				if err := os.Symlink(cloneFrom, vars.RepoDir); err != nil {
 					return err
 				}
-			} else if err := utils.RunCmd("git", "clone", cloneFrom, vars.RepoDir); err != nil {
-				return err
+			} else {
+				/*
+				if err := utils.RunCmd("git", "clone", cloneFrom, vars.RepoDir); err != nil {
+					return err
+				}
+				*/
+				_, err := git.PlainClone(vars.RepoDir, false, &git.CloneOptions{
+					URL: cloneFrom,
+					RemoteName: "origin",
+				})
+				if err !=nil{
+					return err
+				}
 			}
 
 			if common.HasCorrectRepoDir() {
