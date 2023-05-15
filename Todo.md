@@ -1,6 +1,10 @@
 ## Todo
 
 - [ ] Gitの操作を[go-git](https://github.com/go-git/go-git)で書き直す
+  - [ ] Pull
+  - [ ] Push
+  - [ ] SSHでの認証をサポートする
+    - ~/.ssh/configを読む
 - [ ] テストを書く
   - [ ] cmd
   - [ ] conf
