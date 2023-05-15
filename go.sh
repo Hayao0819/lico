@@ -45,15 +45,21 @@ run_build(){
 
 }
 
+run_tool(){
+    if [ ! -e "${script_path}/tools/licotool" ]; then
+        go build -o "${script_path}/tools/licotool" "${script_path}/tools/."
+    fi
+    "${script_path}/tools/licotool" "$@"
+}
+
 get_built_binary(){
-    
     if [ ! -e "${script_path}/dist/artifacts.json" ]; then
         echo "Run 'run_build' before calling 'get_built_binary'" >&2
         return 1
     fi
     #"${script_path}/getpath.py"
 
-    go run -- "${script_path}/tools/main.go" artifact "${script_path}/dist/artifacts.json"
+    run_tool artifact "${script_path}/dist/artifacts.json"
 }
 
 check_cmd(){
