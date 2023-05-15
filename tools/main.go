@@ -86,6 +86,7 @@ func main() {
 	root := rootCmd()
 	root.AddCommand(newcmdCmd())
 	root.AddCommand(artifactCmd())
+	root.SetOut(os.Stdout)
 
 	if err := root.Execute(); err != nil {
 		os.Exit(1)
