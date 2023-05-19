@@ -1,6 +1,7 @@
 package conf
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
 	"strings"
@@ -29,6 +30,12 @@ func ReadCreatedList() (*List, error) {
 	return &list, nil
 }
 
+
+// リスト解析中のエラーをコレでいい感じに表示したい
+func listParseErr(err error, line int)error{
+	return fmt.Errorf("list syntax error in line %d: %v", line, err)
+}
+
 // 設定ファイルを読み込みます
 func ReadConf() (*List, error) {
 	path := vars.GetList()
@@ -53,7 +60,7 @@ func ReadConf() (*List, error) {
 		// :で分割
 		splited := strings.Split(line, ":")
 		if len(splited) >= 4 || len(splited) <= 1{   // if 1<= x <= 4; then
-			return nil, fmt.Errorf("wrong syntax in line: %v", lineNo+1)
+			return nil,  listParseErr(errors.New("wrong syntax"), lineNo+1)
 		}
 
 		// 代入ReadConf
@@ -67,7 +74,7 @@ func ReadConf() (*List, error) {
 		if len(splited) == 3{
 			option, err := ParseEntryOption(strings.TrimSpace(splited[2]))
 			if err !=nil{
-				return nil, err
+				return nil, listParseErr(err, lineNo+1)
 			}
 			item.Option = option
 		}

@@ -23,12 +23,8 @@ func ParseEntryOption(opt string)(*EntryOption, error){
 	for _, s := range strings.Split(opt, ","){
 		s = strings.TrimSpace(s)
 		switch strings.ToLower(s) {
-			/*
-			case "withroot":
-				o.WithRoot=true
-			case "withoutroot", "noroot":
-				o.WithRoot=false
-			*/
+			case "": 
+				continue
 			default:
 				return nil, fmt.Errorf("unknown option: %s", s)
 		}
