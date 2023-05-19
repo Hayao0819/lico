@@ -95,7 +95,7 @@ func CommentOut(path string, targetLineNo int) error {
 	return WriteLines(newFileLine, path)
 }
 
-func RemoveLine(path string, targetLineNo int)error{
+func RemoveLine(path string, targetLineNo int) error {
 	var newFileLine []string
 	fileLines, err := ReadLines(path)
 	if err != nil {
@@ -112,9 +112,9 @@ func RemoveLine(path string, targetLineNo int)error{
 	return WriteLines(newFileLine, path)
 }
 
-func AppendLine(line , path string)error{
+func AppendLine(line, path string) error {
 	file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err !=nil{
+	if err != nil {
 		return err
 	}
 	defer file.Close()

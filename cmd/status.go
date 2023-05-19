@@ -3,9 +3,9 @@ package cmd
 import (
 	//"fmt"
 
+	"errors"
 	"fmt"
 	"os"
-	"errors"
 
 	"github.com/Hayao0819/lico/cmd/common"
 	"github.com/Hayao0819/lico/conf"
@@ -163,7 +163,6 @@ func statusCmd() *cobra.Command {
 	textMode := false
 	tableMode := false
 
-
 	cmd := cobra.Command{
 		Use:   "status",
 		Short: "ステータスを表示します",
@@ -188,9 +187,9 @@ func statusCmd() *cobra.Command {
 
 			if textMode {
 				return showTextStatus(cmd)
-			} else if tableMode{
+			} else if tableMode {
 				return showTableStatus(cmd)
-			}else{
+			} else {
 				return showTextStatus(cmd)
 			}
 		},

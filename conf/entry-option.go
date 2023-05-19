@@ -7,28 +7,26 @@ import (
 
 // 現在準備中
 
-
-type EntryOption struct{
+type EntryOption struct {
 	//WithRoot bool
 }
 
-func DefaultOption()(*EntryOption){
+func DefaultOption() *EntryOption {
 	return &EntryOption{
 		//WithRoot: false,
 	}
 }
 
-func ParseEntryOption(opt string)(*EntryOption, error){
+func ParseEntryOption(opt string) (*EntryOption, error) {
 	o := DefaultOption()
-	for _, s := range strings.Split(opt, ","){
+	for _, s := range strings.Split(opt, ",") {
 		s = strings.TrimSpace(s)
 		switch strings.ToLower(s) {
-			case "": 
-				continue
-			default:
-				return nil, fmt.Errorf("unknown option: %s", s)
+		case "":
+			continue
+		default:
+			return nil, fmt.Errorf("unknown option: %s", s)
 		}
 	}
 	return o, nil
 }
-

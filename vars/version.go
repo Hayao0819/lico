@@ -1,10 +1,10 @@
 package vars
 
 import (
-	/*
+/*
 	"os"
 	"strings"
-	*/
+*/
 )
 
 type verInfo struct {
@@ -23,13 +23,13 @@ var Version = verInfo{
 	Date:   date,
 }
 
-func init(){
+func init() {
 	/*
-	if version == "Unknown" && commit == "Unknown" && date == "Unknown" {
-		if ! strings.Contains(strings.Join(os.Args, " "), "-test.") {
-			println("Please compile with goreleaser.")
-			os.Exit(1)
+		if version == "Unknown" && commit == "Unknown" && date == "Unknown" {
+			if ! strings.Contains(strings.Join(os.Args, " "), "-test.") {
+				println("Please compile with goreleaser.")
+				os.Exit(1)
+			}
 		}
-	}
 	*/
 }

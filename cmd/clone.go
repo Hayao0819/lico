@@ -30,7 +30,7 @@ func cloneCmd() *cobra.Command {
 
 			cloneFrom := args[0]
 
-			if err := os.MkdirAll(filepath.Dir(vars.RepoDir), 0755); err != nil{
+			if err := os.MkdirAll(filepath.Dir(vars.RepoDir), 0755); err != nil {
 				return err
 			}
 

@@ -10,18 +10,18 @@ import (
 	"github.com/Hayao0819/lico/vars"
 )
 
-func TestMain(m *testing.M){
+func TestMain(m *testing.M) {
 	tester.CommonTestMain("../example")(m)
 }
 
-type testEntry struct{
-	repo p.Path
-	home p.Path
-	index int
+type testEntry struct {
+	repo   p.Path
+	home   p.Path
+	index  int
 	expect conf.Entry
 }
 
-func TestNewEntry(t *testing.T){
+func TestNewEntry(t *testing.T) {
 	var args = []testEntry{
 		{
 			repo: p.Path(path.Join(vars.RepoDir, "config", "example1.txt")),
@@ -40,7 +40,6 @@ func TestNewEntry(t *testing.T){
 			},
 		},
 	}
-
 
 	for _, arg := range args {
 		entry := conf.NewEntry(arg.repo, arg.home)
@@ -50,26 +49,26 @@ func TestNewEntry(t *testing.T){
 	}
 }
 
-func TestNewEntryWithIndex(t *testing.T){
+func TestNewEntryWithIndex(t *testing.T) {
 	var args = []testEntry{
 		{
-			repo: p.Path(path.Join(vars.RepoDir, "config", "example1.txt")),
-			home: p.Path(path.Join(vars.RepoDir, "your-home", "ex1.txt")),
+			repo:  p.Path(path.Join(vars.RepoDir, "config", "example1.txt")),
+			home:  p.Path(path.Join(vars.RepoDir, "your-home", "ex1.txt")),
 			index: 1,
 			expect: conf.Entry{
 				RepoPath: p.Path(path.Join(vars.RepoDir, "config", "example1.txt")),
 				HomePath: p.Path(path.Join(vars.RepoDir, "your-home", "ex1.txt")),
-				Index: 1,
+				Index:    1,
 			},
 		},
 		{
-			repo: p.Path(path.Join(vars.RepoDir, "config", "example2.txt")),
-			home: p.Path(path.Join(vars.RepoDir, "your-home", "ex2.txt")),
+			repo:  p.Path(path.Join(vars.RepoDir, "config", "example2.txt")),
+			home:  p.Path(path.Join(vars.RepoDir, "your-home", "ex2.txt")),
 			index: 2,
 			expect: conf.Entry{
 				RepoPath: p.Path(path.Join(vars.RepoDir, "config", "example2.txt")),
 				HomePath: p.Path(path.Join(vars.RepoDir, "your-home", "ex2.txt")),
-				Index: 2,
+				Index:    2,
 			},
 		},
 	}
@@ -81,15 +80,15 @@ func TestNewEntryWithIndex(t *testing.T){
 	}
 }
 
-func TestExistsRepoPath(t *testing.T){
-	type testcase struct{
-		entry conf.Entry
+func TestExistsRepoPath(t *testing.T) {
+	type testcase struct {
+		entry  conf.Entry
 		expect bool
 	}
 
 	tests := []testcase{
 		{
-			entry:  conf.Entry{
+			entry: conf.Entry{
 				RepoPath: p.Path(path.Join(vars.RepoDir, "config", "example2.txt")),
 				HomePath: p.Path(path.Join(vars.RepoDir, "your-home", "ex2.txt")),
 			},

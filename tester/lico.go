@@ -10,9 +10,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-
-func RunLico (args ...string)error{
-	args = append([]string{os.Args[0]}, args...)  // 引数の先頭にファイル名を追加
+func RunLico(args ...string) error {
+	args = append([]string{os.Args[0]}, args...) // 引数の先頭にファイル名を追加
 	return cmd.Execute(os.Stdin, os.Stdout, args...)
 }
 
@@ -20,8 +19,7 @@ func MakeSymLinkInExample() error {
 	return RunLico("set")
 }
 
-
-func RunCmdWithStdout(f func()(cmd *cobra.Command), args ...string)(string, string, error){
+func RunCmdWithStdout(f func() (cmd *cobra.Command), args ...string) (string, string, error) {
 	cmd := f()
 
 	// set stdout, stderr
@@ -31,9 +29,9 @@ func RunCmdWithStdout(f func()(cmd *cobra.Command), args ...string)(string, stri
 	cmd.SetErr(stderr)
 
 	// deal with args
-	if len(args) == 0{
+	if len(args) == 0 {
 		cmd.SetArgs([]string{"--"})
-	}else{
+	} else {
 		cmd.SetArgs(args)
 	}
 

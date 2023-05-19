@@ -27,18 +27,17 @@ func fixCmd() *cobra.Command {
 	return &cmd
 }
 
-func allCmd()*cobra.Command{
+func allCmd() *cobra.Command {
 	rm_all := false
 	verbose_msg := false
 
-	cmd  := cobra.Command{
-		Use: "all",
+	cmd := cobra.Command{
+		Use:   "all",
 		Short: "全ての問題を修正",
-		Long: `全ての問題を自動で修正します。`,
-		Args: cobra.ArbitraryArgs,
+		Long:  `全ての問題を自動で修正します。`,
+		Args:  cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			oldlink_args:=[]string{}
-			
+			oldlink_args := []string{}
 
 			if rm_all {
 				oldlink_args = append(oldlink_args, "--all")
@@ -55,10 +54,9 @@ func allCmd()*cobra.Command{
 			if err != nil {
 				return err
 			}
-			
+
 			return nil
 		},
-
 	}
 
 	cmd.Flags().BoolVarP(&rm_all, "all", "a", false, "全ての問題を修正します(ファイルを削除します)")
@@ -99,7 +97,7 @@ func oldlinkCmd() *cobra.Command {
 
 			//remove_path := []*p.Path{}
 			for _, e := range *created_list {
-				// Prepare 
+				// Prepare
 				home := e.HomePath
 				if verbose_msg {
 					println("Checking: " + e.HomePath.String())
@@ -133,7 +131,7 @@ func oldlinkCmd() *cobra.Command {
 				if _, err = list.GetItemFromPath(home); err != nil {
 					// すでに登録解除されたリンク
 					fmt.Fprintf(os.Stderr, "リストにないリンク: %v\n", home)
-					
+
 					if rm_unregistered {
 						if e.RemoveSymLink() != nil {
 							return err
@@ -158,13 +156,12 @@ func oldlinkCmd() *cobra.Command {
 	return &cmd
 }
 
-
 func ignoreCmd() *cobra.Command {
 	cmd := cobra.Command{
-		Use: "ignore",
+		Use:   "ignore",
 		Short: "本来無視されるべきファイルを確認",
-		Long: `リストに登録されているが本来無視されるべきファイルを表示・除外します。`,
-		Args: cobra.NoArgs,
+		Long:  `リストに登録されているが本来無視されるべきファイルを表示・除外します。`,
+		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			list, err := conf.ReadConf()
 			if err != nil {
@@ -177,13 +174,12 @@ func ignoreCmd() *cobra.Command {
 			}
 
 			for _, e := range *list {
-				if r, _ := ignore.MatchEntry(e); r{
+				if r, _ := ignore.MatchEntry(e); r {
 					cmd.Println(e.HomePath.String())
 				}
 			}
 			return nil
 		},
-
 	}
 
 	return &cmd
@@ -193,5 +189,3 @@ func init() {
 	cmd := CmdFunc(fixCmd)
 	addCommand(&cmd)
 }
-
-

@@ -54,7 +54,7 @@ func newcmdCmd() *cobra.Command {
 	return &cmd
 }
 
-func artifactCmd()*cobra.Command{
+func artifactCmd() *cobra.Command {
 	cmd := cobra.Command{
 		Use:   "artifact PATH",
 		Short: "goreleaserのjsonを解析してパスを返します",

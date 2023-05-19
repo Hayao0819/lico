@@ -30,7 +30,7 @@ func RunSubCmdFromCmd(name string, cmd *cobra.Command, args ...string) error {
 	subcmd := (*subcmdfunc)()
 	if len(args) > 0 {
 		subcmd.SetArgs(args)
-	}else{
+	} else {
 		subcmd.SetArgs([]string{"--"})
 	}
 	subcmd.SetOut(cmd.OutOrStdout())
@@ -48,7 +48,7 @@ func RunSubCmdWithIO(name string, stdout, stderr io.Writer, args ...string) erro
 	// argsのフラグをcmdに渡す
 	if len(args) > 0 {
 		cmd.SetArgs(args)
-	}else{
+	} else {
 		cmd.SetArgs([]string{"--"})
 	}
 

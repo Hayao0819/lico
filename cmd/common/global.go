@@ -7,7 +7,7 @@ import (
 	"github.com/Hayao0819/lico/vars"
 )
 
-func GlobalMode()error{
+func GlobalMode() error {
 	vars.GlobalMode = true
 
 	// root権限で実行しているか確認
