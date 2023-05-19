@@ -127,6 +127,9 @@ case "${mode}" in
         check_cmd "goreleaser"
         goreleaser release --snapshot --clean
         ;;
+    "testall")
+        go test "$script_path/..."
+        ;;
     *)
         echo "No such command" >&2
         call_myself ""
