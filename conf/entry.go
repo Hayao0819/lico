@@ -82,5 +82,3 @@ func addEntryToCreatedList(path p.Path) error {
 	}
 	return utils.AppendLine(path.String(), vars.GetCreated())
 }
-
-

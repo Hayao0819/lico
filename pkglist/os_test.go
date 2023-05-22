@@ -8,7 +8,7 @@ import (
 	"github.com/Hayao0819/lico/tester"
 )
 
-func TestMain(m *testing.M){
+func TestMain(m *testing.M) {
 	tester.CommonTestMain("../example")(m)
 }
 
@@ -16,26 +16,22 @@ func TestReadList(t *testing.T) {
 	list, err := pkglist.ReadList()
 	if err != nil {
 		t.Errorf("pkglist.ReadList() error: %v", err)
-	}else{
+	} else {
 		log.Printf("List: %v\n", list)
 	}
 }
 
-func TestOSList(t *testing.T){
+func TestOSList(t *testing.T) {
 	list, err := pkglist.ReadList()
 	if err != nil {
 		t.Errorf("pkglist.ReadList() error: %v", err)
 	}
 
 	oslist := list.OSList()
-	if len(oslist) == 0{
+	if len(oslist) == 0 {
 		t.Errorf("pkglist.OSList() error: %v", err)
-	}else{
+	} else {
 		log.Printf("OSList: %v\n", oslist)
 	}
-	
+
 }
-
-
-
-

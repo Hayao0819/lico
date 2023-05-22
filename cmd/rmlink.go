@@ -60,7 +60,7 @@ func rmLinkCmd() *cobra.Command {
 					if dryRun {
 						cmd.Println(targetPath.String())
 						continue
-					}else if err := targetEntry.RemoveSymLink(); err != nil {
+					} else if err := targetEntry.RemoveSymLink(); err != nil {
 						errList = append(errList, err)
 					}
 				}

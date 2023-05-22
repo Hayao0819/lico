@@ -9,22 +9,21 @@ import (
 	"github.com/Hayao0819/lico/vars"
 )
 
-
-func TestMain(m *testing.M){
+func TestMain(m *testing.M) {
 	tester.CommonTestMain("../example")(m)
 }
 
 func TestIsDir(t *testing.T) {
-	args := []struct{
-		path string
+	args := []struct {
+		path   string
 		expect bool
 	}{
 		{
-			path: path.Join(vars.RepoDir , "/config"),
+			path:   path.Join(vars.RepoDir, "/config"),
 			expect: true,
 		},
 		{
-			path: path.Join(vars.RepoDir , "README.md"),
+			path:   path.Join(vars.RepoDir, "README.md"),
 			expect: false,
 		},
 	}
@@ -35,17 +34,17 @@ func TestIsDir(t *testing.T) {
 	}
 }
 
-func TestIsFile(t *testing.T){
-	args := []struct{
-		path string
+func TestIsFile(t *testing.T) {
+	args := []struct {
+		path   string
 		expect bool
 	}{
 		{
-			path: path.Join(vars.RepoDir , "/config"),
+			path:   path.Join(vars.RepoDir, "/config"),
 			expect: false,
 		},
 		{
-			path: path.Join(vars.RepoDir , "README.md"),
+			path:   path.Join(vars.RepoDir, "README.md"),
 			expect: true,
 		},
 	}
@@ -56,21 +55,21 @@ func TestIsFile(t *testing.T){
 	}
 }
 
-func TestIsEmpty(t *testing.T){
-	args := []struct{
-		str string
+func TestIsEmpty(t *testing.T) {
+	args := []struct {
+		str    string
 		expect bool
 	}{
 		{
-			str: "",
+			str:    "",
 			expect: true,
 		},
 		{
-			str: " ",
+			str:    " ",
 			expect: true,
 		},
 		{
-			str: "a",
+			str:    "a",
 			expect: false,
 		},
 	}
@@ -88,22 +87,21 @@ func TestIsSymlink(t *testing.T){
 }
 */
 
-
-func TestExists(t *testing.T){
-	args := []struct{
-		path string
+func TestExists(t *testing.T) {
+	args := []struct {
+		path   string
 		expect bool
 	}{
 		{
-			path: path.Join(vars.RepoDir , "/config"),
+			path:   path.Join(vars.RepoDir, "/config"),
 			expect: true,
 		},
 		{
-			path: path.Join(vars.RepoDir , "README.md"),
+			path:   path.Join(vars.RepoDir, "README.md"),
 			expect: true,
 		},
 		{
-			path: path.Join(vars.RepoDir , "not_exist"),
+			path:   path.Join(vars.RepoDir, "not_exist"),
 			expect: false,
 		},
 	}
@@ -114,23 +112,22 @@ func TestExists(t *testing.T){
 	}
 }
 
-
-func TestCommandExists(t *testing.T){
-	args := []struct{
+func TestCommandExists(t *testing.T) {
+	args := []struct {
 		command string
-		expect bool
+		expect  bool
 	}{
 		{
 			command: "ls",
-			expect: true,
+			expect:  true,
 		},
 		{
 			command: "go",
-			expect: true,
+			expect:  true,
 		},
 		{
 			command: "not_exist",
-			expect: false,
+			expect:  false,
 		},
 	}
 	for _, arg := range args {

@@ -62,7 +62,7 @@ func listCmd() *cobra.Command {
 			return nil
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if showCreatedList{
+			if showCreatedList {
 				createdList, err := conf.ReadCreatedList()
 				if err != nil {
 					return err
@@ -75,16 +75,16 @@ func listCmd() *cobra.Command {
 					if absPathMode {
 						fmt.Println(parsed.String())
 						continue
-					}else{
+					} else {
 						rel, err := parsed.Rel(*vars.HomePathBase)
-						if err !=nil{
+						if err != nil {
 							return err
 						}
 						fmt.Println(rel.String())
 					}
 				}
 				return nil
-			}else{
+			} else {
 				list, err := conf.ReadConf()
 				if err != nil {
 					return err

@@ -1,11 +1,11 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
-	"github.com/Hayao0819/lico/conf"
 	"errors"
+	"fmt"
+	"github.com/Hayao0819/lico/conf"
 	"github.com/spf13/cobra"
+	"os"
 )
 
 func setCmd() *cobra.Command {
@@ -18,7 +18,6 @@ func setCmd() *cobra.Command {
 もし不正なファイルが設定されていた場合、そのファイルは無視して続行されます。
 `,
 		RunE: func(cmd *cobra.Command, ars []string) error {
-			
 
 			// get conf
 			list, err := conf.ReadConf()
@@ -35,15 +34,15 @@ func setCmd() *cobra.Command {
 					continue
 				}
 
-				if ! dry_run {
+				if !dry_run {
 					err := entry.MakeSymLink()
 					if err != nil {
 						errlist = append(errlist, err)
-					}else{
+					} else {
 						show_msg = true
 					}
 				}
-				
+
 				if show_msg {
 					cmd.Printf("%v ==> %v\n", entry.RepoPath.String(), entry.HomePath.String())
 				}

@@ -1,8 +1,10 @@
 # リポジトリのファイル : 配置先のパス
 
-# Files
+# File
 ./config/example1.txt : {{ .Repo }}/your-home/ex1.txt
-./config/example2.txt : {{ .Repo }}/your-home/ex2.txt
+
+# File with option
+./config/example2.txt : {{ .Repo }}/your-home/ex2.txt : 
 
 # Dirs
 ./config/super_config : {{ .Repo }}/your-home/super

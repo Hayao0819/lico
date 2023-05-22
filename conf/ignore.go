@@ -8,9 +8,9 @@ import (
 type IgnoreList gi.GitIgnore
 
 // lico.ignoreを読み込んでIgnoreListを生成する
-func ReadIgnoreList()(*IgnoreList, error){
+func ReadIgnoreList() (*IgnoreList, error) {
 	lines, err := FormatTemplate(vars.GetIgnore())
-	if err !=nil{
+	if err != nil {
 		return nil, err
 	}
 
@@ -20,24 +20,24 @@ func ReadIgnoreList()(*IgnoreList, error){
 }
 
 // パスがIgnoreListに含まれているかどうか
-func (i *IgnoreList)MatchString(s string)(bool, string){
+func (i *IgnoreList) MatchString(s string) (bool, string) {
 	g := gi.GitIgnore(*i)
 	b, h := g.MatchesPathHow(s)
-	if h == nil{
+	if h == nil {
 		return b, ""
 	}
 	return b, h.Line
 }
 
 // entryがIgnoreListに含まれているかどうか
-func (i *IgnoreList)MatchEntry(e Entry)(bool, string){
+func (i *IgnoreList) MatchEntry(e Entry) (bool, string) {
 	homeStatus, homeStr := i.MatchString(e.HomePath.String())
 	repoStatus, repoStr := i.MatchString(e.RepoPath.String())
-	if homeStatus{
+	if homeStatus {
 		return true, homeStr
 	}
-	if repoStatus{
+	if repoStatus {
 		return true, repoStr
 	}
-	return false , ""
+	return false, ""
 }

@@ -9,18 +9,18 @@ import (
 )
 
 // テストモードを有効にする
-func Enable(relToExample string)error{
-	current_dir , err := os.Getwd()
-	if err !=nil{
+func Enable(relToExample string) error {
+	current_dir, err := os.Getwd()
+	if err != nil {
 		return err
 	}
-	vars.RepoDir = path.Join(current_dir , relToExample)
+	vars.RepoDir = path.Join(current_dir, relToExample)
 	return nil
 }
 
-func CommonTestMain(relToExample string)(func(*testing.M)){
-	return func(m *testing.M){
-		if err := Enable(relToExample); err != nil{
+func CommonTestMain(relToExample string) func(*testing.M) {
+	return func(m *testing.M) {
+		if err := Enable(relToExample); err != nil {
 			os.Exit(-1)
 		}
 		os.Exit(m.Run())

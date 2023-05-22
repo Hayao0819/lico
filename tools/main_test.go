@@ -11,7 +11,7 @@ import (
 
 func TestArtifactCmd(t *testing.T) {
 
-	testcase := []struct{
+	testcase := []struct {
 		json string
 		path string
 	}{
@@ -22,38 +22,38 @@ func TestArtifactCmd(t *testing.T) {
 	}
 
 	tmpfile, err := os.CreateTemp(os.TempDir(), "goreleaser.json")
-	if err !=nil{
+	if err != nil {
 		t.Fatal(err)
 	}
 	defer os.Remove(tmpfile.Name())
 
-	for _, test := range testcase{
-		if _, err := tmpfile.Write([]byte(test.json)); err != nil{
+	for _, test := range testcase {
+		if _, err := tmpfile.Write([]byte(test.json)); err != nil {
 			t.Fatal(err)
 		}
-		
+
 		stdout, _, err := tester.RunCmdWithStdout(artifactCmd, tmpfile.Name())
 
-		if err != nil{
+		if err != nil {
 			t.Fatal(err)
 		}
 
-		if stdout != test.path{
+		if stdout != test.path {
 			t.Errorf("expected %s, but got %s", test.path, stdout)
 		}
 	}
 }
 
-func TestNewcmdCmd(t *testing.T){
+func TestNewcmdCmd(t *testing.T) {
 	current, err := os.Getwd()
-	if err != nil{
+	if err != nil {
 		t.Fatal(err)
 	}
 
 	basefile := filepath.Clean(filepath.Join(current, "../misc/cmd.go.template"))
 
 	testoutfile, err := os.CreateTemp(os.TempDir(), "testcmd.go")
-	if err != nil{
+	if err != nil {
 		t.Fatal(err)
 	}
 	defer os.Remove(testoutfile.Name())
@@ -62,19 +62,19 @@ func TestNewcmdCmd(t *testing.T){
 		"testcmd",
 	}
 
-	for _, test := range testcase{
-		_, _, err :=  tester.RunCmdWithStdout(newcmdCmd, basefile, testoutfile.Name(), test)
-		if err != nil{
-			t.Fatal(err)
-		}
-		
-		buf := make([]byte, 64)
-		_, err = testoutfile.Read(buf)
-		if err != nil{
+	for _, test := range testcase {
+		_, _, err := tester.RunCmdWithStdout(newcmdCmd, basefile, testoutfile.Name(), test)
+		if err != nil {
 			t.Fatal(err)
 		}
 
-		if len(strings.TrimSpace(string(buf))) == 0{
+		buf := make([]byte, 64)
+		_, err = testoutfile.Read(buf)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if len(strings.TrimSpace(string(buf))) == 0 {
 			t.Errorf("expected not empty, but got empty")
 		}
 
