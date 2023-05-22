@@ -11,6 +11,7 @@ require (
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.6.1
 	github.com/spf13/pflag v1.0.5
+	golang.org/x/exp v0.0.0-20230519143937-03e91628a987
 )
 
 require (

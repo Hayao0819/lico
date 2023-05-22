@@ -7,7 +7,7 @@ import (
 	"github.com/Hayao0819/lico/conf"
 	"github.com/spf13/cobra"
 
-	//p "github.com/Hayao0819/lico/paths"
+	"golang.org/x/exp/slices"
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
 )
@@ -23,6 +23,7 @@ func fixCmd() *cobra.Command {
 	cmd.AddCommand(oldlinkCmd())
 	cmd.AddCommand(allCmd())
 	cmd.AddCommand(ignoreCmd())
+	cmd.AddCommand(duplicateCmd())
 
 	return &cmd
 }
@@ -158,6 +159,44 @@ func oldlinkCmd() *cobra.Command {
 	return &cmd
 }
 
+// Todo: 重複したファイルの自動修正
+func duplicateCmd() *cobra.Command{
+	cmd := cobra.Command{
+		Use: "duplicate",
+		Aliases: []string{"dup"},
+		Short: "重複したファイルを確認",
+		Long: `リストに登録されているが重複しているファイルを表示・除外します。`,
+		Args: cobra.NoArgs,
+	}
+
+	createdCmd := cobra.Command{
+		Use: "created",
+		Short: "重複した作成済みリンクの一覧を確認",
+		Long: `リストに登録されているが重複している作成済みリンクを表示・除外します。`,
+
+		RunE: func(cmd *cobra.Command, args []string) error {
+			created, err := conf.ReadCreatedList()
+			if err != nil {
+				return err
+			}
+
+			checked := []string{}
+			for _, e := range *created {
+				if slices.Contains(checked, e.HomePath.String()) {
+					fmt.Fprintf(os.Stderr, "重複した作成済みリンク: %s\n", e.HomePath)
+				} else {
+					checked = append(checked, e.HomePath.String())
+				}
+			}
+
+			return nil
+		},
+	}
+
+	cmd.AddCommand(&createdCmd)
+
+	return &cmd
+}
 
 func ignoreCmd() *cobra.Command {
 	cmd := cobra.Command{
