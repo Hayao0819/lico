@@ -56,6 +56,14 @@ func allCmd() *cobra.Command {
 				return err
 			}
 
+			// dup-created
+			dup_created_cmd := duplicateCmd()
+			dup_created_cmd.SetArgs([]string{"--"})
+			err = dup_created_cmd.Execute()
+			if err != nil {
+				return err
+			}
+
 			return nil
 		},
 	}
@@ -160,18 +168,10 @@ func oldlinkCmd() *cobra.Command {
 // Todo: 重複したファイルの自動修正
 func duplicateCmd() *cobra.Command{
 	cmd := cobra.Command{
-		Use: "duplicate",
-		Aliases: []string{"dup"},
-		Short: "重複したファイルを確認",
-		Long: `リストに登録されているが重複しているファイルを表示・除外します。`,
+		Use: "dup-created",
+		Short: "作成済みリストの重複を確認",
+		Long: "作成済みリストに登録されているが重複しているファイルを表示・除外します。\nこのコマンドはファイルへの書き込みを自動で行います。",
 		Args: cobra.NoArgs,
-	}
-
-	createdCmd := cobra.Command{
-		Use: "created",
-		Short: "重複した作成済みリンクの一覧を確認",
-		Long: `リストに登録されているが重複している作成済みリンクを表示・除外します。`,
-
 		RunE: func(cmd *cobra.Command, args []string) error {
 			created, err := conf.ReadCreatedList()
 			if err != nil {
@@ -181,7 +181,8 @@ func duplicateCmd() *cobra.Command{
 			checked := []string{}
 			for _, e := range *created {
 				if slices.Contains(checked, e.HomePath.String()) {
-					fmt.Fprintf(os.Stderr, "重複した作成済みリンク: %s\n", e.HomePath)
+					cmd.Printf("重複した作成済みリンク: %s\n", e.HomePath)
+					utils.RemoveLine(vars.GetCreated(), e.Index)
 				} else {
 					checked = append(checked, e.HomePath.String())
 				}
@@ -190,8 +191,6 @@ func duplicateCmd() *cobra.Command{
 			return nil
 		},
 	}
-
-	cmd.AddCommand(&createdCmd)
 
 	return &cmd
 }
