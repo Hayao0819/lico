@@ -44,12 +44,29 @@ func (entry *Entry) ExistsRepoPath() bool {
 	return err == nil
 }
 
+// HomePathの絶対パスを返します
 func (entry *Entry) FormatHome() (p.Path, error) {
 	return entry.HomePath.Abs(vars.HomeDir)
 }
 
+// RepoPathの絶対パスを返します
 func (entry *Entry) FormatRepo() (p.Path, error) {
 	return entry.RepoPath.Abs(*vars.RepoPathBase)
+}
+
+// EntryのPathを絶対パスを変換します
+func (entry *Entry)Format()(*Entry, error){
+	home, err := entry.FormatHome()
+	if err != nil {
+		return nil, err
+	}
+
+	repo, err := entry.FormatRepo()
+	if err != nil {
+		return nil, err
+	}
+
+	return &Entry{RepoPath: repo, HomePath: home, Index: entry.Index, Option: entry.Option}, nil
 }
 
 func (item *Entry) String(replace bool) (string, error) {
