@@ -78,6 +78,7 @@ install_to(){
         echo "Please add path to $1" >&2
     fi
     cp "$(get_built_binary)" "$1"
+    echo "lico has been installed in ${1}/$(basename "$(get_built_binary)")" >&2
 }
 
 check_cmd go
@@ -121,7 +122,7 @@ case "${mode}" in
         gofmt -l -w .
         ;;
     "newcmd")
-        go run -- "$script_path/tools/main.go" newcmd "$script_path/misc/cmd.go.template" "${script_path}/cmd/${1}.go" "$1"
+        run_tool newcmd "$script_path/misc/cmd.go.template" "${script_path}/cmd/${1}.go" "$1"
         ;;
     "release")
         check_cmd "goreleaser"
