@@ -15,13 +15,13 @@ func addCmd() *cobra.Command {
 	var noTemplate bool
 
 	cmd := cobra.Command{
-		Use:   "add [flags] repoFile hooeFile",
+		Use:   "add [flags] homeFile repoFile",
 		Short: "ファイルを追加します",
 		Long:  `ファイルをlicoの管理対象に追加し、存在しない場合は新たに作成します。`,
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 
-			entry := conf.NewEntry(p.New(args[0]), p.New(args[1]))
+			entry := conf.NewEntry(p.New(args[1]), p.New(args[0]))
 
 			// Entry一覧を生成
 			list, err := conf.ReadConf()
