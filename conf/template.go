@@ -32,15 +32,7 @@ func replaceToTemplate(path string) (p.Path, error) {
 	return parsed, nil
 }
 
-// テンプレートを解析してPathを生成します
-func FormatTemplate(path string) ([]string, error) {
-	parsed := []string{}
-
-	dirInfo, err := osenv.Get()
-	if err != nil {
-		return parsed, err
-	}
-
+func GetTemplateFuncMap()(*template.FuncMap){
 	funcMap := template.FuncMap{
 		"environ": func(n string) string {
 			return os.Getenv(n)
@@ -96,6 +88,20 @@ func FormatTemplate(path string) ([]string, error) {
 			return vars.GlobalMode
 		},
 	}
+
+	return &funcMap
+}
+
+// テンプレートを解析してPathを生成します
+func FormatTemplate(path string) ([]string, error) {
+	parsed := []string{}
+
+	dirInfo, err := osenv.Get()
+	if err != nil {
+		return parsed, err
+	}
+
+	funcMap := *GetTemplateFuncMap()
 
 	tpl, err := template.New(filepath.Base(path)).Funcs(funcMap).ParseFiles(path)
 	if err != nil {

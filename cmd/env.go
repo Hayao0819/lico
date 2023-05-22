@@ -3,6 +3,7 @@ package cmd
 import (
 	"strings"
 
+	"github.com/Hayao0819/lico/conf"
 	"github.com/Hayao0819/lico/osenv"
 	"github.com/spf13/cobra"
 )
@@ -51,7 +52,25 @@ func envCmd() *cobra.Command {
 		},
 	}
 
+	cmd.AddCommand(funclistCmd())
 	cmd.Flags().BoolVarP(&showOnlyKey, "key", "k", false, "変数名のみを表示")
+
+	return &cmd
+}
+
+func funclistCmd ()*cobra.Command{
+	cmd := cobra.Command{
+		Use: "func",
+		Short: "テンプレートで利用可能な関数を表示",
+		Long: `テンプレートで利用可能な関数を表示します。`,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			funcs := conf.GetTemplateFuncMap()
+			for key := range *funcs {
+				cmd.Println(key)
+			}
+			return nil
+		},
+	}
 
 	return &cmd
 }
