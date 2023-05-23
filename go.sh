@@ -144,6 +144,8 @@ case "${mode}" in
             xdg-open "$script_path/out/test.html"
         elif which "open" > /dev/null 2>&1; then
             open "$script_path/out/test.html"
+        else 
+            echo "Please open $script_path/out/test.html" >&2
         fi
         ;;
     *)
