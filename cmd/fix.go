@@ -114,7 +114,7 @@ func oldlinkCmd() *cobra.Command {
 
 				// Check if the link is symlink
 				if !utils.IsSymlink(home.String()) {
-					fmt.Fprintf(os.Stderr, "リンクではない: %s\n", home)
+					fmt.Fprintf(os.Stderr, "リンクではないか、存在しない: %s\n", home)
 					if rm_nolink {
 						if utils.RemoveLine(created, e.Index) != nil {
 							return err
