@@ -20,6 +20,7 @@ mode="${1-""}"
     echo "  fmt               run gofmt"
     echo "  newcmd NAME       make new command from template"
     echo "  release           make release"
+    echo "  test              run all test"
     exit 1
 }
 
@@ -128,8 +129,21 @@ case "${mode}" in
         check_cmd "goreleaser"
         goreleaser release --snapshot --clean
         ;;
-    "testall")
-        go test "$script_path/..."
+    "test")
+        mkdir -p "$script_path/out"
+        go test -cover "$script_path/..." -coverprofile "$script_path/out/test.out"
+        ;;
+    "testview")
+        if [ ! -e "$script_path/out/test.out" ]; then
+            echo "Run test before testview" >&2
+        fi
+        go tool cover -html "$script_path/out/test.out" -o "$script_path/out/test.html"
+
+        if which "xdg-open" > /dev/null 2>&1; then
+            xdg-open "$script_path/out/test.html"
+        elif which "open" > /dev/null 2>&1; then
+            open "$script_path/out/test.html"
+        fi
         ;;
     *)
         echo "No such command" >&2
