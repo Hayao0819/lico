@@ -2,21 +2,37 @@ package cmd
 
 import (
 	"errors"
-	"fmt"
-	"os"
-
-	//"strings"
-
-	//"os"
-
 	"github.com/Hayao0819/lico/conf"
-	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
-
-	//"github.com/Hayao0819/lico/vars"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
+
+func printEntryWithAbs(cmd *cobra.Command, entry *conf.Entry, sep string, showline bool)error{
+	entry, err := entry.Format()
+	if err != nil {
+		return err
+	}
+	cmd.Println(entry.RepoPath.String() + sep + entry.HomePath.String())
+	return nil
+}
+
+func printEntryWithRel(cmd *cobra.Command, entry *conf.Entry, sep string, showline bool)error{
+	entry, err := entry.Format()
+	if err != nil {
+		return err
+	}
+	relHome, err := entry.HomePath.Rel(*vars.HomePathBase)
+	if err != nil {
+		return err
+	}
+	relRepo, err := entry.RepoPath.Rel(*vars.RepoPathBase)
+	if err != nil {
+		return err
+	}
+	cmd.Println(relRepo.String() + sep + relHome.String())
+	return nil
+}
 
 // listCmd represents the list command
 func listCmd() *cobra.Command {
@@ -63,6 +79,10 @@ func listCmd() *cobra.Command {
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if showCreatedList {
+				list, err := conf.ReadConf()
+				if err != nil {
+					return err
+				}
 				createdList, err := conf.ReadCreatedList()
 				if err != nil {
 					return err
@@ -72,15 +92,30 @@ func listCmd() *cobra.Command {
 					if err != nil {
 						return nil
 					}
-					if absPathMode {
-						fmt.Println(parsed.String())
-						continue
-					} else {
-						rel, err := parsed.Rel(*vars.HomePathBase)
-						if err != nil {
-							return err
+					hashome, _ := list.HasHomeFile(parsed)
+					e, err := list.GetItemFromPath(parsed)
+					if err != nil || e == nil {
+						hashome=false
+					}
+					if hashome{
+						// リストに登録されているシンボリックリンク
+						if absPathMode {
+							printEntryWithAbs(cmd, e, listSeparator, showIndexNo)
+						} else {
+							printEntryWithRel(cmd, e, listSeparator, showIndexNo)
 						}
-						fmt.Println(rel.String())
+					}else{
+						// リストに登録されていないシンボリックリンク
+						if absPathMode {
+							cmd.Println(parsed.String())
+							continue
+						} else {
+							rel, err := parsed.Rel(*vars.HomePathBase)
+							if err != nil {
+								return err
+							}
+							cmd.Println(rel.String())
+						}
 					}
 				}
 				return nil
@@ -90,49 +125,11 @@ func listCmd() *cobra.Command {
 					return err
 				}
 				for _, entry := range *list {
-					textToPrint := ""
-
-					//parsedRepoPath, err := formatRepoPath(&entry.RepoPath)
-					parsedRepoPath, err := entry.FormatRepo()
-					if err != nil {
-						return err
-					}
-					//parsedHomePath, err := formatHomePath(&entry.HomePath)
-					parsedHomePath, err := entry.FormatHome()
-					if err != nil {
-						return err
-					}
-
 					if absPathMode {
-						//cmd.Printf("%v%s%v\n", parsedRepoPath, listSeparator, parsedHomePath)
-						textToPrint = parsedRepoPath.String() + listSeparator + parsedHomePath.String()
-						//continue
+						printEntryWithAbs(cmd, &entry, listSeparator, showIndexNo)
 					} else if relPathMode {
-						parsedRelRepoPath, err := parsedRepoPath.Rel(*vars.RepoPathBase)
-						if err != nil {
-							return err
-						}
-
-						parsedRelHomePath, err := parsedHomePath.Rel(*vars.HomePathBase)
-						if err != nil {
-							return err
-						}
-
-						textToPrint = parsedRelRepoPath.String() + listSeparator + parsedRelHomePath.String()
-						//cmd.Printf("%v%s%v\n", parsedRelRepoPath, listSeparator, parsedRelHomePath)
-						//continue
+						printEntryWithRel(cmd, &entry, listSeparator, showIndexNo)
 					}
-
-					if utils.IsEmpty(textToPrint) {
-						fmt.Fprintln(os.Stderr, "このメッセージが出力されることはありえないはずです。バグを作者に報告してください。")
-						return errors.New("no mode specified")
-					}
-
-					if showIndexNo {
-						textToPrint = fmt.Sprintf("%v: %v", entry.Index+1, textToPrint) //entry.Indexは0からスタートします
-					}
-
-					cmd.Println(textToPrint)
 				}
 			}
 			return nil
