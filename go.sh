@@ -136,6 +136,7 @@ case "${mode}" in
     "testview")
         if [ ! -e "$script_path/out/test.out" ]; then
             echo "Run test before testview" >&2
+            exit 1
         fi
         go tool cover -html "$script_path/out/test.out" -o "$script_path/out/test.html"
 
