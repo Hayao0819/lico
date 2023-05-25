@@ -8,5 +8,11 @@
     "Debian":{
         "sid": [],
         "bullseye": []
+    },
+    "macOS": {
+        "13": [
+            "gcc",
+            "wine-crossover"
+        ]
     }
 }
