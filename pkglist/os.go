@@ -5,6 +5,7 @@ import (
 	//"fmt"
 	"os"
 
+	"github.com/Hayao0819/lico/osenv"
 	"github.com/Hayao0819/lico/vars"
 )
 
@@ -48,6 +49,19 @@ func (o *OSList) GetPkgs(id string) *[]P {
 }
 
 func (p *List) GetCurrent() (*[]P, error) {
-	// あとで実装する
-	return nil, nil
+	oslist := p.OSList()
+	if len(oslist) == 0 {
+		return nil, nil
+	}
+
+	env, err := osenv.Get()
+	if err != nil{
+		return nil, err
+	}
+
+	current_os := env.Get("OS")
+	current_osver := env.Get("OSVer")
+
+
+	return p.GetOS(current_os).GetPkgs(current_osver), nil
 }
