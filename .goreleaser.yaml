@@ -2,6 +2,7 @@ before:
   hooks:
     - go mod tidy
     - go generate ./...
+    - ./go.sh completions
 
 builds:
   - id: lico-build
@@ -34,6 +35,11 @@ archives:
     format_overrides:
     - goos: windows
       format: zip
+    files:
+      - LICENSE.txt
+      - SUSHI.md
+      - README.md
+      - out/completions/*
 checksum:
   name_template: 'checksums.txt'
 snapshot:
