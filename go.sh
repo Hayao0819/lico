@@ -166,7 +166,7 @@ case "${mode}" in
         ;;
     "test")
         mkdir -p "$script_path/out"
-        go test -cover "$script_path/..." -coverprofile "$script_path/out/test.out"
+        go test -cover "$script_path/..." -coverprofile "$script_path/out/test.out" "$@"
         ;;
     "testview")
         if [ ! -e "$script_path/out/test.out" ]; then
