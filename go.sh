@@ -59,12 +59,10 @@ build_without_goreleaser(){
 }
 
 get_built_binary_without_goreleaser(){
-    _out="${script_path}/out/lico-without-goreleaser"
-    if [ ! -e "$_out" ]; then
+    if [ ! -e "${script_path}/out/lico-without-goreleaser" ]; then
         build_without_goreleaser
     fi
-    echo "$_out"
-    unset _out
+    echo "${script_path}/out/lico-without-goreleaser"
 }
 
 run_tool(){
