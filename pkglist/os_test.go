@@ -33,5 +33,16 @@ func TestOSList(t *testing.T) {
 	} else {
 		log.Printf("OSList: %v\n", oslist)
 	}
+}
 
+func TestGetCurrent(t *testing.T){
+	list, err := pkglist.ReadList()
+	if err != nil {
+		t.Fatal(err)
+	}
+	current, err := list.GetCurrent()
+	if err != nil {
+		t.Fatal(err)
+	}
+	log.Printf("Current: %v\n", current)
 }
