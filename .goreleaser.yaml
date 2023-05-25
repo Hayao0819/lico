@@ -39,7 +39,9 @@ archives:
       - LICENSE.txt
       - SUSHI.md
       - README.md
-      - out/completions/*
+      - src: 'out/completions/lico.*'
+        dst: "shell"
+        strip_parent: true
 checksum:
   name_template: 'checksums.txt'
 snapshot:
