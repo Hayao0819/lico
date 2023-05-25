@@ -21,6 +21,7 @@ mode="${1-""}"
     echo "  newcmd NAME       make new command from template"
     echo "  release           make release"
     echo "  test              run all test"
+    echo "  tool              run licotool"
     exit 1
 }
 
@@ -44,6 +45,26 @@ run_build(){
     }
     rm -f "$logfile"
 
+}
+
+build_without_goreleaser(){
+    _date="$(run_tool date)"
+    _out="${script_path}/out/lico-without-goreleaser"
+    go build \
+        -ldflags "-s -w -X github.com/Hayao0819/lico/vars.version=None -X github.com/Hayao0819/lico/vars.commit=None -X github.com/Hayao0819/lico/vars.date=${_date}" \
+        -trimpath \
+        -o "$_out" \
+        "$script_path/."
+    unset _out _date
+}
+
+get_built_binary_without_goreleaser(){
+    _out="${script_path}/out/lico-without-goreleaser"
+    if [ ! -e "$_out" ]; then
+        build_without_goreleaser
+    fi
+    echo "$_out"
+    unset _out
 }
 
 run_tool(){
@@ -84,27 +105,40 @@ install_to(){
 
 check_cmd go
 
+lico_install(){
+    if [ -n "${1-""}" ]; then
+        if [ ! -d "$1" ]; then
+            echo "Please specify directory"
+            return 1
+        else
+            install_to "$1"
+        fi
+    elif [ "$(id -u)" = 0 ]; then
+        install_to /usr/local/bin/
+    elif [ -e "$HOME/.bin" ]; then
+        install_to "$HOME/.bin"
+    else
+        echo "You should run this script as root to install lico" >&2
+        return 1
+    fi
+}
+
+make_completions(){
+    _out="${script_path}/out/completions"
+    mkdir -p "$_out"
+    for sh in bash zsh fish; do
+        "$(get_built_binary_without_goreleaser)" completion "$sh" >"$_out/lico.$sh"
+    done
+    unset _out
+}
+
 case "${mode}" in
     "build")
         run_build
         mv "$(get_built_binary)" "${script_path}/lico"
         ;;
     "install")
-        if [ -n "${1-""}" ]; then
-            if [ ! -d "$1" ]; then
-                echo "Please specify directory"
-                exit 1
-            else
-                install_to "$1"
-            fi
-        elif [ "$(id -u)" = 0 ]; then
-            install_to /usr/local/bin/
-        elif [ -e "$HOME/.bin" ]; then
-            install_to "$HOME/.bin"
-        else
-            echo "You should run this script as root to install lico" >&2
-            exit 1
-        fi
+        lico_install "$@"
         ;;
     "run")
         run_build
@@ -124,6 +158,9 @@ case "${mode}" in
         ;;
     "newcmd")
         run_tool newcmd "$script_path/misc/cmd.go.template" "${script_path}/cmd/${1}.go" "$1"
+        ;;
+    "completions")
+        make_completions
         ;;
     "release")
         check_cmd "goreleaser"
@@ -147,6 +184,9 @@ case "${mode}" in
         else 
             echo "Please open $script_path/out/test.html" >&2
         fi
+        ;;
+    "tool")
+        run_tool "$@"
         ;;
     *)
         echo "No such command" >&2
