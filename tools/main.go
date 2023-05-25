@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"text/template"
-
+	"time"
 	"github.com/spf13/cobra"
 )
 
@@ -54,6 +54,19 @@ func newcmdCmd() *cobra.Command {
 	return &cmd
 }
 
+func dateCmd()(*cobra.Command){
+	cmd := cobra.Command{
+		Use:   "date",
+		Short: "現在の日付を返します",
+		Long:  "現在の日付を返します",
+		Args:  cobra.ExactArgs(0),
+		Run: func(cmd *cobra.Command, args []string) {
+			cmd.Println(time.Now().UTC().Format(time.RFC3339))
+		},
+	}
+	return &cmd
+}
+
 func artifactCmd() *cobra.Command {
 	cmd := cobra.Command{
 		Use:   "artifact PATH",
@@ -86,6 +99,7 @@ func main() {
 	root := rootCmd()
 	root.AddCommand(newcmdCmd())
 	root.AddCommand(artifactCmd())
+	root.AddCommand(dateCmd())
 	root.SetOut(os.Stdout)
 
 	if err := root.Execute(); err != nil {
