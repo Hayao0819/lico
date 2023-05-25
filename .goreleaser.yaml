@@ -42,6 +42,7 @@ archives:
       - src: 'out/completions/lico.*'
         dst: "shell"
         strip_parent: true
+    rlcp: true
 checksum:
   name_template: 'checksums.txt'
 snapshot:
