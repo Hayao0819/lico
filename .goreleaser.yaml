@@ -73,8 +73,8 @@ brews:
       system "#{bin}/lico help"
     install: |
       bin.install "lico"
-      bash_completion.install "shell/lico.bash" => "your-cli"
-      zsh_completion.install "shell/lico.zsh" => "_your-cli"
+      bash_completion.install "shell/lico.bash" => "lico"
+      zsh_completion.install "shell/lico.zsh" => "lico"
       fish_completion.install "shell/lico.fish"
     dependencies:
       - name: git
