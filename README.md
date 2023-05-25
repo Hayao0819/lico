@@ -1,9 +1,9 @@
 ## Lico - シンプルで軽量なDotfilesマネージャー
 
-![](https://img.shields.io/github/go-mod/go-version/Hayao0819/lico?style=flat-square)
-![](https://img.shields.io/tokei/lines/github/Hayao0819/lico?style=flat-square)
-![](https://img.shields.io/github/license/Hayao0819/lico?style=flat-square)
-![](https://img.shields.io/codecov/c/github/Hayao0819/lico?style=flat-square&token=TTJAQJLYDL)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/Hayao0819/lico?style=flat-square)](./go.mod)
+![Lines](https://img.shields.io/tokei/lines/github/Hayao0819/lico?style=flat-square)
+[![License](https://img.shields.io/github/license/Hayao0819/lico?style=flat-square)](./LICENSE.txt)
+[![Codecov](https://img.shields.io/codecov/c/github/Hayao0819/lico?style=flat-square&token=TTJAQJLYDL)](https://app.codecov.io/gh/Hayao0819/lico)
 
 
 全てのファイルをGitで管理し、自由なファイル構造を維持できます。
