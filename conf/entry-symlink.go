@@ -27,12 +27,12 @@ func (entry *Entry) CheckSymLink() error {
 	// リンクが存在するかどうか
 	if !utils.Exists(link) {
 		//println(link)
-		return vars.ErrNotExist
+		return vars.ErrNotExist(link)
 	}
 
 	// リンクがシンボリックリンクかどうか
 	if !utils.IsSymlink(link) {
-		return vars.ErrNotSymlink
+		return vars.ErrNotSymlink(link)
 	}
 
 	// 適切なシンボリックリンクかどうか
@@ -47,7 +47,7 @@ func (entry *Entry) CheckSymLink() error {
 		return err
 	}
 	if !isSameFile {
-		return vars.ErrLinkToDiffFile
+		return vars.ErrLinkToDiffFile(string(repo_path))
 	}
 
 	// 正常
@@ -76,7 +76,7 @@ func (entry *Entry) MakeSymLink() error {
 	}
 
 	if !orig.Exists() {
-		return vars.ErrNotExist
+		return vars.ErrNotExist(orig.String())
 	}
 
 	if link.Exists() && link.IsSymlink() {
@@ -109,10 +109,10 @@ func (entry *Entry) RemoveSymLink() error {
 		return err
 	}
 	if !link.Exists() {
-		return vars.ErrNotExist
+		return vars.ErrNotExist(link.String())
 	}
 	if !utils.IsSymlink(link.String()) {
-		return vars.ErrNotSymlink
+		return vars.ErrNotSymlink(link.String())
 	}
 
 	created, err := ReadCreatedList()
@@ -126,7 +126,7 @@ func (entry *Entry) RemoveSymLink() error {
 		return err
 	} else if !res {
 		// リストに含まれていない
-		return vars.ErrNotManaged
+		return vars.ErrNotManaged(link.String())
 	}
 
 	if os.Remove(link.String()) != nil {
