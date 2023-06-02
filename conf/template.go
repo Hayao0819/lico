@@ -37,10 +37,10 @@ func GetTemplateFuncMap()(*template.FuncMap){
 		"environ": func(n string) string {
 			return os.Getenv(n)
 		},
-		"isempty": func(s string) bool {
+		"is_empty": func(s string) bool {
 			return utils.IsEmpty(s)
 		},
-		"isset": func(v string) bool {
+		"is_set": func(v string) bool {
 			//return !utils.IsEmpty(os.Getenv(key))
 			_, s := os.LookupEnv(v)
 			return s
@@ -53,7 +53,7 @@ func GetTemplateFuncMap()(*template.FuncMap){
 				return false
 			}
 		},
-		"isunix": func() bool {
+		"is_unix": func() bool {
 			return goos.IsUnix()
 		},
 		"readdir": func(p string) []string {
@@ -84,7 +84,7 @@ func GetTemplateFuncMap()(*template.FuncMap){
 		"joinpath": func(p ...string) string {
 			return filepath.Join(p...)
 		},
-		"isglobal": func() bool {
+		"is_global": func() bool {
 			return vars.GlobalMode
 		},
 	}
@@ -102,6 +102,11 @@ func FormatTemplate(path string) ([]string, error) {
 	}
 
 	funcMap := *GetTemplateFuncMap()
+	funcMap["isempty"]=funcMap["is_empty"]
+	funcMap["isset"]=funcMap["is_set"]
+	funcMap["isunix"]=funcMap["is_unix"]
+	funcMap["isglobal"]=funcMap["is_global"]
+
 
 	tpl, err := template.New(filepath.Base(path)).Funcs(funcMap).ParseFiles(path)
 	if err != nil {
