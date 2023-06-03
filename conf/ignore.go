@@ -8,15 +8,19 @@ import (
 type IgnoreList gi.GitIgnore
 
 // lico.ignoreを読み込んでIgnoreListを生成する
-func ReadIgnoreList() (*IgnoreList, error) {
-	lines, err := FormatTemplate(vars.GetIgnore())
-	if err != nil {
-		return nil, err
+func ReadIgnoreList() (*IgnoreList) {
+	lines := []string{}
+	for _, i := range vars.GetIgnore(){
+		_lines, err := FormatTemplate(i)
+		if err != nil {
+			continue
+		}
+		lines = append(lines, _lines...)
 	}
 
 	gitignore := gi.CompileIgnoreLines(lines...)
 
-	return (*IgnoreList)(gitignore), nil
+	return (*IgnoreList)(gitignore)
 }
 
 // パスがIgnoreListに含まれているかどうか
