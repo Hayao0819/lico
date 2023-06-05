@@ -14,6 +14,7 @@ func Normalize() error {
 		return err
 	}
 
+	
 	for _, v := range []*string{&vars.List, &vars.Ignore, &vars.Created, &vars.PkgList} {
 		if utils.IsEmpty(*v) {
 			continue

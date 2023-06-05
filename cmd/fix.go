@@ -207,11 +207,7 @@ func ignoreCmd() *cobra.Command {
 				return err
 			}
 
-			ignore, err := conf.ReadIgnoreList()
-			if err != nil {
-				return err
-			}
-
+			ignore := conf.ReadIgnoreList()
 			for _, e := range *list {
 				if r, _ := ignore.MatchEntry(e); r {
 					cmd.Println(e.HomePath.String())
