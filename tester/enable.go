@@ -8,6 +8,8 @@ import (
 	"github.com/Hayao0819/lico/vars"
 )
 
+var RepoRoot string
+
 // テストモードを有効にする
 func Enable(relToExample string) error {
 	current_dir, err := os.Getwd()
@@ -15,6 +17,7 @@ func Enable(relToExample string) error {
 		return err
 	}
 	vars.RepoDir = path.Join(current_dir, relToExample)
+	RepoRoot=path.Join(vars.RepoDir + "/../")
 	return nil
 }
 
