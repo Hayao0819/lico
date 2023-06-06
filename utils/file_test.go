@@ -4,6 +4,7 @@ import (
 	//"os"
 	"testing"
 
+	"github.com/Hayao0819/lico/tester"
 	"github.com/Hayao0819/lico/utils"
 )
 
@@ -14,7 +15,7 @@ func makeTestCase() error{
 		path string
 		content string
 	}
-	
+
 }
 */
 
@@ -24,7 +25,7 @@ func TestReadLines(t *testing.T){
 		want []string
 	}{
 		{
-			path: "testdata/test.txt",
+			path: tester.RepoRoot +  "/testdata/test.txt",
 			want: []string{"test1", "test2", "test3"},
 		},
 	}

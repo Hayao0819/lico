@@ -7,11 +7,7 @@ import (
 )
 
 func TestReadIgnoreList(t *testing.T) {
-	ignore, err := conf.ReadIgnoreList()
-	if err != nil {
-		t.Errorf("conf.ReadIgnoreList() = %v", err)
-	}
-
+	ignore := conf.ReadIgnoreList()
 	if ignore == nil {
 		t.Errorf("conf.ReadIgnoreList() = nil")
 	}
