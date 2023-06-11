@@ -20,6 +20,9 @@ builds:
       - -X github.com/Hayao0819/lico/vars.date={{.Date}}
       #- -X github.com/Hayao0819/lico/vars.builtBy=goreleaser
 
+release:
+  mode: keep-existing
+  prerelease: auto
 
 archives:
   - format: tar.gz
