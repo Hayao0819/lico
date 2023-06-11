@@ -158,6 +158,16 @@ func showValue(key string, cmd *cobra.Command) error {
 	return nil
 }
 
+func getStatus(key string)any{
+	status := loadStatus()
+	for _, s := range status{
+		if s.key==key{
+			return s.value
+		}
+	}
+	return nil
+}
+
 func statusCmd() *cobra.Command {
 
 	textMode := false
