@@ -76,6 +76,12 @@ func ReadConf() (*List, error) {
 			item.Option = option
 		}
 
+		if item.Option != nil{
+			if item.Option.CreateLink == false{
+				continue
+			}
+		}
+
 		// 一覧追加
 		list = append(list, item)
 	}

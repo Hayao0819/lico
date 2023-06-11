@@ -10,11 +10,13 @@ import (
 
 type EntryOption struct {
 	Template bool
+	CreateLink bool
 }
 
 func DefaultOption() *EntryOption {
 	return &EntryOption{
 		Template: false,
+		CreateLink: true,
 	}
 }
 
@@ -31,6 +33,9 @@ func ParseEntryOption(opt string) (*EntryOption, error) {
 			o.Template=true
 		case "no-template" , "notemplate":
 			o.Template=false
+		case "false":
+			o.CreateLink = false
+		case "true": continue
 		case "":
 			continue
 		default:
