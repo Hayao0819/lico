@@ -87,6 +87,21 @@ func GetTemplateFuncMap()(*template.FuncMap){
 		"is_global": func() bool {
 			return vars.GlobalMode
 		},
+		"is_exist": func (path string)bool{
+			return utils.Exists(path)
+		},
+		"is_systemd_running": func()bool{
+			cmd := exec.Command("systemctl", "status")
+			if cmd.Run() != nil{
+				return false
+			}
+			return true
+		},
+		// Todo
+		//"is_systemd_service_enabled": func (service string)bool{
+		//},
+		//"is_systemd_service_active": func(service string)bool{
+		//},
 	}
 
 	return &funcMap
