@@ -11,6 +11,16 @@ import (
 func Abs(base, path string) (string, error) {
 	var err error
 
+	// チルダを置き換え
+	path = ReplaceTilde(path)
+
+
+	// 存在しない場合はこの段階で終了
+	if !Exists(path) {
+		return path, nil
+	}
+
+	// ベースディレクトリを移動
 	currentDir, err := os.Getwd()
 	if err != nil {
 		return path, err
@@ -25,7 +35,6 @@ func Abs(base, path string) (string, error) {
 	}
 
 	// 変換
-	path = ReplaceTilde(path)
 	path, err = filepath.Abs(path)
 	if err != nil {
 		return path, err
