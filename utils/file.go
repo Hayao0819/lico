@@ -32,9 +32,11 @@ func Abs(base, path string) (string, error) {
 	}
 
 	// ディレクトリを戻る
-	err = os.Chdir(currentDir)
-	if err != nil {
-		return path, err
+	if !IsEmpty(base) {
+		err = os.Chdir(currentDir)
+		if err != nil {
+			return path, err
+		}
 	}
 	return path, nil
 }
