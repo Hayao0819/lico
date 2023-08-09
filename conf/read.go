@@ -3,6 +3,7 @@ package conf
 import (
 	"errors"
 	"fmt"
+	"os"
 	"regexp"
 	"strings"
 
@@ -13,6 +14,11 @@ import (
 
 func ReadCreatedList() (*List, error) {
 	path := vars.GetCreated()
+
+	if !utils.Exists(path) {
+		os.Create(path)
+		return &List{}, nil
+	}
 
 	lines, err := utils.ReadLines(path)
 	if err != nil {
@@ -76,8 +82,8 @@ func ReadConf() (*List, error) {
 			item.Option = option
 		}
 
-		if item.Option != nil{
-			if item.Option.CreateLink == false{
+		if item.Option != nil {
+			if !item.Option.CreateLink {
 				continue
 			}
 		}
