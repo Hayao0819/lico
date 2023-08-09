@@ -44,51 +44,51 @@ func ErrNoSuchEntry(path string) *fileErr {
 	return &err
 }
 
-func ErrNotSymlink(path string) *fileErr{
+func ErrNotSymlink(path string) *fileErr {
 	return &fileErr{
-		Err: errNotSymlink,
+		Err:  errNotSymlink,
 		Path: path,
 	}
 }
 
-func ErrLinkToDiffFile(path string) *fileErr{
+func ErrLinkToDiffFile(path string) *fileErr {
 	return &fileErr{
-		Err: errLinkToDiffFile,
+		Err:  errLinkToDiffFile,
 		Path: path,
 	}
 }
 
-func ErrPermission(path string) *fileErr{
+func ErrPermission(path string) *fileErr {
 	return &fileErr{
-		Err: errPermission,
+		Err:  errPermission,
 		Path: path,
 	}
 }
 
-func ErrExist(path string) *fileErr{
+func ErrExist(path string) *fileErr {
 	return &fileErr{
-		Err: errExist,
+		Err:  errExist,
 		Path: path,
 	}
 }
 
-func ErrNotExist(path string) *fileErr{
+func ErrNotExist(path string) *fileErr {
 	return &fileErr{
-		Err: errNotExist,
+		Err:  errNotExist,
 		Path: path,
 	}
 }
 
-func ErrClosed(path string)*fileErr{
+func ErrClosed(path string) *fileErr {
 	return &fileErr{
-		Err: errClosed,
+		Err:  errClosed,
 		Path: path,
 	}
 }
 
-func ErrNotManaged(path string)*fileErr{
+func ErrNotManaged(path string) *fileErr {
 	return &fileErr{
-		Err: errNotManaged,
+		Err:  errNotManaged,
 		Path: path,
 	}
 }

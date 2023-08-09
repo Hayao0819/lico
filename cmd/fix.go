@@ -7,9 +7,9 @@ import (
 	"github.com/Hayao0819/lico/conf"
 	"github.com/spf13/cobra"
 
-	"golang.org/x/exp/slices"
 	"github.com/Hayao0819/lico/utils"
 	"github.com/Hayao0819/lico/vars"
+	"golang.org/x/exp/slices"
 )
 
 func fixCmd() *cobra.Command {
@@ -166,12 +166,12 @@ func oldlinkCmd() *cobra.Command {
 }
 
 // Todo: 重複したファイルの自動修正
-func duplicateCmd() *cobra.Command{
+func duplicateCmd() *cobra.Command {
 	cmd := cobra.Command{
-		Use: "dup-created",
+		Use:   "dup-created",
 		Short: "作成済みリストの重複を確認",
-		Long: "作成済みリストに登録されているが重複しているファイルを表示・除外します。\nこのコマンドはファイルへの書き込みを自動で行います。",
-		Args: cobra.NoArgs,
+		Long:  "作成済みリストに登録されているが重複しているファイルを表示・除外します。\nこのコマンドはファイルへの書き込みを自動で行います。",
+		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			created, err := conf.ReadCreatedList()
 			if err != nil {

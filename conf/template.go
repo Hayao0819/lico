@@ -32,7 +32,7 @@ func replaceToTemplate(path string) (p.Path, error) {
 	return parsed, nil
 }
 
-func GetTemplateFuncMap()(*template.FuncMap){
+func GetTemplateFuncMap() *template.FuncMap {
 	funcMap := template.FuncMap{
 		"environ": func(n string) string {
 			return os.Getenv(n)
@@ -87,15 +87,18 @@ func GetTemplateFuncMap()(*template.FuncMap){
 		"is_global": func() bool {
 			return vars.GlobalMode
 		},
-		"is_exist": func (path string)bool{
+		"is_exist": func(path string) bool {
 			return utils.Exists(path)
 		},
-		"is_systemd_running": func()bool{
+		"is_systemd_running": func() bool {
 			cmd := exec.Command("systemctl", "status")
-			if cmd.Run() != nil{
+			/*
+				if cmd.Run() == nil {
+					return true
+				}
 				return false
-			}
-			return true
+			*/
+			return cmd.Run() == nil
 		},
 		// Todo
 		//"is_systemd_service_enabled": func (service string)bool{
@@ -117,11 +120,10 @@ func FormatTemplate(path string) ([]string, error) {
 	}
 
 	funcMap := *GetTemplateFuncMap()
-	funcMap["isempty"]=funcMap["is_empty"]
-	funcMap["isset"]=funcMap["is_set"]
-	funcMap["isunix"]=funcMap["is_unix"]
-	funcMap["isglobal"]=funcMap["is_global"]
-
+	funcMap["isempty"] = funcMap["is_empty"]
+	funcMap["isset"] = funcMap["is_set"]
+	funcMap["isunix"] = funcMap["is_unix"]
+	funcMap["isglobal"] = funcMap["is_global"]
 
 	tpl, err := template.New(filepath.Base(path)).Funcs(funcMap).ParseFiles(path)
 	if err != nil {

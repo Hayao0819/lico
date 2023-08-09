@@ -17,7 +17,7 @@ func Enable(relToExample string) error {
 		return err
 	}
 	vars.RepoDir = path.Join(current_dir, relToExample)
-	RepoRoot=path.Join(vars.RepoDir + "/../")
+	RepoRoot = path.Join(vars.RepoDir + "/../")
 	return nil
 }
 

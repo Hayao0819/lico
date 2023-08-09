@@ -55,13 +55,12 @@ func (p *List) GetCurrent() (*[]P, error) {
 	}
 
 	env, err := osenv.Get()
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 
 	current_os := env.Get("OS")
 	current_osver := env.Get("OSVer")
-
 
 	return p.GetOS(current_os).GetPkgs(current_osver), nil
 }

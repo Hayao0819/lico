@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/pflag"
 )
 
-func printEntryWithAbs(cmd *cobra.Command, entry *conf.Entry, sep string, showline bool)error{
+func printEntryWithAbs(cmd *cobra.Command, entry *conf.Entry, sep string, showline bool) error {
 	entry, err := entry.Format()
 	if err != nil {
 		return err
@@ -17,7 +17,7 @@ func printEntryWithAbs(cmd *cobra.Command, entry *conf.Entry, sep string, showli
 	return nil
 }
 
-func printEntryWithRel(cmd *cobra.Command, entry *conf.Entry, sep string, showline bool)error{
+func printEntryWithRel(cmd *cobra.Command, entry *conf.Entry, sep string, showline bool) error {
 	entry, err := entry.Format()
 	if err != nil {
 		return err
@@ -95,16 +95,16 @@ func listCmd() *cobra.Command {
 					hashome, _ := list.HasHomeFile(parsed)
 					e, err := list.GetItemFromPath(parsed)
 					if err != nil || e == nil {
-						hashome=false
+						hashome = false
 					}
-					if hashome{
+					if hashome {
 						// リストに登録されているシンボリックリンク
 						if absPathMode {
 							printEntryWithAbs(cmd, e, listSeparator, showIndexNo)
 						} else {
 							printEntryWithRel(cmd, e, listSeparator, showIndexNo)
 						}
-					}else{
+					} else {
 						// リストに登録されていないシンボリックリンク
 						if absPathMode {
 							cmd.Println(parsed.String())

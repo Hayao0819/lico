@@ -23,7 +23,7 @@ func pullCmd() *cobra.Command {
 				}
 			}
 
-			if getStatus("MissingLink") != 0{
+			if getStatus("MissingLink") != 0 {
 				cmd.PrintErrln("新しいリンクがあります。setコマンドを用いて設定してください。")
 			}
 

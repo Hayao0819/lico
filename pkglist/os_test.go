@@ -35,7 +35,7 @@ func TestOSList(t *testing.T) {
 	}
 }
 
-func TestGetCurrent(t *testing.T){
+func TestGetCurrent(t *testing.T) {
 	list, err := pkglist.ReadList()
 	if err != nil {
 		t.Fatal(err)

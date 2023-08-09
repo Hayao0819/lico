@@ -25,7 +25,7 @@ func cloneCmd() *cobra.Command {
 
 			if common.HasCorrectRepoDir() {
 				//return common.RunCmd(pullCmd)
-				return RunSubCmdFromCmd("pull", cmd)
+				return nil
 			}
 
 			cloneFrom := args[0]

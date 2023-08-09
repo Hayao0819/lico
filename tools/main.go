@@ -2,10 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/spf13/cobra"
 	"os"
 	"text/template"
 	"time"
-	"github.com/spf13/cobra"
 )
 
 func rootCmd() *cobra.Command {
@@ -54,7 +54,7 @@ func newcmdCmd() *cobra.Command {
 	return &cmd
 }
 
-func dateCmd()(*cobra.Command){
+func dateCmd() *cobra.Command {
 	cmd := cobra.Command{
 		Use:   "date",
 		Short: "現在の日付を返します",

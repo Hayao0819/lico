@@ -55,7 +55,7 @@ func (entry *Entry) FormatRepo() (p.Path, error) {
 }
 
 // EntryのPathを絶対パスを変換します
-func (entry *Entry)Format()(*Entry, error){
+func (entry *Entry) Format() (*Entry, error) {
 	home, err := entry.FormatHome()
 	if err != nil {
 		return nil, err

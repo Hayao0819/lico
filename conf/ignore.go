@@ -8,9 +8,9 @@ import (
 type IgnoreList gi.GitIgnore
 
 // lico.ignoreを読み込んでIgnoreListを生成する
-func ReadIgnoreList() (*IgnoreList) {
+func ReadIgnoreList() *IgnoreList {
 	lines := []string{}
-	for _, i := range vars.GetIgnore(){
+	for _, i := range vars.GetIgnore() {
 		_lines, err := FormatTemplate(i)
 		if err != nil {
 			continue

@@ -2,8 +2,8 @@ package vars
 
 import (
 /*
-	"os"
-	"strings"
+"os"
+"strings"
 */
 )
 

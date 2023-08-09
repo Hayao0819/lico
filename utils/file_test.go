@@ -19,24 +19,24 @@ func makeTestCase() error{
 }
 */
 
-func TestReadLines(t *testing.T){
-	testcase := []struct{
+func TestReadLines(t *testing.T) {
+	testcase := []struct {
 		path string
 		want []string
 	}{
 		{
-			path: tester.RepoRoot +  "/testdata/test.txt",
+			path: tester.RepoRoot + "/testdata/test.txt",
 			want: []string{"test1", "test2", "test3"},
 		},
 	}
 
-	for _, tc := range testcase{
+	for _, tc := range testcase {
 		got, err := utils.ReadLines(tc.path)
-		if err != nil{
+		if err != nil {
 			t.Errorf("ReadLines() error: %v", err)
 		}
-		for i := range got{
-			if got[i] != tc.want[i]{
+		for i := range got {
+			if got[i] != tc.want[i] {
 				t.Errorf("ReadLines() got: %v, want: %v", got[i], tc.want[i])
 			}
 		}

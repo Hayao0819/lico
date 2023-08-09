@@ -19,10 +19,10 @@ var PkgListFile string = "~/.lico/repo/lico-pkgs-2.json"
 */
 
 var (
-	List    string = ""
+	List    string   = ""
 	Ignore  []string = []string{}
-	PkgList string = ""
-	HomeDir string = ""
+	PkgList string   = ""
+	HomeDir string   = ""
 )
 
 var (
@@ -43,9 +43,9 @@ func GetList() string {
 }
 
 func GetIgnore() []string {
-	if len(Ignore) != 0{
+	if len(Ignore) != 0 {
 		return Ignore
-	}else{
+	} else {
 		return []string{
 			path.Join(RepoDir + "/lico.ignore"),
 		}

@@ -58,11 +58,11 @@ func envCmd() *cobra.Command {
 	return &cmd
 }
 
-func funclistCmd ()*cobra.Command{
+func funclistCmd() *cobra.Command {
 	cmd := cobra.Command{
-		Use: "func",
+		Use:   "func",
 		Short: "テンプレートで利用可能な関数を表示",
-		Long: `テンプレートで利用可能な関数を表示します。`,
+		Long:  `テンプレートで利用可能な関数を表示します。`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			funcs := conf.GetTemplateFuncMap()
 			for key := range *funcs {

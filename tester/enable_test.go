@@ -8,20 +8,20 @@ import (
 	"github.com/Hayao0819/lico/vars"
 )
 
-func TestEnable(t *testing.T){
+func TestEnable(t *testing.T) {
 	err := tester.Enable("../example")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if _, err = os.Stat(vars.RepoDir); err != nil{
+	if _, err = os.Stat(vars.RepoDir); err != nil {
 		t.Fatal(err)
 	}
 }
 
-func TestCommonTestMain(t *testing.T){
+func TestCommonTestMain(t *testing.T) {
 	f := tester.CommonTestMain("../example")
-	if f == nil{
+	if f == nil {
 		t.Fatal("nil function")
 	}
 }
