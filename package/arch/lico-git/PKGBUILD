@@ -26,8 +26,8 @@ build(){
 
 package(){
     mkdir -p "${pkgdir}/usr/bin/"
-    cp -r "${srcdir}/lico" "${pkgdir}/usr/bin/"
-    chmod 755 "${pkgdir}/usr/bin/"
+    cp "${srcdir}/lico/lico" "${pkgdir}/usr/bin/"
+    chmod 755 "${pkgdir}/usr/bin/lico"
 }
 
 
