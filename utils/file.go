@@ -17,7 +17,7 @@ func Abs(base, path string) (string, error) {
 	// 親ディレクトリを再帰的に作成
 	os.MkdirAll(filepath.Dir(path), 0750)
 
-	// ベースディレクトリを移動
+	// カレントディレクトリを取得
 	currentDir, err := os.Getwd()
 	if err != nil {
 		return path, err
@@ -25,6 +25,7 @@ func Abs(base, path string) (string, error) {
 
 	// 起点移動
 	if !IsEmpty(base) {
+		os.MkdirAll(base, 0750)
 		err = os.Chdir(base)
 		if err != nil {
 			return path, err
