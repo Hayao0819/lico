@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"fmt"
-	"path"
 
 	//p "github.com/Hayao0819/lico/paths"
 	"github.com/Hayao0819/lico/utils"
@@ -16,10 +15,11 @@ import (
 
 func HasCorrectRepoDir() bool {
 	isDir := utils.IsDir(vars.RepoDir)
-	hasGitDir := utils.Exists(fmt.Sprint(path.Join(vars.RepoDir, ".git")))
+	//hasGitDir := utils.Exists(path.Join(vars.RepoDir, ".git"))
+	hasListFile := utils.Exists(vars.GetList())
 	//cmd.Println(isDir)
 	//cmd.Println(hasGitDir)
-	return isDir && hasGitDir
+	return isDir && hasListFile //&& hasGitDir
 }
 
 /*
