@@ -21,7 +21,7 @@ pkgver(){
 
 build(){
     cd "$srcdir/lico"
-    "$srcdir/lico/go.sh" build
+    "$srcdir/lico/devtools.sh" build
 }
 
 package(){

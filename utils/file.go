@@ -15,7 +15,7 @@ func Abs(base, path string) (string, error) {
 	path = ReplaceTilde(path)
 
 	// 親ディレクトリを再帰的に作成
-	os.MkdirAll(path, 0750)
+	os.MkdirAll(filepath.Dir(path), 0750)
 
 	// ベースディレクトリを移動
 	currentDir, err := os.Getwd()

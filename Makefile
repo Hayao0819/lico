@@ -1,6 +1,6 @@
 
 build:
-	@./go.sh build
+	@./devtools.sh build
 
 install: build
-	@./go.sh install
+	@./devtools.sh install
